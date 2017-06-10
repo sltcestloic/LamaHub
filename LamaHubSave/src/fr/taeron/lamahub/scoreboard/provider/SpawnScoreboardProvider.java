@@ -21,6 +21,7 @@ public class SpawnScoreboardProvider extends SidebarProvider{
 	@SuppressWarnings("deprecation")
 	@Override
 	public List<SidebarEntry> getLines(Player p) {
+		Bukkit.broadcastMessage("getlines pour " + p.getName());
         final List<SidebarEntry> lines = new ArrayList<SidebarEntry>();
         lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.GRAY + SpawnScoreboardProvider.STRAIGHT_LINE, SpawnScoreboardProvider.STRAIGHT_LINE));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.AQUA + "En ligne: ", ChatColor.WHITE.toString() + Bukkit.getOnlinePlayers().length));

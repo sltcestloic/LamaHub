@@ -64,7 +64,17 @@ public class UserManager implements Listener
     }
     
     public void saveUserData() {
-    	new BukkitRunnable(){
+    	final Set<Map.Entry<UUID, LamaUser>> entrySet = users.entrySet();
+    	final Map<String, LamaUser> saveMap = new LinkedHashMap<String, LamaUser>(entrySet.size());
+    	for (final Map.Entry<UUID, LamaUser> entry : entrySet) {
+    		saveMap.put(entry.getKey().toString(), entry.getValue());
+    	}
+    	config.set("joueurs", saveMap);
+		config.save();
+    }
+
+	public void saveUserDataAsync() {
+		new BukkitRunnable(){
 			@Override
 			public void run() {
 		        final Set<Map.Entry<UUID, LamaUser>> entrySet = users.entrySet();
@@ -76,5 +86,5 @@ public class UserManager implements Listener
 		        config.save();
 			}
     	}.runTaskAsynchronously(plugin);
-    }
+	}
 }

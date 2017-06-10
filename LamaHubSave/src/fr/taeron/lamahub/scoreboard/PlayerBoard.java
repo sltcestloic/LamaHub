@@ -13,7 +13,6 @@ import org.bukkit.*;
 
 public class PlayerBoard{
 	
-    private boolean sidebarVisible;
     private boolean removed;
     private SidebarProvider defaultProvider;
     private SidebarProvider temporaryProvider;
@@ -27,7 +26,6 @@ public class PlayerBoard{
     private final LamaHub plugin;
     
     public PlayerBoard(final LamaHub plugin, final Player player) {
-        this.sidebarVisible = false;
         this.removed = false;
         this.plugin = plugin;
         this.player = player;
@@ -44,7 +42,7 @@ public class PlayerBoard{
     }
     
     public static boolean isSupportedByServer() {
-        return Bukkit.getScoreboardManager() != null;
+        return true;
     }
     
     public void remove() {
@@ -68,16 +66,9 @@ public class PlayerBoard{
     }
     
     public boolean isSidebarVisible() {
-        return this.sidebarVisible;
+        return true;
     }
     
-    public void setSidebarVisible(final boolean visible) {
-        if (!isSupportedByServer()) {
-            return;
-        }
-        this.sidebarVisible = visible;
-        this.bufferedObjective.setDisplaySlot(visible ? DisplaySlot.SIDEBAR : null);
-    }
     
     public void setDefaultSidebar(final SidebarProvider provider, final long updateInterval) {
         if (!isSupportedByServer()) {
@@ -152,14 +143,13 @@ public class PlayerBoard{
                     if (PlayerBoard.this.player.equals(update)) {
                         PlayerBoard.this.teammates.addPlayer((OfflinePlayer)update);
                     } else {
-                    	if (!SpawnHandler.isInSpawn(update)) {
+                    	if (SpawnHandler.isInSpawn(update)) {
                     		PlayerBoard.this.neutrals.addPlayer((OfflinePlayer)update);
                     		continue;
                     	} else {
                             PlayerBoard.this.opponents.addPlayer((OfflinePlayer)update);
                     	}
                     }
-                    PlayerBoard.this.neutrals.addPlayer((OfflinePlayer)update);
                 }
             }
         }.runTaskAsynchronously(this.plugin);

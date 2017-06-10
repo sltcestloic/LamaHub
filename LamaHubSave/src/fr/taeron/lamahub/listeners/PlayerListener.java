@@ -1,5 +1,6 @@
 package fr.taeron.lamahub.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
@@ -18,6 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -116,4 +118,15 @@ public class PlayerListener implements Listener{
 			}
 		}		
 	}
+    
+    @EventHandler
+    public void onPlayerRespawn(final PlayerRespawnEvent event) {
+        event.setRespawnLocation(Bukkit.getWorlds().get(0).getSpawnLocation().clone().add(0.5, 0.5, 0.5));
+        final Player player = event.getPlayer();
+        new BukkitRunnable() {
+            public void run() {
+            	LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(player, true, true);
+            }
+        }.runTaskLater(LamaHub.getInstance(), 1L);
+    }
 }

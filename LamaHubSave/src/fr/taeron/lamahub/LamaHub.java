@@ -6,6 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.lamahub.inventory.InventoryHandler;
+import fr.taeron.lamahub.listeners.PlayerListener;
+import fr.taeron.lamahub.listeners.WorldListener;
 import fr.taeron.lamahub.scoreboard.ScoreboardHandler;
 import fr.taeron.lamahub.user.UserManager;
 
@@ -20,7 +22,12 @@ public class LamaHub extends JavaPlugin{
 	
 	public void onEnable(){
 		this.setInstances();
+		this.registerListeners();
 	} 
+	
+	public void onDisable(){
+		this.userManager.saveUserDataAsync();
+	}
 	 
 	public void runAutoSave(){
 		new BukkitRunnable(){
@@ -30,6 +37,11 @@ public class LamaHub extends JavaPlugin{
 				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "§aSauvegarde automatique effectuée.");
 			}
 		}.runTaskTimerAsynchronously(this, 20, 6000);
+	}
+	
+	private void registerListeners(){
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+		Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
 	}
 	 
 	 private void setInstances(){

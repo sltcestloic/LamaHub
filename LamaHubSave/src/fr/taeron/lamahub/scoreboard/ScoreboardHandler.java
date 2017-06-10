@@ -5,7 +5,6 @@ import org.bukkit.plugin.*;
 import org.bukkit.scheduler.*;
 
 import fr.taeron.lamahub.LamaHub;
-import fr.taeron.lamahub.user.LamaUser;
 
 import org.bukkit.entity.*;
 import java.util.*;
@@ -44,6 +43,7 @@ public class ScoreboardHandler implements Listener
     
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(final PlayerJoinEvent event) {
+    	event.setJoinMessage(null);
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         for (final PlayerBoard board : this.playerBoards.values()) {
@@ -52,6 +52,7 @@ public class ScoreboardHandler implements Listener
         final PlayerBoard board2 = new PlayerBoard(this.plugin, player);
         board2.addUpdates(ScoreboardHandler.getOnlinePlayers());
         this.setPlayerBoard(uuid, board2);
+        LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(player, true, true);
     }
     
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
@@ -65,9 +66,6 @@ public class ScoreboardHandler implements Listener
     
     public void setPlayerBoard(final UUID uuid, final PlayerBoard board) {
         this.playerBoards.put(uuid, board);
-        LamaUser p = LamaHub.getInstance().getUserManager().getUser(uuid);
-        if(p.hasScoreboardEnabled())
-        board.setSidebarVisible(true);
     }
     
     public void clearBoards() {
