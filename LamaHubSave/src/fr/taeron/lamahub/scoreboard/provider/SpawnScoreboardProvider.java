@@ -15,7 +15,7 @@ public class SpawnScoreboardProvider extends SidebarProvider{
 
 	@Override
 	public String getTitle(Player p) {
-		return SidebarProvider.SCOREBOARD_TITLE + " §7| §bFFA";
+		return SidebarProvider.SCOREBOARD_TITLE;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -26,6 +26,6 @@ public class SpawnScoreboardProvider extends SidebarProvider{
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.AQUA + "En ligne: ", ChatColor.WHITE.toString() + Bukkit.getOnlinePlayers().length));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.AQUA + "Ping: ", ((CraftPlayer)p).getHandle().ping));
         lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.STRIKETHROUGH + SpawnScoreboardProvider.STRAIGHT_LINE + ChatColor.GRAY, SpawnScoreboardProvider.STRAIGHT_LINE));
-		return null;
+		return lines;
 	}
 }
