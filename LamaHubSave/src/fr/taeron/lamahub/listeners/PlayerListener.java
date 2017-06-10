@@ -1,11 +1,14 @@
 package fr.taeron.lamahub.listeners;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -14,10 +17,13 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
+
 
 public class PlayerListener implements Listener{
 
@@ -77,4 +83,37 @@ public class PlayerListener implements Listener{
             }
         }.runTask(LamaHub.getInstance());
     }
+    
+    @SuppressWarnings("deprecation")
+	@EventHandler
+	public void onSoup(PlayerInteractEvent e){
+		CraftPlayer p = (CraftPlayer) e.getPlayer();
+		if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
+			if(p.getItemInHand().equals(new ItemStack(Material.MUSHROOM_SOUP))){
+				if(p.getHealth() < 20){
+					if(p.getHealth() < 13){
+						if(p.getFoodLevel() < 13){
+							p.setHealth(p.getHealth() + 7);
+							p.setFoodLevel((int) (p.getFoodLevel() + 7));
+							e.getPlayer().getItemInHand().setType(Material.BOWL);
+						} else {
+							p.setFoodLevel(20);
+							p.setHealth(p.getHealth() + 7);
+							e.getPlayer().getItemInHand().setType(Material.BOWL);
+						}
+					} else {
+						p.setHealth(20);
+						e.getPlayer().getItemInHand().setType(Material.BOWL);
+					}
+				} else {
+					if(p.getFoodLevel() < 20){
+						p.setFoodLevel((int) (p.getFoodLevel() + 7));
+						e.getPlayer().getItemInHand().setType(Material.BOWL);
+					} else {
+						return;
+					}
+				}
+			}
+		}		
+	}
 }
