@@ -10,6 +10,7 @@ public class LamaUser implements ConfigurationSerializable{
     private final UUID uniqueId;
     private int kills;
     private int deaths;
+    private int ks;
     private boolean scoreboard;
     private int bestStreak;
 
@@ -20,10 +21,10 @@ public class LamaUser implements ConfigurationSerializable{
     
     public LamaUser(final Map<String, Object> map) {
         this.uniqueId = UUID.fromString((String) map.get("uniqueID"));
-        this.kills = Integer.valueOf((String) map.get("kills"));
-        this.deaths = Integer.valueOf((String) map.get("deaths"));
+        this.kills = Integer.valueOf(String.valueOf(map.get("kills")));
+        this.deaths = Integer.valueOf(String.valueOf(map.get("deaths")));
         this.scoreboard = Boolean.valueOf((String) map.get("toggledScoreboard"));
-        this.bestStreak = Integer.valueOf((String) map.get("bestStreak"));
+        this.bestStreak = Integer.valueOf(String.valueOf(map.get("bestStreak")));
     }
     
     public Map<String, Object> serialize() {
@@ -58,6 +59,21 @@ public class LamaUser implements ConfigurationSerializable{
     
     public int getDeaths() {
         return this.deaths;
+    }
+    
+    public void setKS(int i){
+    	this.ks = i;
+    	if(i > this.bestStreak){
+    		this.bestStreak = i;
+    	}
+    }
+    
+    public int getBestKS(){
+    	return this.bestStreak;
+    }
+    
+    public int getKS(){
+    	return this.ks;
     }
     
     public void setDeaths(final int deaths) {

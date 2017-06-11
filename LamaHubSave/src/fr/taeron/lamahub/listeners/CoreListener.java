@@ -2,10 +2,14 @@ package fr.taeron.lamahub.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,20 +18,24 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
+import net.minecraft.server.v1_7_R4.EntityItem;
 
 
-public class PlayerListener implements Listener{
+public class CoreListener implements Listener{
 
 	@EventHandler
 	public void blockBreak(BlockBreakEvent e){
@@ -120,6 +128,17 @@ public class PlayerListener implements Listener{
 	}
     
     @EventHandler
+    public void onJoin(PlayerJoinEvent e){
+    	e.setJoinMessage(null);
+        LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
+    }
+    
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e){
+    	e.setQuitMessage(null);
+    }
+    
+    @EventHandler
     public void onPlayerRespawn(final PlayerRespawnEvent event) {
         event.setRespawnLocation(Bukkit.getWorlds().get(0).getSpawnLocation().clone().add(0.5, 0.5, 0.5));
         final Player player = event.getPlayer();
@@ -128,5 +147,39 @@ public class PlayerListener implements Listener{
             	LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(player, true, true);
             }
         }.runTaskLater(LamaHub.getInstance(), 1L);
+    }
+    
+    @EventHandler
+  	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
+		if(!SpawnHandler.isInSpawn(event.getPlayer().getLocation())){
+			Item item = event.getItemDrop();
+			ItemStack itemstack = item.getItemStack();
+			Location location = item.getLocation();
+			EntityItem ei = new EntityItem(
+				((CraftWorld)location.getWorld()).getHandle(),
+		      	location.getX(),
+		      	location.getY(),
+		      	location.getZ(),
+		      	CraftItemStack.asNMSCopy(itemstack)) {
+		    	@Override
+		      	public boolean a(EntityItem entityitem) {
+		    		return false;
+		    	}
+		    	};
+		    	ei.pickupDelay = 40;
+		    	((Item)ei.getBukkitEntity()).setVelocity(item.getVelocity());
+		    	((CraftWorld)location.getWorld()).getHandle().addEntity(ei);
+		    	item.remove();
+		}
+  	}
+    
+    @EventHandler
+    public void entitySpawn(ItemSpawnEvent e){
+    	new BukkitRunnable(){
+			@Override
+			public void run() {
+				e.getEntity().remove();
+			}
+    	}.runTaskLater(LamaHub.getInstance(), 60l);
     }
 }

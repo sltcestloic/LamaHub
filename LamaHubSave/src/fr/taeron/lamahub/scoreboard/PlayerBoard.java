@@ -13,27 +13,27 @@ import org.bukkit.*;
 
 public class PlayerBoard{
 	
+    private boolean sidebarVisible;
     private boolean removed;
     private SidebarProvider defaultProvider;
     private SidebarProvider temporaryProvider;
     private BukkitRunnable runnable;
-    private final Team teammates;
-    private final Team neutrals;
-    private final Team opponents;
+    private final Team spawn;
+    private final Team ffa;
     private final Scoreboard scoreboard;
     public final BufferedObjective bufferedObjective;
     private final Player player;
     private final LamaHub plugin;
     
     public PlayerBoard(final LamaHub plugin, final Player player) {
+        this.sidebarVisible = false;
         this.removed = false;
         this.plugin = plugin;
         this.player = player;
         this.scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard();
         this.bufferedObjective = new BufferedObjective(this.scoreboard);
-        (this.teammates = this.scoreboard.registerNewTeam("teammates")).setPrefix("§a");
-        (this.neutrals = this.scoreboard.registerNewTeam("neutrals")).setPrefix("§7");
-        (this.opponents = this.scoreboard.registerNewTeam("opponents")).setPrefix("§c");
+        (this.spawn = this.scoreboard.registerNewTeam("spawn")).setPrefix("§7");
+        (this.ffa = this.scoreboard.registerNewTeam("ffa")).setPrefix("§f");
         new BukkitRunnable() {
             public void run() {
                 player.setScoreboard(PlayerBoard.this.scoreboard);
@@ -42,7 +42,7 @@ public class PlayerBoard{
     }
     
     public static boolean isSupportedByServer() {
-        return true;
+        return Bukkit.getScoreboardManager() != null;
     }
     
     public void remove() {
@@ -66,9 +66,16 @@ public class PlayerBoard{
     }
     
     public boolean isSidebarVisible() {
-        return true;
+        return this.sidebarVisible;
     }
     
+    public void setSidebarVisible(final boolean visible) {
+        if (!isSupportedByServer()) {
+            return;
+        }
+        this.sidebarVisible = visible;
+        this.bufferedObjective.setDisplaySlot(visible ? DisplaySlot.SIDEBAR : null);
+    }
     
     public void setDefaultSidebar(final SidebarProvider provider, final long updateInterval) {
         if (!isSupportedByServer()) {
@@ -138,20 +145,16 @@ public class PlayerBoard{
     
     public void addUpdates(final Collection<? extends Player> updates) {
         new BukkitRunnable() {
-            public void run() {
+            public void run() { 
                 for (final Player update : updates) {
-                    if (PlayerBoard.this.player.equals(update)) {
-                        PlayerBoard.this.teammates.addPlayer((OfflinePlayer)update);
-                    } else {
-                    	if (SpawnHandler.isInSpawn(update)) {
-                    		PlayerBoard.this.neutrals.addPlayer((OfflinePlayer)update);
-                    		continue;
-                    	} else {
-                            PlayerBoard.this.opponents.addPlayer((OfflinePlayer)update);
-                    	}
-                    }
+                	if(!SpawnHandler.isInSpawn(update)){
+                		PlayerBoard.this.ffa.addPlayer((OfflinePlayer)update);
+                	} else {
+                		PlayerBoard.this.spawn.addPlayer((OfflinePlayer)update);
+                	}
                 }
             }
         }.runTaskAsynchronously(this.plugin);
     }
 }
+
