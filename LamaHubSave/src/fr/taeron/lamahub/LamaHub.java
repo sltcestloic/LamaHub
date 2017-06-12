@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import fr.taeron.core.command.module.essential.HatCommand;
 import fr.taeron.lamahub.commands.ColorCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
@@ -128,6 +129,7 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("stats").setExecutor(new StatsCommand());
 		this.getCommand("color").setExecutor(new ColorCommand());
 		this.getCommand("spawn").setExecutor(new SpawnCommand());
+		this.getCommand("hat").setExecutor(new HatCommand());
 	}
 	 
 	 private void setInstances(){
