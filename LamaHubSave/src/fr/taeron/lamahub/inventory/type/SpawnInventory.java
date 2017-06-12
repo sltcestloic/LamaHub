@@ -2,11 +2,13 @@ package fr.taeron.lamahub.inventory.type;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.InventorySnapshot;
@@ -39,6 +41,7 @@ public class SpawnInventory extends InventorySnapshot{
         if (setItems) {
             inventory.setItem(0, Config.SPAWN_COMPASS_ITEM);
             inventory.setItem(8, Config.TRAILS_ITEM);
+            inventory.setItem(7, Config.HAT_ITEM);
         }
         player.updateInventory();
         if(player.getName().length() > 14){

@@ -38,6 +38,14 @@ public class GUIListener implements Listener{
 		if(e.getItem().equals(Config.FFA_SELECTOR_ITEM)){
 			KitGui.open(e.getPlayer());
 		}
+		if(e.getItem().equals(Config.HAT_ITEM)){
+			if(!e.getPlayer().hasPermission("vip")){
+				e.getPlayer().sendMessage("§2Tu dois être VIP pour avoir accès aux §a§nChapeaux!");
+				e.getPlayer().sendMessage("§2Notre boutique: §ahttp://lamahub.buycraft.net/");
+				return;
+			}
+			HatGui.open(e.getPlayer());
+		}
 		if(e.getItem().equals(Config.TRAILS_ITEM)){
 			if(!e.getPlayer().hasPermission("vip")){
 				e.getPlayer().sendMessage("§2Tu dois être VIP pour utiliser cette commande.");

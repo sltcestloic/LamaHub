@@ -1,9 +1,14 @@
 package fr.taeron.lamahub.inventory.type;
 
+import java.net.NetworkInterface;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.InventorySnapshot;
@@ -31,6 +36,7 @@ public class FFAInventory extends InventorySnapshot{
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {
             inventory.setItem(0, Config.FFA_SELECTOR_ITEM);
+            inventory.setItem(7, Config.HAT_ITEM);
         }
         player.updateInventory();
     }
