@@ -14,10 +14,12 @@ public class LamaUser implements ConfigurationSerializable{
     private int ks;
     private int bestStreak;
     private String prefix;
+    private int coins;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.prefix = "§7";
+        this.coins = 0;
     }
     
     public LamaUser(final Map<String, Object> map) {
@@ -26,6 +28,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.deaths = Integer.valueOf(String.valueOf(map.get("deaths")));
         this.bestStreak = Integer.valueOf(String.valueOf(map.get("bestStreak")));
         this.prefix = String.valueOf(map.get("prefix"));
+        this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
     }
     
     public Map<String, Object> serialize() {
@@ -35,6 +38,7 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("deaths", this.deaths);
         map.put("bestStreak", this.bestStreak);
         map.put("prefix", this.prefix);
+        map.put("coins", this.coins);
         return map;
     }
     
@@ -44,6 +48,22 @@ public class LamaUser implements ConfigurationSerializable{
     
     public void setBestKS(int i){
     	this.bestStreak = i;
+    }
+    
+    public void addCoins(int i){
+    	this.coins += i;
+    }
+    
+    public int getCoins(){
+    	return this.coins;
+    }
+    
+    public void removeCoins(int i){
+    	this.coins -= i;
+    }
+    
+    public void setCoins(int i){
+    	this.coins = i;
     }
     
     public int getKills() {
