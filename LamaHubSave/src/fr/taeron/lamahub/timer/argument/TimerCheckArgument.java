@@ -41,7 +41,7 @@ public class TimerCheckArgument extends CommandArgument{
                 temporaryTimer = (PlayerTimer)timer;
                 break;
             }
-        }
+        } 
         if (temporaryTimer == null) {
             sender.sendMessage(ChatColor.RED + "Le timer '" + args[1] + "' est introuvable.");
             return true;
