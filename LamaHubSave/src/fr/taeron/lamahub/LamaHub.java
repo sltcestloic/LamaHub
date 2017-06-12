@@ -134,7 +134,7 @@ public class LamaHub extends JavaPlugin{
 	}
 	 
 	 private void setInstances(){
-		 Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
+		Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
 		 this.userManager = new UserManager(this);
 		 LamaHub.instance = this;
 		 this.scoreboardHandler = new ScoreboardHandler(this);
