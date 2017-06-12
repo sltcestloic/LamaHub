@@ -23,7 +23,7 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
 	
     
     public CombatTagTimer(final LamaHub plugin) {
-        super("Combat", TimeUnit.SECONDS.toMillis(20L));
+        super("Combat", TimeUnit.SECONDS.toMillis(30L));
     }
     
     public String getScoreboardPrefix() {
@@ -48,6 +48,11 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
                 this.onExpire((UUID)optionalUserUUID.get());
             }
         }
+    }
+    
+    @Override
+    public void onExpire(UUID u){
+    	Bukkit.getPlayer(u).sendMessage("§aTu n'es plus en combat, tu peux désormais ré-utiliser la commande /spawn.");
     }
     
 	@SuppressWarnings("deprecation")
