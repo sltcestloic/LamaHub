@@ -49,6 +49,14 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
             }
         }
     }
+    
+	@SuppressWarnings("deprecation")
+	@EventHandler
+    public void onQuit(PlayerQuitEvent e){
+    	if(this.getRemaining(e.getPlayer()) > 0){
+    		e.getPlayer().setHealth(0);
+    	}
+    }
 
     
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

@@ -1,6 +1,5 @@
 package fr.taeron.lamahub.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -97,42 +96,37 @@ public class GUIListener implements Listener{
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 		String s = e.getCurrentItem().getItemMeta().getDisplayName();
 		if(s.equalsIgnoreCase("§1Bleu")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&1 \"");
 			user.setPrefix("§1");
 		}
 		if(s.equalsIgnoreCase("§bAqua")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&b \"");
 			user.setPrefix("§b");
 		}
 		if(s.equalsIgnoreCase("§3Cyan")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&3 \"");
 			user.setPrefix("§3");
 		}
 		if(s.equalsIgnoreCase("§2Vert")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&2 \"");
 			user.setPrefix("§2");
 		}
 		if(s.equalsIgnoreCase("§aVert Clair")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&a \"");
 			user.setPrefix("§a");
 		}
 		if(s.equalsIgnoreCase("§dRose")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&d \"");
 			user.setPrefix("§d");
 		}
 		if(s.equalsIgnoreCase("§eJaune")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&e \"");
 			user.setPrefix("§e");
 		}
 		if(s.equalsIgnoreCase("§cRouge")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&c \"");
 			user.setPrefix("§c");
 		}
 		if(s.equalsIgnoreCase("§6Orange")){
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pp user " + e.getWhoClicked().getName() + " prefix set \"&f[&b&lVIP&f]&6 \"");
 			user.setPrefix("§6");
 		}
+		if(s.equalsIgnoreCase("§7Gris")){
+			user.setPrefix("§7");
+		}
 		p.sendMessage("§2Pseudo changé en " + s);
+		p.setPlayerListName(user.getPrefix() + p.getName());
 		p.closeInventory();
 	}
 }

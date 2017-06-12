@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.lamahub.commands.ColorCommand;
+import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
@@ -126,6 +127,7 @@ public class LamaHub extends JavaPlugin{
 	private void registerCommands(){
 		this.getCommand("stats").setExecutor(new StatsCommand());
 		this.getCommand("color").setExecutor(new ColorCommand());
+		this.getCommand("spawn").setExecutor(new SpawnCommand());
 	}
 	 
 	 private void setInstances(){

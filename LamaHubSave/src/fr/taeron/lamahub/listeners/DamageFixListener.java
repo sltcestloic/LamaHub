@@ -13,6 +13,6 @@ public class DamageFixListener implements Listener{
 		if(!(e.getDamager() instanceof Player)){
 			return;
 		}
-		e.setDamage(e.getDamage() / 1.55);
+		e.setDamage(e.getDamage() / 1.7);
 	}
 }

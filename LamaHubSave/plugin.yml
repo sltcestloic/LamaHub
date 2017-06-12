@@ -7,3 +7,4 @@ commands:
   stats:
   color:
     aliases: [tag]
+  spawn:

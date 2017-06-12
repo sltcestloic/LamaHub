@@ -1,5 +1,6 @@
 package fr.taeron.lamahub.user;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.*;
 import java.util.*;
 import com.google.common.collect.*;
@@ -16,7 +17,7 @@ public class LamaUser implements ConfigurationSerializable{
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.prefix = "";
+        this.prefix = "§7";
     }
     
     public LamaUser(final Map<String, Object> map) {
@@ -54,6 +55,9 @@ public class LamaUser implements ConfigurationSerializable{
     }
     
     public String getPrefix(){
+    	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
+    		return "§7";
+    	}
     	return this.prefix;
     }
     

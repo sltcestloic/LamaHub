@@ -41,6 +41,10 @@ public class SpawnInventory extends InventorySnapshot{
             inventory.setItem(8, Config.TRAILS_ITEM);
         }
         player.updateInventory();
-        player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName());
+        if(player.getName().length() > 14){
+            player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName().substring(0, 14));
+        } else {
+     	  player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName());
+        }
     }
 }
