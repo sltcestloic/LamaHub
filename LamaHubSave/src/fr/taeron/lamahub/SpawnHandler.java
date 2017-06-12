@@ -17,4 +17,8 @@ public class SpawnHandler {
     public static boolean isInSpawn(final Entity entity) {
         return isInSpawn(entity.getLocation());
     }
+    
+    public static boolean isInFFA(Entity entity){
+    	return entity.getLocation().getWorld().getName().equalsIgnoreCase("ffasoup");
+    }
 }

@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
@@ -26,11 +28,19 @@ public class SpawnInventory extends InventorySnapshot{
         player.setFireTicks(0);
         player.setHealth(20.0);
         player.setFlying(false);
+        if(player.hasPermission("vip")){
+        	player.setAllowFlight(true);
+        }
+		
+        
         player.getActivePotionEffects().clear();
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999999, 2));
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {
             inventory.setItem(0, Config.SPAWN_COMPASS_ITEM);
+            inventory.setItem(8, Config.TRAILS_ITEM);
         }
         player.updateInventory();
+        player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName());
     }
 }

@@ -6,7 +6,6 @@ import org.bukkit.plugin.*;
 import org.bukkit.scheduler.*;
 
 import fr.taeron.lamahub.LamaHub;
-import fr.taeron.lamahub.user.LamaUser;
 
 import org.bukkit.entity.*;
 import java.util.*;
@@ -66,8 +65,6 @@ public class ScoreboardHandler implements Listener
     
     public void setPlayerBoard(final UUID uuid, final PlayerBoard board) {
         this.playerBoards.put(uuid, board);
-        LamaUser p = LamaHub.getInstance().getUserManager().getUser(uuid);
-        if(p.hasScoreboardEnabled())
         board.setSidebarVisible(true);
     }
     

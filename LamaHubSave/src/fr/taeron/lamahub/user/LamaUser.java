@@ -11,20 +11,20 @@ public class LamaUser implements ConfigurationSerializable{
     private int kills;
     private int deaths;
     private int ks;
-    private boolean scoreboard;
     private int bestStreak;
+    private String prefix;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.scoreboard = true;
+        this.prefix = "";
     }
     
     public LamaUser(final Map<String, Object> map) {
-        this.uniqueId = UUID.fromString((String) map.get("uniqueID"));
+        this.uniqueId = UUID.fromString(String.valueOf(map.get("uniqueID")));
         this.kills = Integer.valueOf(String.valueOf(map.get("kills")));
         this.deaths = Integer.valueOf(String.valueOf(map.get("deaths")));
-        this.scoreboard = Boolean.valueOf((String) map.get("toggledScoreboard"));
         this.bestStreak = Integer.valueOf(String.valueOf(map.get("bestStreak")));
+        this.prefix = String.valueOf(map.get("prefix"));
     }
     
     public Map<String, Object> serialize() {
@@ -32,25 +32,29 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("uniqueID", this.uniqueId.toString());
         map.put("kills", this.kills);
         map.put("deaths", this.deaths);
-        map.put("toggledScoreboard", this.scoreboard);
         map.put("bestStreak", this.bestStreak);
+        map.put("prefix", this.prefix);
         return map;
-    }
-    
-    public boolean hasScoreboardEnabled(){
-    	return this.scoreboard;
-    }
-    
-    public void toggleScoreboard(){
-    	this.scoreboard = !this.scoreboard;
     }
     
     public UUID getUniqueId() {
         return this.uniqueId;
     }
     
+    public void setBestKS(int i){
+    	this.bestStreak = i;
+    }
+    
     public int getKills() {
         return this.kills;
+    }
+    
+    public void setPrefix(String s){
+    	this.prefix = s;
+    }
+    
+    public String getPrefix(){
+    	return this.prefix;
     }
     
     public void setKills(final int kills) {
@@ -80,7 +84,13 @@ public class LamaUser implements ConfigurationSerializable{
         this.deaths = deaths;
     }
     
+    public String getKDRAsString(){
+    	final double ratio = (this.getDeaths() > 0) ? (this.getKills() / this.getDeaths()) : ((double)this.getKills());
+        final String ratioString = (String.valueOf(ratio).length() > 4) ? String.valueOf(ratio).substring(0, 4) : String.valueOf(ratio);
+        return ratioString;
+    }
+    
     public double getKDR(){
-    	return this.kills / this.deaths;
+    	return (this.getDeaths() > 0) ? (this.getKills() / this.getDeaths()) : ((double)this.getKills());
     }
 }

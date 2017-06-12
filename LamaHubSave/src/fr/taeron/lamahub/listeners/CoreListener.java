@@ -1,5 +1,7 @@
 package fr.taeron.lamahub.listeners;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,16 +22,19 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
 import net.minecraft.server.v1_7_R4.EntityItem;
@@ -37,6 +42,9 @@ import net.minecraft.server.v1_7_R4.EntityItem;
 
 public class CoreListener implements Listener{
 
+	
+	private HashMap<Player, Boolean> fall = new HashMap<>();
+	
 	@EventHandler
 	public void blockBreak(BlockBreakEvent e){
 		if(!e.getPlayer().isOp() || e.getPlayer().getGameMode() != GameMode.CREATIVE){
@@ -170,6 +178,8 @@ public class CoreListener implements Listener{
 		    	((Item)ei.getBukkitEntity()).setVelocity(item.getVelocity());
 		    	((CraftWorld)location.getWorld()).getHandle().addEntity(ei);
 		    	item.remove();
+		} else {
+			event.setCancelled(true);
 		}
   	}
     
@@ -181,5 +191,39 @@ public class CoreListener implements Listener{
 				e.getEntity().remove();
 			}
     	}.runTaskLater(LamaHub.getInstance(), 60l);
+    }
+    
+
+    
+    @EventHandler
+    public void noKit(PlayerMoveEvent e){
+    	if(e.getFrom().getBlockY() == e.getTo().getBlockY()){
+    		return;
+    	}
+    	if(!e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("FFASoup")){
+    		return;
+    	}
+    	if(e.getTo().getBlockY() < 140 && e.getTo().getBlockY() > 130 && e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
+    		e.getPlayer().setFallDistance(0f);
+    		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(e.getPlayer(), true, true);
+    		e.getPlayer().setFallDistance(0f);
+    	} else if (!e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getTo().getBlockY() > 130){
+    		this.fall.put(e.getPlayer(), true);
+    	}
+    }
+    
+    @EventHandler
+    public void fall(EntityDamageEvent e){
+    	if(e.getCause() != DamageCause.FALL){
+    		return;
+    	}
+    	if(!(e.getEntity() instanceof Player)){
+    		return;
+    	}
+    	Player p = (Player) e.getEntity();
+    	if(this.fall.containsKey(p)){
+    		e.setCancelled(true);
+    		this.fall.remove(p);
+    	}
     }
 }

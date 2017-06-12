@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/Taeron/Desktop/folderlol/papersourceheaven/Paper-1.7/PaperSpigot-Server/target/paperspigot-1.7.10-R0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Taeron/Desktop/LamaCore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Taeron/Desktop/Dev/jars/PowerfulPerms-4.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

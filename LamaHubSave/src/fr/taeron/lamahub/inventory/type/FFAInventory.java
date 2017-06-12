@@ -26,6 +26,7 @@ public class FFAInventory extends InventorySnapshot{
         player.setFireTicks(0);
         player.setHealth(20.0);
         player.setFlying(false);
+        player.setAllowFlight(false);
         player.getActivePotionEffects().clear();
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {

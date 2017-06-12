@@ -6,7 +6,6 @@ import org.bukkit.plugin.*;
 import org.bukkit.scoreboard.*;
 
 import fr.taeron.lamahub.LamaHub;
-import fr.taeron.lamahub.SpawnHandler;
 
 import java.util.*;
 import org.bukkit.*;
@@ -18,8 +17,6 @@ public class PlayerBoard{
     private SidebarProvider defaultProvider;
     private SidebarProvider temporaryProvider;
     private BukkitRunnable runnable;
-    private final Team spawn;
-    private final Team ffa;
     private final Scoreboard scoreboard;
     public final BufferedObjective bufferedObjective;
     private final Player player;
@@ -32,8 +29,6 @@ public class PlayerBoard{
         this.player = player;
         this.scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard();
         this.bufferedObjective = new BufferedObjective(this.scoreboard);
-        (this.spawn = this.scoreboard.registerNewTeam("spawn")).setPrefix("§7");
-        (this.ffa = this.scoreboard.registerNewTeam("ffa")).setPrefix("§f");
         new BukkitRunnable() {
             public void run() {
                 player.setScoreboard(PlayerBoard.this.scoreboard);
@@ -146,13 +141,7 @@ public class PlayerBoard{
     public void addUpdates(final Collection<? extends Player> updates) {
         new BukkitRunnable() {
             public void run() { 
-                for (final Player update : updates) {
-                	if(!SpawnHandler.isInSpawn(update)){
-                		PlayerBoard.this.ffa.addPlayer((OfflinePlayer)update);
-                	} else {
-                		PlayerBoard.this.spawn.addPlayer((OfflinePlayer)update);
-                	}
-                }
+                //qqch
             }
         }.runTaskAsynchronously(this.plugin);
     }

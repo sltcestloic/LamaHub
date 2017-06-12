@@ -1,5 +1,12 @@
 package fr.taeron.lamahub.commands;
 
-public class StatsCommand {
+import fr.taeron.core.util.command.ArgumentExecutor;
+import fr.taeron.lamahub.commands.arguments.StatsResetArgument;
 
+public class StatsCommand extends ArgumentExecutor{
+
+	public StatsCommand() {
+		super("stats");
+		this.arguments.add(new StatsResetArgument());
+	}
 }

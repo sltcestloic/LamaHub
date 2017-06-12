@@ -2,5 +2,8 @@ name: LamaHub
 author: koalaQ_Q
 main: fr.taeron.lamahub.LamaHub
 version: 0.1
+depend: [LamaCore]
 commands:
   stats:
+  color:
+    aliases: [tag]
