@@ -7,7 +7,7 @@ import java.util.TimeZone;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import fr.taeron.core.util.ItemBuilder;
-import net.minecraft.util.org.apache.commons.lang3.time.FastDateFormat;
+import net.minecraft.util.org.apache.commons.lang3.time.FastDateFormat; 
 
 public class Config {
 
