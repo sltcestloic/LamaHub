@@ -1,5 +1,6 @@
 package fr.taeron.lamahub.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,12 +10,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
+import org.bukkit.plugin.Plugin;
 import fr.taeron.core.Core;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
+import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.user.LamaUser;
@@ -38,8 +40,8 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.TRAILS_ITEM)){
 			if(!e.getPlayer().hasPermission("vip")){
-				e.getPlayer().sendMessage("§2Tu dois être VIP pour utiliser cette commande.");
-				e.getPlayer().sendMessage("§2Notre boutique: §ahttp://lamahub.buycraft.net/");
+				e.getPlayer().sendMessage("Â§2Tu dois Ãªtre VIP pour utiliser cette commande.");
+				e.getPlayer().sendMessage("Â§2Notre boutique: Â§ahttp://lamahub.buycraft.net/");
 				return;
 			}
 			e.getPlayer().performCommand("trail");
@@ -97,37 +99,37 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 		String s = e.getCurrentItem().getItemMeta().getDisplayName();
-		if(s.equalsIgnoreCase("§1Bleu")){
-			user.setPrefix("§1");
+		if(s.equalsIgnoreCase("Â§1Bleu")){
+			user.setPrefix("Â§1");
 		}
-		if(s.equalsIgnoreCase("§bAqua")){
-			user.setPrefix("§b");
+		if(s.equalsIgnoreCase("Â§bAqua")){
+			user.setPrefix("Â§b");
 		}
-		if(s.equalsIgnoreCase("§3Cyan")){
-			user.setPrefix("§3");
+		if(s.equalsIgnoreCase("Â§3Cyan")){
+			user.setPrefix("Â§3");
 		}
-		if(s.equalsIgnoreCase("§2Vert")){
-			user.setPrefix("§2");
+		if(s.equalsIgnoreCase("Â§2Vert")){
+			user.setPrefix("Â§2");
 		}
-		if(s.equalsIgnoreCase("§aVert Clair")){
-			user.setPrefix("§a");
+		if(s.equalsIgnoreCase("Â§aVert Clair")){
+			user.setPrefix("Â§a");
 		}
-		if(s.equalsIgnoreCase("§dRose")){
-			user.setPrefix("§d");
+		if(s.equalsIgnoreCase("Â§dRose")){
+			user.setPrefix("Â§d");
 		}
-		if(s.equalsIgnoreCase("§eJaune")){
-			user.setPrefix("§e");
+		if(s.equalsIgnoreCase("Â§eJaune")){
+			user.setPrefix("Â§e");
 		}
-		if(s.equalsIgnoreCase("§cRouge")){
-			user.setPrefix("§c");
+		if(s.equalsIgnoreCase("Â§cRouge")){
+			user.setPrefix("Â§c");
 		}
-		if(s.equalsIgnoreCase("§6Orange")){
-			user.setPrefix("§6");
+		if(s.equalsIgnoreCase("Â§6Orange")){
+			user.setPrefix("Â§6");
 		}
-		if(s.equalsIgnoreCase("§7Gris")){
-			user.setPrefix("§7");
+		if(s.equalsIgnoreCase("Â§7Gris")){
+			user.setPrefix("Â§7");
 		}
-		p.sendMessage("§2Pseudo changé en " + s);
+		p.sendMessage("Â§2Pseudo changÃ© en " + s);
 		p.setPlayerListName(user.getPrefix() + p.getName());
 		p.closeInventory();
 	}
@@ -147,24 +149,88 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
-		case "�eCobweb":
+		case "§6Page suivante ➔":
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+                    p.closeInventory();
+    				HatGuiPage2.open(p);
+					p.updateInventory();
+                }
+            }, 1L);	
+			break;
+		case "§eCobweb":
 			p.getInventory().setHelmet(new ItemStack(Material.WEB));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "�eMelon":
+		case "§eMelon":
 			p.getInventory().setHelmet(new ItemStack(Material.MELON_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "�eGlass":
+		case "§eGlass":
 			p.getInventory().setHelmet(new ItemStack(Material.GLASS));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "�eRedstone Torch":
-			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_LAMP_ON));
+		case "§eRedstone Torch":
+			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_TORCH_ON));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "�eCoal":
+		case "§eCoal":
 			p.getInventory().setHelmet(new ItemStack(Material.COAL_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
 		default:
 			break;
 		}
-		p.sendMessage("�7[�9Hat�7] Vous avez correctement chang� votre �a�nchapeaux !");
+	}
+	
+	@EventHandler
+	public void inventoryClickedHatPage2(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(HatGuiPage2.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
+		switch (displayName) {
+		case "§6Page précédente":
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+                    p.closeInventory();
+    				HatGui.open(p);
+					p.updateInventory();
+                }
+            }, 1L);	
+			break;
+		case "§eCobweb":
+			p.getInventory().setHelmet(new ItemStack(Material.TNT));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			break;
+		case "§eMelon":
+			p.getInventory().setHelmet(new ItemStack(Material.SPONGE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			break;
+		case "§eGlass":
+			p.getInventory().setHelmet(new ItemStack(Material.DEAD_BUSH));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			break;
+		case "§eRedstone Torch":
+			p.getInventory().setHelmet(new ItemStack(Material.VINE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			break;
+		case "§eCoal":
+			p.getInventory().setHelmet(new ItemStack(Material.ENCHANTMENT_TABLE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			break;
+		default:
+			break;
+		}
 	}
 }

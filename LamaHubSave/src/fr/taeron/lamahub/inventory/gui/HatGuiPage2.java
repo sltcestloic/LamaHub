@@ -4,20 +4,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
 import fr.taeron.core.util.ItemBuilder;
 
-public class HatGui {
+public class HatGuiPage2 {
 	
-	private static Inventory i;
+private static Inventory i;
 	
-	public HatGui(){
-		i = Bukkit.createInventory(null, 9*3, "§6HatGui");
-		i.setItem(16, new ItemBuilder(Material.ARROW).displayName("§6Page suivante ➔").build());
-		i.setItem(10, new ItemBuilder(Material.WEB).displayName("§eCobweb").build());
-		i.setItem(11, new ItemBuilder(Material.MELON_BLOCK).displayName("§eMelon").build());
-		i.setItem(12, new ItemBuilder(Material.GLASS).displayName("§eGlass").build());
-		i.setItem(13, new ItemBuilder(Material.REDSTONE_TORCH_ON).displayName("§eRedstone Torch").build());
-		i.setItem(14, new ItemBuilder(Material.COAL_BLOCK).displayName("§eCoal").build());
+	public HatGuiPage2(){
+		i = Bukkit.createInventory(null, 9*3, "§6HatGui | Page n°2");
+		i.setItem(16, new ItemBuilder(Material.ARROW).displayName("§6Page précédente").build());
+		i.setItem(10, new ItemBuilder(Material.TNT).displayName("§eTnt").build());
+		i.setItem(11, new ItemBuilder(Material.SPONGE).displayName("§eEponge").build());
+		i.setItem(12, new ItemBuilder(Material.DEAD_BUSH).displayName("§eFeuille mort").build());
+		i.setItem(13, new ItemBuilder(Material.VINE).displayName("§eVignes").build());
+		i.setItem(14, new ItemBuilder(Material.ENCHANTMENT_TABLE).displayName("§eTable d'enchantement").build());
 		for(int a = 0; a<3; a++){
 			i.setItem(a, new ItemBuilder(Material.STAINED_GLASS_PANE).data((short)14).displayName(" ").build());
 		}
