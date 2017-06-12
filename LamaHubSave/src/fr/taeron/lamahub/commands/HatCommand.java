@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import fr.taeron.lamahub.inventory.gui.HatGui;
 
-public class HatCommand implements CommandExecutor{
+public class HatCommand  implements CommandExecutor{
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -18,12 +18,11 @@ public class HatCommand implements CommandExecutor{
 			return false;
 		}
 		if(!(sender instanceof Player)){
-			Bukkit.getConsoleSender().sendMessage("§cNique ta mère ack on change pas de couleur depuis la console");
+			Bukkit.getConsoleSender().sendMessage("§cNique ta mère ack on change pas de chapeau avec la console");
 			return false;
 		}
 		Player p = (Player) sender;
 		HatGui.open(p);
 		return false;
 	}
-
 }

@@ -17,6 +17,7 @@ import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
+import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.listeners.CoreListener;
@@ -143,6 +144,7 @@ public class LamaHub extends JavaPlugin{
 		 new KitGui();
 		 new ColorGui();
 		 new HatGui();
+		 new HatGuiPage2();
 		 this.timerManager = new TimerManager(this);
 	 }
 	 
