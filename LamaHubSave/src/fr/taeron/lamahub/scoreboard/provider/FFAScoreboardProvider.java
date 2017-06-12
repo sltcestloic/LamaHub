@@ -30,6 +30,7 @@ public class FFAScoreboardProvider extends SidebarProvider{
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Morts: ", ChatColor.WHITE.toString() + user.getDeaths()));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "KS: ", ChatColor.WHITE.toString() + user.getKS()));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Meilleur KS: ", ChatColor.WHITE.toString() + user.getBestKS()));
+        lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "LamaCoins: ", ChatColor.WHITE.toString() + user.getCoins()));
         final Collection<Timer> timers = LamaHub.getInstance().getTimerManager().getTimers();
         for (final Timer timer : timers) {
             if (timer instanceof PlayerTimer) {
