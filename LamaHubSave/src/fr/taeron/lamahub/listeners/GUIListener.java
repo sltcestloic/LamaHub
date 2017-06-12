@@ -143,7 +143,7 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(!e.getInventory().getTitle().equalsIgnoreCase(HatGui.title())){
-			return;
+			return;  
 		}
 		e.setCancelled(true);  
 		Player p = (Player) e.getWhoClicked(); 
