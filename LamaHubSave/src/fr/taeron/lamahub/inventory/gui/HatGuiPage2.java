@@ -16,7 +16,7 @@ private static Inventory i;
 		i.setItem(16, new ItemBuilder(Material.ARROW).displayName("§6Page précédente").build());
 		i.setItem(10, new ItemBuilder(Material.TNT).displayName("§eTnt").build());
 		i.setItem(11, new ItemBuilder(Material.SPONGE).displayName("§eEponge").build());
-		i.setItem(12, new ItemBuilder(Material.DEAD_BUSH).displayName("§eFeuille mort").build());
+		i.setItem(12, new ItemBuilder(Material.DEAD_BUSH).displayName("§eFeuille morte").build());
 		i.setItem(13, new ItemBuilder(Material.VINE).displayName("§eVignes").build());
 		i.setItem(14, new ItemBuilder(Material.ENCHANTMENT_TABLE).displayName("§eTable d'enchantement").build());
 		for(int a = 0; a<3; a++){
