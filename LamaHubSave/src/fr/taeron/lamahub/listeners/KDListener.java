@@ -30,19 +30,19 @@ public class KDListener implements Listener{
 			ap2.setKS(ap2.getKS() + 1);
 			if(ap.getKS() < 5){
 				ap2.addCoins(5);
-				e.getEntity().getKiller().sendMessage("§a+5 §cLamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+5 §2LamaCoins");
 			} else if(ap.getKS() < 10){
 				ap2.addCoins(10);
-				e.getEntity().getKiller().sendMessage("§a+10 §cLamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+10 §2LamaCoins");
 			} else if (ap.getKS() < 15){
 				ap2.addCoins(20);
-				e.getEntity().getKiller().sendMessage("§a+20 §cLamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+20 §2LamaCoins");
 			} else if (ap.getKS() < 20){
 				ap2.addCoins(30);
-				e.getEntity().getKiller().sendMessage("§a+30 §cLamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+30 §2LamaCoins");
 			} else {
 				ap2.addCoins(50);
-				e.getEntity().getKiller().sendMessage("§a+50 §cLamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+50 §2LamaCoins");
 			}
 			
 		} else {
