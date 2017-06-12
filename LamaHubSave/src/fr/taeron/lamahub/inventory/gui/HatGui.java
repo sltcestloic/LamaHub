@@ -12,7 +12,7 @@ public class HatGui {
 	
 	public HatGui(){
 		i = Bukkit.createInventory(null, 9*3, "§6HatGui");
-		i.setItem(16, new ItemBuilder(Material.ARROW).displayName("§6Page suivante ➔").build());
+		i.setItem(16, new ItemBuilder(Material.ARROW).displayName("§6Page suivante ->").build());
 		i.setItem(10, new ItemBuilder(Material.WEB).displayName("§eCobweb").build());
 		i.setItem(11, new ItemBuilder(Material.MELON_BLOCK).displayName("§eMelon").build());
 		i.setItem(12, new ItemBuilder(Material.GLASS).displayName("§eGlass").build());

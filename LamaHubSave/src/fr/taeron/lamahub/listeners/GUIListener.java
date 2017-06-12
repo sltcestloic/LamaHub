@@ -149,7 +149,7 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked(); 
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
-		case "§6Page suivante ➔":
+		case "§6Page suivante ->":
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
