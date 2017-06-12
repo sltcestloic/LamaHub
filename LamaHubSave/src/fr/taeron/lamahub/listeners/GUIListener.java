@@ -8,11 +8,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import fr.taeron.core.Core;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
+import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.user.LamaUser;
@@ -128,5 +130,41 @@ public class GUIListener implements Listener{
 		p.sendMessage("Â§2Pseudo changÃ© en " + s);
 		p.setPlayerListName(user.getPrefix() + p.getName());
 		p.closeInventory();
+	}
+	
+	@EventHandler
+	public void inventoryClickedHat(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(HatGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
+		switch (displayName) {
+		case "§eCobweb":
+			p.getInventory().setHelmet(new ItemStack(Material.WEB));
+			break;
+		case "§eMelon":
+			p.getInventory().setHelmet(new ItemStack(Material.MELON_BLOCK));
+			break;
+		case "§eGlass":
+			p.getInventory().setHelmet(new ItemStack(Material.GLASS));
+			break;
+		case "§eRedstone Torch":
+			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_LAMP_ON));
+			break;
+		case "§eCoal":
+			p.getInventory().setHelmet(new ItemStack(Material.COAL_BLOCK));
+			break;
+		default:
+			break;
+		}
+		p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 	}
 }
