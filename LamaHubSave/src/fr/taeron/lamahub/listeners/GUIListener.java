@@ -146,7 +146,7 @@ public class GUIListener implements Listener{
 			return;
 		}
 		e.setCancelled(true);
-		Player p = (Player) e.getWhoClicked();
+		Player p = (Player) e.getWhoClicked(); 
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
 		case "§6Page suivante ➔":
