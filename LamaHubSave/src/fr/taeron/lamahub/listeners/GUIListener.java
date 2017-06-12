@@ -210,23 +210,23 @@ public class GUIListener implements Listener{
                 }
             }, 1L);	
 			break;
-		case "§eCobweb":
+		case "§eTnt":
 			p.getInventory().setHelmet(new ItemStack(Material.TNT));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "§eMelon":
+		case "§eEponge":
 			p.getInventory().setHelmet(new ItemStack(Material.SPONGE));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "§eGlass":
+		case "§eFeuille morte":
 			p.getInventory().setHelmet(new ItemStack(Material.DEAD_BUSH));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "§eRedstone Torch":
+		case "§eVignes":
 			p.getInventory().setHelmet(new ItemStack(Material.VINE));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
-		case "§eCoal":
+		case "§eTable d'enchantement":
 			p.getInventory().setHelmet(new ItemStack(Material.ENCHANTMENT_TABLE));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
 			break;
