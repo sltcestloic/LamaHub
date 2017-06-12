@@ -147,24 +147,24 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
-		case "§eCobweb":
+		case "Â§eCobweb":
 			p.getInventory().setHelmet(new ItemStack(Material.WEB));
 			break;
-		case "§eMelon":
+		case "Â§eMelon":
 			p.getInventory().setHelmet(new ItemStack(Material.MELON_BLOCK));
 			break;
-		case "§eGlass":
+		case "Â§eGlass":
 			p.getInventory().setHelmet(new ItemStack(Material.GLASS));
 			break;
-		case "§eRedstone Torch":
+		case "Â§eRedstone Torch":
 			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_LAMP_ON));
 			break;
-		case "§eCoal":
+		case "Â§eCoal":
 			p.getInventory().setHelmet(new ItemStack(Material.COAL_BLOCK));
 			break;
 		default:
 			break;
 		}
-		p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+		p.sendMessage("Â§7[Â§9HatÂ§7] Vous avez correctement changÃ© votre Â§aÂ§nchapeau !");
 	}
 }

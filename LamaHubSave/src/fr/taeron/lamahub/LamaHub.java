@@ -10,12 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.taeron.core.command.module.essential.HatCommand;
 import fr.taeron.lamahub.commands.ColorCommand;
+import fr.taeron.lamahub.commands.HatCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
+import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.listeners.CoreListener;
@@ -141,6 +142,7 @@ public class LamaHub extends JavaPlugin{
 		 new MainGui();
 		 new KitGui();
 		 new ColorGui();
+		 new HatGui();
 		 this.timerManager = new TimerManager(this);
 	 }
 	 
