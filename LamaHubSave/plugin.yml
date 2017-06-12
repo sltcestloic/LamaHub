@@ -8,3 +8,4 @@ commands:
   color:
     aliases: [tag]
   spawn:
+  hat:

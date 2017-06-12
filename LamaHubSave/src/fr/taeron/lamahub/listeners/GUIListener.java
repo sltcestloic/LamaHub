@@ -174,6 +174,7 @@ public class GUIListener implements Listener{
 		case "§eRedstone Torch":
 			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_TORCH_ON));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_LAMP_ON));
 			break;
 		case "§eCoal":
 			p.getInventory().setHelmet(new ItemStack(Material.COAL_BLOCK));
