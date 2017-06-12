@@ -145,7 +145,7 @@ public class GUIListener implements Listener{
 		if(!e.getInventory().getTitle().equalsIgnoreCase(HatGui.title())){
 			return;
 		}
-		e.setCancelled(true);
+		e.setCancelled(true);  
 		Player p = (Player) e.getWhoClicked(); 
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
