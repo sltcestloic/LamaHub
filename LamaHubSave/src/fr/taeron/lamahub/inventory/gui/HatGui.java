@@ -17,7 +17,7 @@ public class HatGui {
 		
 		i.setItem(10, new ItemBuilder(Material.QUARTZ_STAIRS).displayName("§eEscalier de Quartz").build());
 		i.setItem(11, new ItemBuilder(Material.EMERALD_BLOCK).displayName("§eBloc d'Emeraude").build());
-		i.setItem(12, new ItemBuilder(Material.MELON).displayName("§eMelon").build());
+		i.setItem(12, new ItemBuilder(Material.MELON_BLOCK).displayName("§eMelon").build());
 		i.setItem(13, new ItemBuilder(Material.PUMPKIN).displayName("§eCitrouille").build());
 		i.setItem(14, new ItemBuilder(Material.HAY_BLOCK).displayName("§eBloc de foin").build());
 		i.setItem(19, new ItemBuilder(Material.REDSTONE_BLOCK).displayName("§eBloc de redstone").build());
