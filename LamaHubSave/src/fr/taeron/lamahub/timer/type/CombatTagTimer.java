@@ -50,11 +50,6 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
         }
     }
     
-    @Override
-    public void onExpire(UUID u){
-    	Bukkit.getPlayer(u).sendMessage("§aTu n'es plus en combat, tu peux désormais ré-utiliser la commande /spawn.");
-    }
-    
 	@SuppressWarnings("deprecation")
 	@EventHandler
     public void onQuit(PlayerQuitEvent e){
