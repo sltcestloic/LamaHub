@@ -23,6 +23,14 @@ import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
 
+	@EventHandler
+	public void itemClickedHat(InventoryClickEvent e){
+		if(e.getClickedInventory() != null){
+			if(e.getCurrentItem().equals(e.getWhoClicked().getInventory().getHelmet())){
+				e.setCancelled(true); 
+			}
+		}
+	}
 	
 	@EventHandler
 	public void itemClicked(PlayerInteractEvent e){
