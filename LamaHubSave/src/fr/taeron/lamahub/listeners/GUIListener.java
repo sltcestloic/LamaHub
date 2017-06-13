@@ -27,7 +27,7 @@ public class GUIListener implements Listener{
 	public void itemClickedHat(InventoryClickEvent e){
 		if(e.getClickedInventory() != null){
 			if(e.getCurrentItem().equals(e.getWhoClicked().getInventory().getHelmet())){
-				e.setCancelled(true);
+				e.setCancelled(true); 
 			}
 		}
 	}
