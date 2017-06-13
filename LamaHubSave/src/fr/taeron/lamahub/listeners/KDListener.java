@@ -1,11 +1,13 @@
 package fr.taeron.lamahub.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.user.LamaUser;
@@ -58,5 +60,15 @@ public class KDListener implements Listener{
 		ap.setKS(0);
 		ap.setCurrentKit("Aucun");
 		ap.setLastAttacker(null);
+	}
+	
+	@EventHandler
+	public void update(EntityDamageByEntityEvent e){
+		if(!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)){
+			return;
+		}
+		LamaUser attacker = LamaHub.getInstance().getUserManager().getUser(e.getDamager().getUniqueId());
+		LamaUser victim = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
+		victim.setLastAttacker(Bukkit.getPlayer(attacker.getUniqueId()));
 	}
 }

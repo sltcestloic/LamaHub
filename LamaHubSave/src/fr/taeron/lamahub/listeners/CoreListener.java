@@ -240,12 +240,12 @@ public class CoreListener implements Listener{
     			if(ent instanceof Player){
     				Player victimp = (Player) ent;
     				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(victimp.getUniqueId());
+    				victim.setLastAttacker(p);
     				if(victim.getCurrentKitName().equalsIgnoreCase("AntiStomper") || victimp.isSneaking()){
     					victimp.damage(4.0);
     				} else {
     					victimp.damage(e.getDamage());
     				}
-    				victim.setLastAttacker(p);
     			}
     		}
     		if(e.getDamage() > 4){
