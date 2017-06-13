@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
@@ -18,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -37,6 +39,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
+import fr.taeron.lamahub.user.LamaUser;
 import net.minecraft.server.v1_7_R4.EntityItem;
 
 
@@ -212,7 +215,8 @@ public class CoreListener implements Listener{
     	}
     }
     
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void fall(EntityDamageEvent e){
     	if(e.getCause() != DamageCause.FALL){
     		return;
@@ -224,6 +228,32 @@ public class CoreListener implements Listener{
     	if(this.fall.containsKey(p)){
     		e.setCancelled(true);
     		this.fall.remove(p);
+    		return;
+    	}
+    	if(e.isCancelled()){
+    		return;
+    	}
+    	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+    	LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+    	if(user.getCurrentKitName().equalsIgnoreCase("Stomper")){
+    		for(Entity ent : p.getNearbyEntities(5, 5, 5)){
+    			if(ent instanceof Player){
+    				Player victimp = (Player) ent;
+    				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(victimp.getUniqueId());
+    				if(victim.getCurrentKitName().equalsIgnoreCase("AntiStomper") || victimp.isSneaking()){
+    					final EntityDamageByEntityEvent event = new EntityDamageByEntityEvent((Entity)p, (Entity)victimp, EntityDamageEvent.DamageCause.ENTITY_ATTACK, 4.0);
+                        Bukkit.getServer().getPluginManager().callEvent(event);
+                        victimp.setLastDamageCause((EntityDamageEvent)event);
+    				} else {
+    					final EntityDamageByEntityEvent event = new EntityDamageByEntityEvent((Entity)p, (Entity)victimp, EntityDamageEvent.DamageCause.ENTITY_ATTACK, e.getDamage());
+                        Bukkit.getServer().getPluginManager().callEvent(event);
+                        victimp.setLastDamageCause((EntityDamageEvent)event);
+    				}
+    			}
+    		}
+    		if(e.getDamage() > 4){
+    			e.setDamage(4.0);
+    		}
     	}
     }
 }

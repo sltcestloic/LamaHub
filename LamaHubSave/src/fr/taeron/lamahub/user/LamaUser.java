@@ -15,11 +15,13 @@ public class LamaUser implements ConfigurationSerializable{
     private int bestStreak;
     private String prefix;
     private int coins;
+    private String currentKit;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.prefix = "§7";
         this.coins = 0;
+        this.currentKit = "Aucun";
     }
     
     public LamaUser(final Map<String, Object> map) {
@@ -29,6 +31,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.bestStreak = Integer.valueOf(String.valueOf(map.get("bestStreak")));
         this.prefix = String.valueOf(map.get("prefix"));
         this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
+        this.prefix = String.valueOf(map.get("currentKit"));
     }
     
     public Map<String, Object> serialize() {
@@ -39,7 +42,16 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("bestStreak", this.bestStreak);
         map.put("prefix", this.prefix);
         map.put("coins", this.coins);
+        map.put("currentKit", this.currentKit);
         return map;
+    }
+    
+    public void setCurrentKit(String s){
+    	this.currentKit = s;
+    }
+    
+    public String getCurrentKitName(){
+    	return this.currentKit;
     }
     
     public UUID getUniqueId() {

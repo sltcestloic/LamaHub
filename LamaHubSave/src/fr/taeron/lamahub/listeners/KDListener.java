@@ -23,7 +23,8 @@ public class KDListener implements Listener{
 			ap.setDeaths(ap.getDeaths() + 1);
 		}
 		if(e.getEntity().getKiller() != null){
-			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " §7a été tué par §a" + e.getEntity().getKiller().getName());
+			LamaUser killer = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getKiller().getUniqueId());
+			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a été tué par §a" + e.getEntity().getKiller().getName() + " (" + killer.getCurrentKitName() + ")");
 			e.getEntity().getKiller().sendMessage("§c" + e.getEntity().getName() + " §7a été tué par §a" + e.getEntity().getKiller().getName());
 			LamaUser ap2 = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getKiller().getUniqueId());
 			ap2.setKills(ap2.getKills() + 1);
@@ -49,5 +50,6 @@ public class KDListener implements Listener{
 			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " §7est mort");
 		}
 		ap.setKS(0);
+		ap.setCurrentKit("Aucun");
 	}
 }
