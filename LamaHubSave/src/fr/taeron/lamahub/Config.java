@@ -25,7 +25,7 @@ public class Config {
 		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
 		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
 		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
-		HAT_ITEM = new ItemBuilder(Material.DIAMOND_HELMET).displayName("§bChapeaux").build();
+		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override

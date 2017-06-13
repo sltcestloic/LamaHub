@@ -1,11 +1,12 @@
 package fr.taeron.lamahub.listeners;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.user.LamaUser;
 
@@ -18,6 +19,8 @@ public class KDListener implements Listener{
 			return;
 		}
 		e.getDrops().clear();
+		ItemStack it = new ItemStack(Material.MUSHROOM_SOUP, 10);
+		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it);
 		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
 		if(e.getEntity().getLastDamageCause().getCause() != DamageCause.SUICIDE){
 			ap.setDeaths(ap.getDeaths() + 1);

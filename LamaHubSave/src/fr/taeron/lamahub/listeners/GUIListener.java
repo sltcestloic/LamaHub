@@ -153,7 +153,7 @@ public class GUIListener implements Listener{
 	}
 	
 	@EventHandler
-	public void inventoryClickedHat(InventoryClickEvent e){
+	public void inventoryClickedHatPage1(InventoryClickEvent e){
 		if(e.getSlotType() == SlotType.OUTSIDE){
 			return;
 		}
@@ -161,10 +161,10 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(!e.getInventory().getTitle().equalsIgnoreCase(HatGui.title())){
-			return;  
+			return;
 		}
-		e.setCancelled(true);  
-		Player p = (Player) e.getWhoClicked(); 
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
 		case "§6Page suivante ->":
@@ -177,24 +177,64 @@ public class GUIListener implements Listener{
                 }
             }, 1L);	
 			break;
-		case "§eCobweb":
-			p.getInventory().setHelmet(new ItemStack(Material.WEB));
+		case "§eEscalier de Quartz":
+			p.getInventory().setHelmet(new ItemStack(Material.QUARTZ_STAIRS));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eBloc d'Emeraude":
+			p.getInventory().setHelmet(new ItemStack(Material.EMERALD_BLOCK));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
 		case "§eMelon":
-			p.getInventory().setHelmet(new ItemStack(Material.MELON_BLOCK));
+			p.getInventory().setHelmet(new ItemStack(Material.MELON, 1, (short)7));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
-		case "§eGlass":
-			p.getInventory().setHelmet(new ItemStack(Material.GLASS));
+		case "§eCitrouille":
+			p.getInventory().setHelmet(new ItemStack(Material.PUMPKIN));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
-		case "§eRedstone Torch":
-			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_TORCH_ON));
-			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeaux !");
+		case "§eBloc de foin":
+			p.getInventory().setHelmet(new ItemStack(Material.HAY_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
-		case "§eCoal":
-			p.getInventory().setHelmet(new ItemStack(Material.COAL_BLOCK));
+		case "§eBloc de redstone":
+			p.getInventory().setHelmet(new ItemStack(Material.REDSTONE_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eBloc de diamand":
+			p.getInventory().setHelmet(new ItemStack(Material.DIAMOND_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eEtagère de livre":
+			p.getInventory().setHelmet(new ItemStack(Material.BOOKSHELF, 1, (short)7));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eBloc de note":
+			p.getInventory().setHelmet(new ItemStack(Material.NOTE_BLOCK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Bleu)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Vert)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Rouge)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Jaune)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Orange)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePanneau de verre (Noir)":
+			p.getInventory().setHelmet(new ItemStack(Material.STAINED_GLASS, 1 , (short)3));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
 		default:
@@ -227,24 +267,64 @@ public class GUIListener implements Listener{
                 }
             }, 1L);	
 			break;
-		case "§eTnt":
-			p.getInventory().setHelmet(new ItemStack(Material.TNT));
-			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
-			break;
-		case "§eEponge":
-			p.getInventory().setHelmet(new ItemStack(Material.SPONGE));
-			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
-			break;
-		case "§eFeuille morte":
-			p.getInventory().setHelmet(new ItemStack(Material.DEAD_BUSH));
-			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
-			break;
-		case "§eVignes":
-			p.getInventory().setHelmet(new ItemStack(Material.VINE));
-			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
-			break;
 		case "§eTable d'enchantement":
 			p.getInventory().setHelmet(new ItemStack(Material.ENCHANTMENT_TABLE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eMur en pierre":
+			p.getInventory().setHelmet(new ItemStack(Material.COBBLE_WALL));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eDalle de quartz":
+			p.getInventory().setHelmet(new ItemStack(Material.STEP, 1, (short)7));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eDalle de pierre":
+			p.getInventory().setHelmet(new ItemStack(Material.STEP));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eNeige":
+			p.getInventory().setHelmet(new ItemStack(Material.SNOW));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eTrappe":
+			p.getInventory().setHelmet(new ItemStack(Material.TRAP_DOOR));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eCrochet":
+			p.getInventory().setHelmet(new ItemStack(Material.TRIPWIRE_HOOK));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePortail":
+			p.getInventory().setHelmet(new ItemStack(Material.FENCE_GATE, 1, (short)7));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eDispenser":
+			p.getInventory().setHelmet(new ItemStack(Material.DISPENSER));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePiston collant":
+			p.getInventory().setHelmet(new ItemStack(Material.PISTON_STICKY_BASE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§ePlaque de pression en fer":
+			p.getInventory().setHelmet(new ItemStack(Material.IRON_PLATE));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eBeacon":
+			p.getInventory().setHelmet(new ItemStack(Material.BEACON));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eEchelle":
+			p.getInventory().setHelmet(new ItemStack(Material.LADDER, 1, (short)7));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eNenuphar":
+			p.getInventory().setHelmet(new ItemStack(Material.WATER_LILY));
+			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
+			break;
+		case "§eEnclume":
+			p.getInventory().setHelmet(new ItemStack(Material.ANVIL));
 			p.sendMessage("§7[§9Hat§7] Vous avez correctement changé votre §a§nchapeau !");
 			break;
 		default:
