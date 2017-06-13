@@ -19,7 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -215,7 +214,6 @@ public class CoreListener implements Listener{
     	}
     }
     
-	@SuppressWarnings("deprecation")
 	@EventHandler
     public void fall(EntityDamageEvent e){
     	if(e.getCause() != DamageCause.FALL){
@@ -235,7 +233,9 @@ public class CoreListener implements Listener{
     	}
     	LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
     	if(user.getCurrentKitName().equalsIgnoreCase("Stomper")){
-        	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+    		if(p.getNearbyEntities(5, 5, 5).size() > 0){
+            	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+    		}
     		for(Entity ent : p.getNearbyEntities(5, 5, 5)){
     			if(ent instanceof Player){
     				Player victimp = (Player) ent;
@@ -245,8 +245,7 @@ public class CoreListener implements Listener{
     				} else {
     					victimp.damage(e.getDamage());
     				}
-    				EntityDamageByEntityEvent ev = new EntityDamageByEntityEvent(p, victimp, DamageCause.ENTITY_ATTACK, 1);
-    				victimp.setLastDamageCause(ev);
+    				victim.setLastAttacker(p);
     			}
     		}
     		if(e.getDamage() > 4){

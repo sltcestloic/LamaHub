@@ -2,6 +2,8 @@ package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.*;
+import org.bukkit.entity.Player;
+
 import java.util.*;
 import com.google.common.collect.*;
 
@@ -16,6 +18,7 @@ public class LamaUser implements ConfigurationSerializable{
     private String prefix;
     private int coins;
     private String currentKit;
+    private Player lastAttacker;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -44,6 +47,14 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("coins", this.coins);
         map.put("currentKit", this.currentKit);
         return map;
+    }
+    
+    public void setLastAttacker(Player p){
+    	this.lastAttacker = p;
+    }
+    
+    public Player getLastAttacker(){
+    	return this.lastAttacker;
     }
     
     public void setCurrentKit(String s){
