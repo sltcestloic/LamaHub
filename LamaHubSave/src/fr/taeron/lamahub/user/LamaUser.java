@@ -31,7 +31,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.bestStreak = Integer.valueOf(String.valueOf(map.get("bestStreak")));
         this.prefix = String.valueOf(map.get("prefix"));
         this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
-        this.prefix = String.valueOf(map.get("currentKit"));
+        this.currentKit = String.valueOf(map.get("currentKit"));
     }
     
     public Map<String, Object> serialize() {
