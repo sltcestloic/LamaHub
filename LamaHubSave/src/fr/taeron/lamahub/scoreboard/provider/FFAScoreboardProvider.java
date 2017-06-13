@@ -26,7 +26,8 @@ public class FFAScoreboardProvider extends SidebarProvider{
 		final List<SidebarEntry> lines = new ArrayList<SidebarEntry>();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 		lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.GRAY + SpawnScoreboardProvider.STRAIGHT_LINE, SpawnScoreboardProvider.STRAIGHT_LINE));	
-        lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Kills: ", ChatColor.WHITE.toString() + user.getKills()));
+        lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Kit: ", ChatColor.WHITE.toString() + user.getCurrentKitName()));
+		lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Kills: ", ChatColor.WHITE.toString() + user.getKills()));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Morts: ", ChatColor.WHITE.toString() + user.getDeaths()));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "KS: ", ChatColor.WHITE.toString() + user.getKS()));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Meilleur KS: ", ChatColor.WHITE.toString() + user.getBestKS()));

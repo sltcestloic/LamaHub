@@ -29,6 +29,7 @@ public class FFAInventory extends InventorySnapshot{
         player.setFlying(false);
         player.setAllowFlight(false);
         player.getActivePotionEffects().clear();
+        LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).setCurrentKit("Aucun");
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {
             inventory.setItem(0, Config.FFA_SELECTOR_ITEM);
