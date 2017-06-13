@@ -19,7 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -215,7 +214,6 @@ public class CoreListener implements Listener{
     	}
     }
     
-    @SuppressWarnings("deprecation")
 	@EventHandler
     public void fall(EntityDamageEvent e){
     	if(e.getCause() != DamageCause.FALL){
@@ -233,21 +231,18 @@ public class CoreListener implements Listener{
     	if(e.isCancelled()){
     		return;
     	}
-    	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
     	LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
     	if(user.getCurrentKitName().equalsIgnoreCase("Stomper")){
+        	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
     		for(Entity ent : p.getNearbyEntities(5, 5, 5)){
+    			Bukkit.broadcastMessage("Entité trouvée: " + ent);
     			if(ent instanceof Player){
     				Player victimp = (Player) ent;
     				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(victimp.getUniqueId());
     				if(victim.getCurrentKitName().equalsIgnoreCase("AntiStomper") || victimp.isSneaking()){
-    					final EntityDamageByEntityEvent event = new EntityDamageByEntityEvent((Entity)p, (Entity)victimp, EntityDamageEvent.DamageCause.ENTITY_ATTACK, 4.0);
-                        Bukkit.getServer().getPluginManager().callEvent(event);
-                        victimp.setLastDamageCause((EntityDamageEvent)event);
+    					victimp.damage(4.0);
     				} else {
-    					final EntityDamageByEntityEvent event = new EntityDamageByEntityEvent((Entity)p, (Entity)victimp, EntityDamageEvent.DamageCause.ENTITY_ATTACK, e.getDamage());
-                        Bukkit.getServer().getPluginManager().callEvent(event);
-                        victimp.setLastDamageCause((EntityDamageEvent)event);
+    					victimp.damage(e.getDamage());
     				}
     			}
     		}

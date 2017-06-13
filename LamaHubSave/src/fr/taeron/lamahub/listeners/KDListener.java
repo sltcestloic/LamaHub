@@ -19,8 +19,12 @@ public class KDListener implements Listener{
 			return;
 		}
 		e.getDrops().clear();
-		ItemStack it = new ItemStack(Material.MUSHROOM_SOUP, 10);
+		ItemStack it = new ItemStack(Material.BOWL, 16);
+		ItemStack it2 = new ItemStack(Material.BROWN_MUSHROOM, 16);
+		ItemStack it3 = new ItemStack(Material.RED_MUSHROOM, 16);
 		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it);
+		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it2);
+		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it3);
 		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
 		if(e.getEntity().getLastDamageCause().getCause() != DamageCause.SUICIDE){
 			ap.setDeaths(ap.getDeaths() + 1);
@@ -28,7 +32,7 @@ public class KDListener implements Listener{
 		if(e.getEntity().getKiller() != null){
 			LamaUser killer = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getKiller().getUniqueId());
 			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a été tué par §a" + e.getEntity().getKiller().getName() + " (" + killer.getCurrentKitName() + ")");
-			e.getEntity().getKiller().sendMessage("§c" + e.getEntity().getName() + " §7a été tué par §a" + e.getEntity().getKiller().getName());
+			e.getEntity().getKiller().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a été tué par §a" + e.getEntity().getKiller().getName() + " (" + killer.getCurrentKitName() + ")");
 			LamaUser ap2 = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getKiller().getUniqueId());
 			ap2.setKills(ap2.getKills() + 1);
 			ap2.setKS(ap2.getKS() + 1);
