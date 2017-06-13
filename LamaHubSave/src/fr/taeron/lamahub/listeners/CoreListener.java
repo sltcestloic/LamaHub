@@ -233,7 +233,7 @@ public class CoreListener implements Listener{
     	}
     	LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
     	if(user.getCurrentKitName().equalsIgnoreCase("Stomper")){
-    		if(p.getNearbyEntities(5, 5, 5).size() > 0){
+    		if(p.getNearbyEntities(5, 5, 5).size() > 0 && e.getDamage() > 4){
             	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
     		}
     		for(Entity ent : p.getNearbyEntities(5, 5, 5)){
