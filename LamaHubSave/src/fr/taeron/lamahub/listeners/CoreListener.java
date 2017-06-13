@@ -32,8 +32,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
@@ -253,4 +255,39 @@ public class CoreListener implements Listener{
     		}
     	}
     }
+	
+	@EventHandler
+	public void onKangaroo(PlayerInteractEvent e){
+		if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK){
+			return;
+		}
+		if(e.getPlayer().getItemInHand().getType() != Material.FIREWORK){
+			return;
+		}
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
+		if(!user.getCurrentKitName().equalsIgnoreCase("Kangaroo")){
+			return;
+		} else {
+			if(System.currentTimeMillis() - user.lastKangarooTime() < 2000){
+				return;
+			} else {
+				if(e.getPlayer().isSneaking()){
+					Vector vector = e.getPlayer().getEyeLocation().getDirection();
+                    vector.multiply(1.4f);
+                    vector.setY(0.5f);
+                    e.getPlayer().setVelocity(vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    Bukkit.getPluginManager().callEvent(ev);
+				} else {
+					Vector vector = e.getPlayer().getEyeLocation().getDirection();
+					vector.multiply(0.8f);
+                    vector.setY(0.7);
+                    e.getPlayer().setVelocity(vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    Bukkit.getPluginManager().callEvent(ev);
+				}
+				user.setLastKangarooTime(System.currentTimeMillis());
+			}
+		}
+	}
 }
