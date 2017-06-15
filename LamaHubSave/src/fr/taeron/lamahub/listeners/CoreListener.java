@@ -85,7 +85,7 @@ public class CoreListener implements Listener{
         }
         if(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bStone Sword")){
         	event.setCancelled(true);
-        }
+        } 
     }
     
     @EventHandler
