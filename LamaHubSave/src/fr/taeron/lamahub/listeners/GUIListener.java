@@ -12,13 +12,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import fr.taeron.core.Core;
+import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
+import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
+import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
@@ -29,6 +32,41 @@ public class GUIListener implements Listener{
 			if(e.getCurrentItem().equals(e.getWhoClicked().getInventory().getHelmet())){
 				e.setCancelled(true); 
 			}
+		}
+	}
+	
+	@EventHandler
+	public void itemClickerParametre(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(ParametreGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aNotifications (Activé)")){
+			Parametre.setNotification(false);
+			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
+				
+				@Override
+				public void run() {
+					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 8).displayName("§cNotifications (Désactivé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
+				}
+			}, 1L);
+		}
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cNotifications (Désactivé)")){
+			Parametre.setNotification(true);
+			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
+				
+				@Override
+				public void run() {
+					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 10).displayName("§aNotifications (Activé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
+				}
+			}, 1L);
 		}
 	}
 	
@@ -45,6 +83,12 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.FFA_SELECTOR_ITEM)){
 			KitGui.open(e.getPlayer());
+		}
+		if(e.getItem().equals(Config.FRIENDS_ITEM)){
+			// FRIENDS GUI
+		}
+		if(e.getItem().equals(Config.SETTINGS_ITEM)){
+			ParametreGui.open(e.getPlayer());
 		}
 		if(e.getItem().equals(Config.HAT_ITEM)){
 			e.setCancelled(true);

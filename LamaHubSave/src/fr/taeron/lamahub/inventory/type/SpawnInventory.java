@@ -40,6 +40,7 @@ public class SpawnInventory extends InventorySnapshot{
             inventory.setItem(0, Config.SPAWN_COMPASS_ITEM);
             inventory.setItem(8, Config.TRAILS_ITEM);
             inventory.setItem(7, Config.HAT_ITEM);
+            inventory.setItem(6, Config.SETTINGS_ITEM);
         }
         player.updateInventory();
         if(player.getName().length() > 14){

@@ -15,11 +15,13 @@ import fr.taeron.lamahub.commands.HatCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
+import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
+import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.GUIListener;
@@ -40,7 +42,6 @@ public class LamaHub extends JavaPlugin{
 	private int msg;
 	private static final long MINUTE;
     private static final long HOUR;
-	
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
@@ -145,6 +146,7 @@ public class LamaHub extends JavaPlugin{
 		 new ColorGui();
 		 new HatGui();
 		 new HatGuiPage2();
+		 new ParametreGui();
 		 this.timerManager = new TimerManager(this);
 	 }
 	 
