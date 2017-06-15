@@ -274,15 +274,15 @@ public class CoreListener implements Listener{
 			} else {
 				if(e.getPlayer().isSneaking()){
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
-                    vector.multiply(1.4f);
-                    vector.setY(0.5f);
+                    vector.multiply(2.8f);
+                    vector.setY(1f);
                     e.getPlayer().setVelocity(vector);
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);
 				} else {
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
-					vector.multiply(0.8f);
-                    vector.setY(0.7);
+					vector.multiply(1.6f);
+                    vector.setY(1.4);
                     e.getPlayer().setVelocity(vector);
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);

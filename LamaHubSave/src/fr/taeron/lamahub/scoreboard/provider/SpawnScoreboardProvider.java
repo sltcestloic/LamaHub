@@ -28,6 +28,7 @@ public class SpawnScoreboardProvider extends SidebarProvider{
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "Ping: ", ChatColor.WHITE.toString() + ((CraftPlayer)p).getHandle().ping));
         lines.add(new SidebarEntry(ChatColor.GRAY + "", ChatColor.GREEN + "LamaCoins: ", ChatColor.WHITE.toString() + LamaHub.getInstance().getUserManager().getUser(p.getUniqueId()).getCoins()));
         lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.STRIKETHROUGH + SpawnScoreboardProvider.STRAIGHT_LINE + ChatColor.GRAY, SpawnScoreboardProvider.STRAIGHT_LINE));
+        lines.add(new SidebarEntry(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString(), "lamahub.omgcraft.fr" , ""));
         return lines;
 	}
 }
