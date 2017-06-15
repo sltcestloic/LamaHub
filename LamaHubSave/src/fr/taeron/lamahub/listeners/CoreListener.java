@@ -78,9 +78,12 @@ public class CoreListener implements Listener{
     }
     
     @EventHandler
-    public void onPlayerDropItem(final PlayerDropItemEvent event) {
+    public void onPlayerItem(final PlayerDropItemEvent event) {
         if (SpawnHandler.isInSpawn((Entity)event.getPlayer())) {
             event.getItemDrop().remove();
+        }
+        if(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bStone Sword")){
+        	event.setCancelled(true);
         }
     }
     
