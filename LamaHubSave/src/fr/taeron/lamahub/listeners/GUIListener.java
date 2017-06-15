@@ -57,7 +57,7 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.TRAILS_ITEM)){
 			if(!e.getPlayer().hasPermission("vip")){
-				e.getPlayer().sendMessage("§2Tu dois être VIP pour utiliser cette commande.");
+				e.getPlayer().sendMessage("§2Tu dois être VIP pour avoir accès aux §a§nParticules!");
 				e.getPlayer().sendMessage("§2Notre boutique: §ahttp://lamahub.buycraft.net/");
 				return;
 			}
@@ -94,16 +94,17 @@ public class GUIListener implements Listener{
 			return;
 		}
 		e.setCancelled(true);
-		e.getWhoClicked().getInventory().clear();
 		Player p = (Player) e.getWhoClicked();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
 		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur")){
+			e.getWhoClicked().getInventory().clear();
 			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
 			user.setCurrentKit(kitName);
 		} else if (!e.getWhoClicked().hasPermission("vip")){
-			p.sendMessage("§cTu n'as pas accès à ce kit pour le moment, mais pas de panique ! Tu pourras bientot l'acheter avec tes LamaCoins !");
+			p.sendMessage("§cCe kit est réservé aux VIP pour le moment, mais pas de panique ! Tu pourras bientot l'acheter avec tes LamaCoins !");
 		} else {
+			e.getWhoClicked().getInventory().clear();
 			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
 			user.setCurrentKit(kitName);
 		}

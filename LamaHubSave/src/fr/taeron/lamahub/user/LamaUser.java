@@ -2,6 +2,8 @@ package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.*;
+import org.bukkit.entity.Player;
+
 import java.util.*;
 import com.google.common.collect.*;
 
@@ -16,12 +18,15 @@ public class LamaUser implements ConfigurationSerializable{
     private String prefix;
     private int coins;
     private String currentKit;
+    private Player lastAttacker;
+    private long lastKangaroo;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.prefix = "§7";
         this.coins = 0;
         this.currentKit = "Aucun";
+        this.lastKangaroo = System.currentTimeMillis();
     }
     
     public LamaUser(final Map<String, Object> map) {
@@ -32,6 +37,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.prefix = String.valueOf(map.get("prefix"));
         this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
         this.currentKit = String.valueOf(map.get("currentKit"));
+        this.lastKangaroo = System.currentTimeMillis();
     }
     
     public Map<String, Object> serialize() {
@@ -44,6 +50,22 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("coins", this.coins);
         map.put("currentKit", this.currentKit);
         return map;
+    }
+    
+    public long lastKangarooTime(){
+    	return this.lastKangaroo;
+    }
+    
+    public void setLastKangarooTime(long l){
+    	this.lastKangaroo = l;
+    }
+    
+    public void setLastAttacker(Player p){
+    	this.lastAttacker = p;
+    }
+    
+    public Player getLastAttacker(){
+    	return this.lastAttacker;
     }
     
     public void setCurrentKit(String s){

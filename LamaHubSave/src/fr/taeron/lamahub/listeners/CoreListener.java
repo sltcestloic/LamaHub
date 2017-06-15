@@ -19,7 +19,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -33,8 +32,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
@@ -196,7 +197,7 @@ public class CoreListener implements Listener{
 			public void run() {
 				e.getEntity().remove();
 			}
-    	}.runTaskLater(LamaHub.getInstance(), 60l);
+    	}.runTaskLater(LamaHub.getInstance(), 80l);
     }
     
 
@@ -209,7 +210,7 @@ public class CoreListener implements Listener{
     	if(!e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("FFASoup")){
     		return;
     	}
-    	if(e.getTo().getBlockY() < 140 && e.getTo().getBlockY() > 130 && e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
+    	if(e.getTo().getBlockY() < 140 && e.getTo().getBlockY() > 138 && e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
     		e.getPlayer().setFallDistance(0f);
     		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(e.getPlayer(), true, true);
     		e.getPlayer().setFallDistance(0f);
@@ -218,7 +219,6 @@ public class CoreListener implements Listener{
     	}
     }
     
-	@SuppressWarnings("deprecation")
 	@EventHandler
     public void fall(EntityDamageEvent e){
     	if(e.getCause() != DamageCause.FALL){
@@ -238,18 +238,19 @@ public class CoreListener implements Listener{
     	}
     	LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
     	if(user.getCurrentKitName().equalsIgnoreCase("Stomper")){
-        	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+    		if(p.getNearbyEntities(5, 5, 5).size() > 0 && e.getDamage() > 4){
+            	p.getWorld().playSound(p.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+    		}
     		for(Entity ent : p.getNearbyEntities(5, 5, 5)){
     			if(ent instanceof Player){
     				Player victimp = (Player) ent;
     				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(victimp.getUniqueId());
+    				victim.setLastAttacker(p);
     				if(victim.getCurrentKitName().equalsIgnoreCase("AntiStomper") || victimp.isSneaking()){
     					victimp.damage(4.0);
     				} else {
     					victimp.damage(e.getDamage());
     				}
-    				EntityDamageByEntityEvent ev = new EntityDamageByEntityEvent(p, victimp, DamageCause.ENTITY_ATTACK, 1);
-    				victimp.setLastDamageCause(ev);
     			}
     		}
     		if(e.getDamage() > 4){
@@ -257,4 +258,40 @@ public class CoreListener implements Listener{
     		}
     	}
     }
+	
+	@EventHandler
+	public void onKangaroo(PlayerInteractEvent e){
+		if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK){
+			return;
+		}
+		if(e.getPlayer().getItemInHand().getType() != Material.FIREWORK){
+			return;
+		}
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
+		if(!user.getCurrentKitName().equalsIgnoreCase("Kangaroo")){
+			return;
+		} else {
+			e.setCancelled(true);
+			if(System.currentTimeMillis() - user.lastKangarooTime() < 2000){
+				return;
+			} else {
+				if(e.getPlayer().isSneaking()){
+					Vector vector = e.getPlayer().getEyeLocation().getDirection();
+                    vector.multiply(2.8f);
+                    vector.setY(1f);
+                    e.getPlayer().setVelocity(vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    Bukkit.getPluginManager().callEvent(ev);
+				} else {
+					Vector vector = e.getPlayer().getEyeLocation().getDirection();
+					vector.multiply(1.6f);
+                    vector.setY(1.4);
+                    e.getPlayer().setVelocity(vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    Bukkit.getPluginManager().callEvent(ev);
+				}
+				user.setLastKangarooTime(System.currentTimeMillis());
+			}
+		}
+	}
 }

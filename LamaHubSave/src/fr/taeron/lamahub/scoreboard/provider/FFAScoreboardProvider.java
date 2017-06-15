@@ -46,7 +46,9 @@ public class FFAScoreboardProvider extends SidebarProvider{
                 }
                 lines.add(new SidebarEntry(playerTimer.getScoreboardPrefix(), timerName, ": " + ChatColor.WHITE + LamaHub.getRemaining(remaining2, false)));
             }
-        }           lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.STRIKETHROUGH + SpawnScoreboardProvider.STRAIGHT_LINE + ChatColor.GRAY, SpawnScoreboardProvider.STRAIGHT_LINE));
+        }           
+        lines.add(new SidebarEntry(ChatColor.GRAY, ChatColor.STRIKETHROUGH + SpawnScoreboardProvider.STRAIGHT_LINE + ChatColor.GRAY, SpawnScoreboardProvider.STRAIGHT_LINE));
+        lines.add(new SidebarEntry(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString(), "lamahub.omgcraft.fr" , ""));
         return lines;
 	}
 }
