@@ -57,7 +57,7 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.TRAILS_ITEM)){
 			if(!e.getPlayer().hasPermission("vip")){
-				e.getPlayer().sendMessage("§2Tu dois être VIP pour utiliser cette commande.");
+				e.getPlayer().sendMessage("§2Tu dois être VIP pour avoir accès aux §a§nParticules!");
 				e.getPlayer().sendMessage("§2Notre boutique: §ahttp://lamahub.buycraft.net/");
 				return;
 			}

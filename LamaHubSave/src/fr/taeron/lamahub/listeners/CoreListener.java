@@ -194,7 +194,7 @@ public class CoreListener implements Listener{
 			public void run() {
 				e.getEntity().remove();
 			}
-    	}.runTaskLater(LamaHub.getInstance(), 60l);
+    	}.runTaskLater(LamaHub.getInstance(), 80l);
     }
     
 
@@ -207,7 +207,7 @@ public class CoreListener implements Listener{
     	if(!e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("FFASoup")){
     		return;
     	}
-    	if(e.getTo().getBlockY() < 140 && e.getTo().getBlockY() > 130 && e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
+    	if(e.getTo().getBlockY() < 140 && e.getTo().getBlockY() > 138 && e.getPlayer().getInventory().contains(Config.FFA_SELECTOR_ITEM) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
     		e.getPlayer().setFallDistance(0f);
     		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(e.getPlayer(), true, true);
     		e.getPlayer().setFallDistance(0f);
@@ -268,6 +268,7 @@ public class CoreListener implements Listener{
 		if(!user.getCurrentKitName().equalsIgnoreCase("Kangaroo")){
 			return;
 		} else {
+			e.setCancelled(true);
 			if(System.currentTimeMillis() - user.lastKangarooTime() < 2000){
 				return;
 			} else {
