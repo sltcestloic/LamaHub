@@ -15,7 +15,7 @@ public class Config {
 	public static ItemStack FFA_SELECTOR_ITEM;
 	public static ItemStack TRAILS_ITEM;
 	public static ItemStack HAT_ITEM;
-	public static ItemStack FRIENDS_ITEM;
+	public static ItemStack FRIENDS_ITEM; 
 	public static ItemStack SETTINGS_ITEM;
 	public static final TimeZone SERVER_TIME_ZONE;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS;
@@ -24,6 +24,12 @@ public class Config {
     public static final FastDateFormat DAY_MTH_YR_HR_MIN_AMPM;
 	
 	static{
+		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
+		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
+		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
+		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
+		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("§bParametres").build();
+		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("§bAmis").build();
 		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("Â§bMenu Principal").build();
 		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("Â§bKit").build();
 		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("Â§bParticules").build();

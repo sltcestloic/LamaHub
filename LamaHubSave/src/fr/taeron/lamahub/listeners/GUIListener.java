@@ -22,6 +22,7 @@ import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
+import fr.taeron.lamahub.inventory.gui.SonsGui;
 import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
@@ -44,6 +45,31 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(!e.getInventory().getTitle().equalsIgnoreCase(ParametreGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		if(e.getCurrentItem().getType() == Material.JUKEBOX){
+			SonsGui.open(p);
+		}else if(e.getCurrentItem().getType() == Material.SIGN){
+			p.closeInventory();
+			p.updateInventory();
+			p.sendMessage("§6§m           §r§cLiens Utiles §6§m          ");
+			p.sendMessage("§f➤ §fhttps://discord.gg/QjhvzT6");
+			p.sendMessage("§f➤ §flamahub.omgcraft.fr");
+			p.sendMessage("§f➤ §fhttp://lamahub.buycraft.net/");
+		}
+	}
+	
+	@EventHandler
+	public void itemClickerSons(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(SonsGui.title())){
 			return;
 		}
 		e.setCancelled(true);
@@ -88,7 +114,7 @@ public class GUIListener implements Listener{
 			// FRIENDS GUI
 		}
 		if(e.getItem().equals(Config.SETTINGS_ITEM)){
-			ParametreGui.open(e.getPlayer());
+			ParametreGui.open(e.getPlayer(), e.getPlayer().getName());
 		}
 		if(e.getItem().equals(Config.HAT_ITEM)){
 			e.setCancelled(true);
