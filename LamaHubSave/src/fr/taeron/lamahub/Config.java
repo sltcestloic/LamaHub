@@ -24,12 +24,12 @@ public class Config {
     public static final FastDateFormat DAY_MTH_YR_HR_MIN_AMPM;
 	
 	static{
-		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
-		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
-		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
-		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
-		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("§bParamètres").build();
-		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("§bAmis").build();
+		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("Â§bMenu Principal").build();
+		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("Â§bKit").build();
+		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("Â§bParticules").build();
+		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("Â§bChapeaux").build();
+		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("Â§bParamÂ§tres").build();
+		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("Â§bAmis").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override

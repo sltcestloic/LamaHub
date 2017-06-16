@@ -1,7 +1,7 @@
 name: LamaHub
-author: koalaQ_Q
+authors: [koalaQ_Q, Skazzy]
 main: fr.taeron.lamahub.LamaHub
-version: 0.1
+version: 0.2
 depend: [LamaCore]
 commands:
   stats:
