@@ -73,4 +73,8 @@ public class PlayerDuel {
 	        }
 		}
 	}
+	
+	public void end(Player winner){
+		
+	}
 }

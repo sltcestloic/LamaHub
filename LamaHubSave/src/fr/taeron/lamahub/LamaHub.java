@@ -23,6 +23,7 @@ import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
+import fr.taeron.lamahub.listeners.DuelListener;
 import fr.taeron.lamahub.listeners.GUIListener;
 import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.WorldListener;
@@ -129,6 +130,7 @@ public class LamaHub extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new KDListener(), this);
 		Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
 		Bukkit.getPluginManager().registerEvents(new DamageFixListener(), this);
+		Bukkit.getPluginManager().registerEvents(new DuelListener(), this);
 	}
 	
 	private void registerCommands(){
