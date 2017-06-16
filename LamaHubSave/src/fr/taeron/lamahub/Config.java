@@ -15,7 +15,7 @@ public class Config {
 	public static ItemStack FFA_SELECTOR_ITEM;
 	public static ItemStack TRAILS_ITEM;
 	public static ItemStack HAT_ITEM;
-	public static ItemStack FRIENDS_ITEM;
+	public static ItemStack FRIENDS_ITEM; 
 	public static ItemStack SETTINGS_ITEM;
 	public static final TimeZone SERVER_TIME_ZONE;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS;
