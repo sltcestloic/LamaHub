@@ -85,7 +85,7 @@ public class CoreListener implements Listener{
         if (SpawnHandler.isInSpawn((Entity)event.getPlayer())) {
             event.getItemDrop().remove();
         }
-        if(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bStone Sword")){
+        if(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("ï¿½bStone Sword")){
         	event.setCancelled(true);
         } 
     }
@@ -150,7 +150,8 @@ public class CoreListener implements Listener{
         LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
     }
     
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void chat(AsyncPlayerChatEvent e){
     	Player p = e.getPlayer();
     	String message = e.getMessage();

@@ -14,7 +14,6 @@ import fr.taeron.lamahub.commands.HatCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
-import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
@@ -27,6 +26,9 @@ import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.GUIListener;
 import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.WorldListener;
+import fr.taeron.lamahub.match.arena.ArenaExecutor;
+import fr.taeron.lamahub.match.arena.ArenaManager;
+import fr.taeron.lamahub.match.arena.FlatFileArenaManager;
 import fr.taeron.lamahub.scoreboard.ScoreboardHandler;
 import fr.taeron.lamahub.timer.TimerManager;
 import fr.taeron.lamahub.user.UserManager;
@@ -42,6 +44,7 @@ public class LamaHub extends JavaPlugin{
 	private int msg;
 	private static final long MINUTE;
     private static final long HOUR;
+    private ArenaManager arenaManager;
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
@@ -133,6 +136,7 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("color").setExecutor(new ColorCommand());
 		this.getCommand("spawn").setExecutor(new SpawnCommand());
 		this.getCommand("hat").setExecutor(new HatCommand());
+		this.getCommand("arena").setExecutor(new ArenaExecutor(this));
 	}
 	 
 	 private void setInstances(){
@@ -149,6 +153,11 @@ public class LamaHub extends JavaPlugin{
 		 new SonsGui();
 		 new ParametreGui();
 		 this.timerManager = new TimerManager(this);
+		 this.arenaManager = new FlatFileArenaManager(this);
+	 }
+	 
+	 public ArenaManager getArenaManager(){
+		 return this.arenaManager;
 	 }
 	 
 	 public TimerManager getTimerManager(){
