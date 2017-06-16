@@ -20,6 +20,7 @@ public class LamaUser implements ConfigurationSerializable{
     private String currentKit;
     private Player lastAttacker;
     private long lastKangaroo;
+    private boolean notification;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -27,9 +28,10 @@ public class LamaUser implements ConfigurationSerializable{
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
+        this.notification = true;
     }
-    
-    public LamaUser(final Map<String, Object> map) {
+
+	public LamaUser(final Map<String, Object> map) {
         this.uniqueId = UUID.fromString(String.valueOf(map.get("uniqueID")));
         this.kills = Integer.valueOf(String.valueOf(map.get("kills")));
         this.deaths = Integer.valueOf(String.valueOf(map.get("deaths")));
@@ -52,6 +54,14 @@ public class LamaUser implements ConfigurationSerializable{
         return map;
     }
     
+    public boolean isNotificationEnabled() {
+		return notification;
+	}
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
+	
     public long lastKangarooTime(){
     	return this.lastKangaroo;
     }

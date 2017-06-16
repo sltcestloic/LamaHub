@@ -41,7 +41,6 @@ import org.bukkit.util.Vector;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
-import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.user.LamaUser;
 import net.minecraft.server.v1_7_R4.EntityItem;
 
@@ -158,8 +157,9 @@ public class CoreListener implements Listener{
     	for(Player pAll : Bukkit.getOnlinePlayers()){
     		if(message.contains(pAll.getName())){
     			if(pAll == p){return;}
-    			if(!Parametre.isNotificationEnabled()){return;}
-    			pAll.playSound(pAll.getLocation(), Sound.LEVEL_UP, 5F, 1F);
+    			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+    			if(!user.isNotificationEnabled()){return;}
+    			pAll.playSound(pAll.getLocation(), Sound.LEVEL_UP, 8F, 1F);
     		}
     	}
     }

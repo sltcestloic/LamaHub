@@ -12,10 +12,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import fr.taeron.core.Core;
+import fr.taeron.core.user.UserManager;
 import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
-import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
@@ -74,8 +74,9 @@ public class GUIListener implements Listener{
 		}
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aNotifications (Activé)")){
-			Parametre.setNotification(false);
+			user.setNotification(false);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
 				@Override
@@ -85,7 +86,7 @@ public class GUIListener implements Listener{
 			}, 1L);
 		}
 		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cNotifications (Désactivé)")){
-			Parametre.setNotification(true);
+			user.setNotification(true);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
 				@Override
