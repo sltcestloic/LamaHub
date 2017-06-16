@@ -26,6 +26,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -40,6 +41,7 @@ import org.bukkit.util.Vector;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
+import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.user.LamaUser;
 import net.minecraft.server.v1_7_R4.EntityItem;
 
@@ -79,10 +81,13 @@ public class CoreListener implements Listener{
     }
     
     @EventHandler
-    public void onPlayerDropItem(final PlayerDropItemEvent event) {
+    public void onPlayerItem(final PlayerDropItemEvent event) {
         if (SpawnHandler.isInSpawn((Entity)event.getPlayer())) {
             event.getItemDrop().remove();
         }
+        if(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bStone Sword")){
+        	event.setCancelled(true);
+        } 
     }
     
     @EventHandler
@@ -143,6 +148,19 @@ public class CoreListener implements Listener{
     public void onJoin(PlayerJoinEvent e){
     	e.setJoinMessage(null);
         LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
+    }
+    
+    @EventHandler
+    public void chat(AsyncPlayerChatEvent e){
+    	Player p = e.getPlayer();
+    	String message = e.getMessage();
+    	for(Player pAll : Bukkit.getOnlinePlayers()){
+    		if(message.contains(pAll.getName())){
+    			if(pAll == p){return;}
+    			if(!Parametre.isNotificationEnabled()){return;}
+    			pAll.playSound(pAll.getLocation(), Sound.LEVEL_UP, 5F, 1F);
+    		}
+    	}
     }
     
     @EventHandler
