@@ -1,7 +1,7 @@
 name: LamaHub
 authors: [koalaQ_Q, Skazzy]
 main: fr.taeron.lamahub.LamaHub
-version: 0.2
+version: 0.3
 depend: [LamaCore]
 commands:
   stats:
@@ -9,3 +9,4 @@ commands:
     aliases: [tag]
   spawn:
   hat:
+  arena:
