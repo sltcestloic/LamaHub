@@ -137,6 +137,7 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("spawn").setExecutor(new SpawnCommand());
 		this.getCommand("hat").setExecutor(new HatCommand());
 		this.getCommand("arena").setExecutor(new ArenaExecutor(this));
+		this.getCommand("arena").setPermission("admin");
 	}
 	 
 	 private void setInstances(){
