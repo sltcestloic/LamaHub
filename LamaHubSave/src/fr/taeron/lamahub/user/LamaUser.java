@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import com.google.common.collect.*;
 
+import fr.taeron.lamahub.match.PlayerDuel;
+
 public class LamaUser implements ConfigurationSerializable{
 	
 	
@@ -21,6 +23,7 @@ public class LamaUser implements ConfigurationSerializable{
     private Player lastAttacker;
     private long lastKangaroo;
     private boolean notification;
+    private PlayerDuel currentDuel;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -62,6 +65,14 @@ public class LamaUser implements ConfigurationSerializable{
 		this.notification = notification;
 	}
 	
+    public void setCurrentDuel(PlayerDuel d){
+    	this.currentDuel = d;
+    }
+    
+    public PlayerDuel getCurrentDuel(){
+    	return this.currentDuel;
+    }
+    
     public long lastKangarooTime(){
     	return this.lastKangaroo;
     }

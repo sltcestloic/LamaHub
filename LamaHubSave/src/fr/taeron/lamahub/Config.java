@@ -17,6 +17,8 @@ public class Config {
 	public static ItemStack HAT_ITEM;
 	public static ItemStack FRIENDS_ITEM; 
 	public static ItemStack SETTINGS_ITEM;
+	public static ItemStack UNRANKED_ITEM;
+	public static ItemStack RANKED_ITEM;
 	public static final TimeZone SERVER_TIME_ZONE;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS_TRAILING;
@@ -24,18 +26,20 @@ public class Config {
     public static final FastDateFormat DAY_MTH_YR_HR_MIN_AMPM;
 	
 	static{
-		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
-		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
-		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
-		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
-		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("§bParametres").build();
-		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("§bAmis").build();
+		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("ï¿½bMenu Principal").build();
+		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("ï¿½bKit").build();
+		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("ï¿½bParticules").build();
+		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("ï¿½bChapeaux").build();
+		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("ï¿½bParametres").build();
+		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("ï¿½bAmis").build();
 		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("Â§bMenu Principal").build();
 		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("Â§bKit").build();
 		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("Â§bParticules").build();
 		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("Â§bChapeaux").build();
 		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("Â§bParamÃ¨tres").build();
 		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("Â§bAmis").build();
+		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("Â§9Unranked").build();
+		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("Â§aRanked").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override

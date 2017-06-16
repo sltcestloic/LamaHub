@@ -23,6 +23,7 @@ import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
+import fr.taeron.lamahub.listeners.DuelListener;
 import fr.taeron.lamahub.listeners.GUIListener;
 import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.WorldListener;
@@ -87,7 +88,7 @@ public class LamaHub extends JavaPlugin{
 					return;
 				}
 				if(msg == 3){
-					Bukkit.broadcastMessage("§cServeur en §c§lbêta§c !");
+					Bukkit.broadcastMessage("§cServeur en §c§ldeveloppement§c ! Le fait de trouver des bugs est totalement NORMAL");
 					msg = 4;
 					return;
 				}
@@ -129,6 +130,7 @@ public class LamaHub extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new KDListener(), this);
 		Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
 		Bukkit.getPluginManager().registerEvents(new DamageFixListener(), this);
+		Bukkit.getPluginManager().registerEvents(new DuelListener(), this);
 	}
 	
 	private void registerCommands(){
@@ -137,6 +139,7 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("spawn").setExecutor(new SpawnCommand());
 		this.getCommand("hat").setExecutor(new HatCommand());
 		this.getCommand("arena").setExecutor(new ArenaExecutor(this));
+		this.getCommand("arena").setPermission("admin");
 	}
 	 
 	 private void setInstances(){

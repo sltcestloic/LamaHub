@@ -14,6 +14,7 @@ public class MainGui {
 	public MainGui(){
 		i = Bukkit.createInventory(null, 9, "§9Choix du jeu");
 		i.setItem(0, new ItemBuilder(Material.MUSHROOM_SOUP).displayName("§9Soup FFA").build());
+		i.setItem(1, new ItemBuilder(Material.DIAMOND_CHESTPLATE).displayName("§91v1 §c[Dev]").build());
 	}
 	
 	public static void open(Player p){
