@@ -87,7 +87,7 @@ public class LamaHub extends JavaPlugin{
 					return;
 				}
 				if(msg == 3){
-					Bukkit.broadcastMessage("§cServeur en §c§lbêta§c !");
+					Bukkit.broadcastMessage("§cServeur en §c§ldeveloppement§c ! Le fait de trouver des bugs est totalement NORMAL");
 					msg = 4;
 					return;
 				}
