@@ -14,7 +14,7 @@ public class PlayerGui {
 	
 	public PlayerGui(){
 		i = Bukkit.createInventory(null, 9, "§9Paramètres (Joueur)");
-		i.setItem(2, new ItemBuilder(Material.NAME_TAG).displayName("§6§lCommandes Utiles").lore("§a➔ §f Clique droit/gauche").build());
+		i.setItem(4, new ItemBuilder(Material.NAME_TAG).displayName("§6§lCommandes Utiles").lore("§a➔ §f Clique droit/gauche").build());
 	}
 	
 	public static void open(Player p){

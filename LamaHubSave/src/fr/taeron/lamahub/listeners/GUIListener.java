@@ -129,7 +129,7 @@ public class GUIListener implements Listener{
 			p.sendMessage("§cSyntaxe : /color");
 		}else if(e.getCurrentItem().getType() == Material.PAPER && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§c/trail §9(§7VIP ONLY§9)")){
 			p.closeInventory();
-			p.sendMessage("§cSyntaxe : trail");
+			p.sendMessage("§cSyntaxe : /trail");
 		}
 			
 	}
@@ -148,7 +148,7 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
-		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aNotifications (Activé)")){
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aMentions (Activé)")){
 			user.setNotification(false);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
@@ -158,7 +158,7 @@ public class GUIListener implements Listener{
 				}
 			}, 1L);
 		}
-		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cNotifications (Désactivé)")){
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cMentions (Désactivé)")){
 			user.setNotification(true);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
