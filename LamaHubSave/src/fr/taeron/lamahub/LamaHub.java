@@ -15,11 +15,14 @@ import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
+import fr.taeron.lamahub.inventory.gui.CommandUtilsGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
+import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
+import fr.taeron.lamahub.inventory.gui.PlayerGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
@@ -155,6 +158,9 @@ public class LamaHub extends JavaPlugin{
 		 new HatGuiPage2();
 		 new SonsGui();
 		 new ParametreGui();
+		 new LiensUtilesGui();
+		 new CommandUtilsGui();
+		 new PlayerGui();
 		 this.timerManager = new TimerManager(this);
 		 this.arenaManager = new FlatFileArenaManager(this);
 	 }

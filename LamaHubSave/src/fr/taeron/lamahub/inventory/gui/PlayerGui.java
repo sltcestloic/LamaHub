@@ -6,15 +6,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import fr.taeron.core.util.ItemBuilder;
+import fr.taeron.lamahub.LamaHub;
 
-public class MainGui {
+public class PlayerGui {
 
 	private static Inventory i;
 	
-	public MainGui(){
-		i = Bukkit.createInventory(null, 9, "§9Choix du jeu");
-		i.setItem(0, new ItemBuilder(Material.MUSHROOM_SOUP).displayName("§9Soup FFA").build());
-		i.setItem(1, new ItemBuilder(Material.DIAMOND_CHESTPLATE).displayName("§91v1 §c�9(�8En Developpement�9)").build());
+	public PlayerGui(){
+		i = Bukkit.createInventory(null, 9, "§9Paramètres (Joueur)");
+		i.setItem(4, new ItemBuilder(Material.NAME_TAG).displayName("§6§lCommandes Utiles").lore("§a➔ §f Clique droit/gauche").build());
 	}
 	
 	public static void open(Player p){
@@ -25,3 +25,4 @@ public class MainGui {
 		return i.getTitle();
 	}
 }
+

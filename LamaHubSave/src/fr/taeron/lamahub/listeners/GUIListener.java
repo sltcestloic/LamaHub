@@ -12,16 +12,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import fr.taeron.core.Core;
+import fr.taeron.core.user.UserManager;
 import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
-import fr.taeron.lamahub.inventory.Parametre;
 import fr.taeron.lamahub.inventory.gui.ColorGui;
+import fr.taeron.lamahub.inventory.gui.CommandUtilsGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
+import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
+import fr.taeron.lamahub.inventory.gui.PlayerGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
 import fr.taeron.lamahub.user.LamaUser;
 
@@ -33,6 +36,35 @@ public class GUIListener implements Listener{
 			if(e.getCurrentItem().equals(e.getWhoClicked().getInventory().getHelmet())){
 				e.setCancelled(true); 
 			}
+		}
+	}
+	
+	@EventHandler
+	public void itemClickerParametreLiens(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(LiensUtilesGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lBoutique")){
+			p.closeInventory();
+			p.updateInventory();
+			p.sendMessage("§f➥ §fhttp://lamahub.buycraft.net/");
+		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDiscord")){
+			p.closeInventory();
+			p.updateInventory();
+			p.sendMessage("§f➥ §fhttps://discord.gg/QjhvzT6");
+		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDeveloppeurs :3")){
+			p.closeInventory();
+			p.updateInventory();
+			p.sendMessage("§6§mKoala§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
+			p.sendMessage("§6§mSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
 		}
 	}
 	
@@ -49,16 +81,57 @@ public class GUIListener implements Listener{
 		}
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
-		if(e.getCurrentItem().getType() == Material.JUKEBOX){
+		if(e.getCurrentItem().getType() == Material.SIGN){
+			LiensUtilesGui.open(p);
+		}else if(e.getCurrentItem().getType() == Material.JUKEBOX){
 			SonsGui.open(p);
-		}else if(e.getCurrentItem().getType() == Material.SIGN){
-			p.closeInventory();
-			p.updateInventory();
-			p.sendMessage("§6§m           §r§cLiens Utiles §6§m          ");
-			p.sendMessage("§f➤ §fhttps://discord.gg/QjhvzT6");
-			p.sendMessage("§f➤ §flamahub.omgcraft.fr");
-			p.sendMessage("§f➤ §fhttp://lamahub.buycraft.net/");
+		}else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+			PlayerGui.open(p);
 		}
+	}
+	
+	@EventHandler
+	public void itemClickerParametrePlayer(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(PlayerGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		if(e.getCurrentItem().getType() == Material.NAME_TAG){
+			CommandUtilsGui.open(p);
+		}
+	}
+	
+	@EventHandler
+	public void itemClickerParametreCommandes(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(CommandUtilsGui.title())){
+			return;
+		}
+		e.setCancelled(true);
+		Player p = (Player) e.getWhoClicked();
+		if(e.getCurrentItem().getType() == Material.PAPER && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§c/report")){
+			p.closeInventory();
+			p.sendMessage("§cSyntaxe : /report <joueur> <raison>");
+		}else if(e.getCurrentItem().getType() == Material.PAPER && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§c/color §9(§7VIP ONLY§9)")){
+			p.closeInventory();
+			p.sendMessage("§cSyntaxe : /color");
+		}else if(e.getCurrentItem().getType() == Material.PAPER && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§c/trail §9(§7VIP ONLY§9)")){
+			p.closeInventory();
+			p.sendMessage("§cSyntaxe : /trail");
+		}
+			
 	}
 	
 	@EventHandler
@@ -74,23 +147,24 @@ public class GUIListener implements Listener{
 		}
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
-		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aNotifications (Activé)")){
-			Parametre.setNotification(false);
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aMentions (Activé)")){
+			user.setNotification(false);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
-					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 8).displayName("§cNotifications (Désactivé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
+					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 8).displayName("§cMentions (Désactivé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
 				}
 			}, 1L);
 		}
-		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cNotifications (Désactivé)")){
-			Parametre.setNotification(true);
+		if(e.getCurrentItem().getType() == Material.INK_SACK && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cMentions (Désactivé)")){
+			user.setNotification(true);
 			Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
-					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 10).displayName("§aNotifications (Activé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
+					p.getOpenInventory().setItem(1, new ItemBuilder(Material.INK_SACK).data((short) 10).displayName("§aMentions (Activé)").lore("§f➤ §7 Lorsque quelqu'un vous mentionne vous entendrez un petit §9'§nding§r§9'").build());
 				}
 			}, 1L);
 		}
@@ -114,7 +188,7 @@ public class GUIListener implements Listener{
 			// FRIENDS GUI
 		}
 		if(e.getItem().equals(Config.SETTINGS_ITEM)){
-			ParametreGui.open(e.getPlayer(), e.getPlayer().getName());
+			ParametreGui.open(e.getPlayer());
 		}
 		if(e.getItem().equals(Config.HAT_ITEM)){
 			e.setCancelled(true);
