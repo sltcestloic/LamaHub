@@ -84,6 +84,8 @@ public class LamaHub extends JavaPlugin{
 		new BukkitRunnable(){
 			public void run(){
 				LamaHub.this.userManager.saveUserDataAsync();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-on");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-all");
 				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "§aSauvegarde automatique effectuée.");
 				LamaHub.this.clearEntities();
 				if(msg == 4){
