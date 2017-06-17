@@ -1,6 +1,7 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -19,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -36,6 +38,9 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -328,6 +333,21 @@ public class CoreListener implements Listener{
 				}
 				user.setLastKangarooTime(System.currentTimeMillis());
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onViper(EntityDamageByEntityEvent e){
+		if(!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){return;}
+		if(!(e.getDamager() instanceof Player) && !(e.getEntity() instanceof Player)){return;}
+		Player attacker = (Player)e.getDamager();
+		Player victim = (Player)e.getEntity();
+		if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
+		if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
+		int randomNumber = (int) (Math.random()*(5-1))+1;
+		if(randomNumber == 1){
+			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 1));
 		}
 	}
 	
