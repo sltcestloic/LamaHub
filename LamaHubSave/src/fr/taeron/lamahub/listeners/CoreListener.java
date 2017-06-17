@@ -80,9 +80,27 @@ public class CoreListener implements Listener{
     }
     
     @EventHandler
-    public void onPlayerItem(final PlayerDropItemEvent event) {
-        if (SpawnHandler.isInSpawn(event.getPlayer())) {
-            event.setCancelled(true);
+    public void onPlayerItem(final PlayerDropItemEvent e) {
+        if (SpawnHandler.isInSpawn(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM)){
+        	e.setCancelled(true);
         }
     }
     
