@@ -62,8 +62,8 @@ public class GUIListener implements Listener{
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDeveloppeurs :3")){
 			p.closeInventory();
 			p.updateInventory();
-			p.sendMessage("§6§mKoala§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
-			p.sendMessage("§6§mSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
+			p.sendMessage("§6§nkoalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
+			p.sendMessage("§6§nSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
 		}
 	}
 	
