@@ -23,7 +23,9 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
+import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
+import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.DuelListener;
@@ -67,6 +69,7 @@ public class LamaHub extends JavaPlugin{
 	
 	public void onDisable(){
 		this.userManager.saveUserData();
+		this.arenaManager.saveArena();
 	}
 	
 	public static String getRemaining(final long millis, final boolean milliseconds) {
@@ -165,6 +168,8 @@ public class LamaHub extends JavaPlugin{
 		 new LiensUtilesGui();
 		 new CommandUtilsGui();
 		 new PlayerGui();
+		 new RankedGui();
+		 new UnrankedGui();
 		 this.timerManager = new TimerManager(this);
 		 this.arenaManager = new FlatFileArenaManager(this);
 	 }

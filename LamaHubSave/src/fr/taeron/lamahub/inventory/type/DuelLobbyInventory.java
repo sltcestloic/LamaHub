@@ -1,5 +1,6 @@
 package fr.taeron.lamahub.inventory.type;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
@@ -7,13 +8,12 @@ import org.bukkit.inventory.PlayerInventory;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.InventorySnapshot;
-import fr.taeron.lamahub.scoreboard.SidebarProvider;
 import fr.taeron.lamahub.scoreboard.provider.SpawnScoreboardProvider;
 
 public class DuelLobbyInventory extends InventorySnapshot{
 
-	public DuelLobbyInventory(LamaHub plugin, SidebarProvider sidebarProvider, Location location) {
-		super(plugin, new SpawnScoreboardProvider(), location);
+	public DuelLobbyInventory(LamaHub plugin) {
+		super(plugin, new SpawnScoreboardProvider(), new Location(Bukkit.getWorld("Hub"), 0.0, 108.0, 0.0));
 	}
 
 	

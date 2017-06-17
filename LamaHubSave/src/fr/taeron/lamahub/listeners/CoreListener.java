@@ -1,7 +1,6 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -40,7 +39,6 @@ import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -318,7 +316,6 @@ public class CoreListener implements Listener{
 				if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){
 					return;
 				}
-                this.fall.put(e.getPlayer(), true);
 				if(e.getPlayer().isSneaking()){
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
                     vector.multiply(2.8f);
@@ -327,6 +324,7 @@ public class CoreListener implements Listener{
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);
 				} else {
+	                this.fall.put(e.getPlayer(), true);
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
 					vector.multiply(1.6f);
                     vector.setY(1.2);
@@ -359,5 +357,6 @@ public class CoreListener implements Listener{
 	@EventHandler
 	public void minecartFix(VehicleDestroyEvent e){
 		e.setCancelled(true);
+		e.getVehicle().remove();
 	}
 }
