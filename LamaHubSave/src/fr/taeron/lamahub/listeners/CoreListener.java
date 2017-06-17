@@ -343,7 +343,7 @@ public class CoreListener implements Listener{
 	public void onViper(EntityDamageByEntityEvent e){
 		if(!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){return;}
 		if(!(e.getDamager() instanceof Player) && !(e.getEntity() instanceof Player)){return;}
-		Player attacker = (Player)e.getDamager();
+		Player attacker = (Player)e.getDamager(); 
 		Player victim = (Player)e.getEntity();
 		if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
