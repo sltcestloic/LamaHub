@@ -67,6 +67,7 @@ public class LamaHub extends JavaPlugin{
 	
 	public void onDisable(){
 		this.userManager.saveUserData();
+		this.arenaManager.saveArena();
 	}
 	
 	public static String getRemaining(final long millis, final boolean milliseconds) {
