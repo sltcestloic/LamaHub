@@ -1,7 +1,6 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -40,7 +39,6 @@ import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -341,17 +339,20 @@ public class CoreListener implements Listener{
 	
 	@EventHandler
 	public void onViper(EntityDamageByEntityEvent e){
-		if(!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){return;}
-		if(!(e.getDamager() instanceof Player) && !(e.getEntity() instanceof Player)){return;}
+		if(!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player)){
+			return;
+		}
 		Player attacker = (Player)e.getDamager(); 
 		Player victim = (Player)e.getEntity();
-		if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
-		attacker.sendMessage("Stone sword detected");
+		if(!attacker.getItemInHand().getType().equals(Material.STONE_SWORD)){
+			return;
+		}
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
-		if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
-		attacker.sendMessage("Kit Viper detected");
+		if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){
+			return;
+		}
 		int randomNumber = (int) (Math.random()*(5-1))+1;
-		if(randomNumber == 1){
+		if(randomNumber == 2){
 			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 1));
 		}
 	}
