@@ -288,6 +288,9 @@ public class CoreListener implements Listener{
 			if(System.currentTimeMillis() - user.lastKangarooTime() < 2000){
 				return;
 			} else {
+				if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){
+					return;
+				}
                 this.fall.put(e.getPlayer(), true);
 				if(e.getPlayer().isSneaking()){
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
