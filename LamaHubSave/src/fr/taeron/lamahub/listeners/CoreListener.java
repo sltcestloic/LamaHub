@@ -198,6 +198,9 @@ public class CoreListener implements Listener{
     
     @EventHandler
   	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
+    	if(event.isCancelled()){
+    		return;
+    	}
 		if(!SpawnHandler.isInSpawn(event.getPlayer().getLocation())){
 			Item item = event.getItemDrop();
 			ItemStack itemstack = item.getItemStack();
