@@ -34,6 +34,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -328,5 +329,10 @@ public class CoreListener implements Listener{
 				user.setLastKangarooTime(System.currentTimeMillis());
 			}
 		}
+	}
+	
+	@EventHandler
+	public void minecartFix(VehicleDestroyEvent e){
+		e.setCancelled(true);
 	}
 }
