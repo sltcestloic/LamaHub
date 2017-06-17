@@ -360,5 +360,6 @@ public class CoreListener implements Listener{
 	@EventHandler
 	public void minecartFix(VehicleDestroyEvent e){
 		e.setCancelled(true);
+		e.getVehicle().remove();
 	}
 }
