@@ -14,17 +14,17 @@ public class ParametreGui {
 	
 	public ParametreGui(){
 		i = Bukkit.createInventory(null, 9, "§9Paramètres");
-		i.setItem(2, new ItemBuilder(Material.JUKEBOX).displayName("§6§lSons").lore("§c➤ §f Clique droit/gauche").build());
-		i.setItem(6, new ItemBuilder(Material.SIGN).displayName("§6§lLiens utiles").lore("§c➤ §f Clique droit/gauche").build());
+		i.setItem(2, new ItemBuilder(Material.JUKEBOX).displayName("§6§lSons").lore("§a➔ §f Clique droit/gauche").build());
+		i.setItem(6, new ItemBuilder(Material.SIGN).displayName("§6§lLiens utiles").lore("§a➔ §f Clique droit/gauche").build());
 	}
 	
-	public static void open(Player p, String ign){
+	public static void open(Player p){
 		p.openInventory(i);
 		Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 			
 			@Override
 			public void run() {
-				p.getOpenInventory().setItem(4, new ItemBuilder(Material.SKULL_ITEM).displayName("§c§l"+ ign).build());
+				p.getOpenInventory().setItem(4, new ItemBuilder(Material.SKULL_ITEM).displayName("§c§l"+ p.getName()).build());
 			}
 		}, 1L);
 	}
