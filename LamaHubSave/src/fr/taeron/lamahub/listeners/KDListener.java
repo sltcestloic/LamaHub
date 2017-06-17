@@ -21,12 +21,8 @@ public class KDListener implements Listener{
 			return;
 		}
 		e.getDrops().clear();
-		ItemStack it = new ItemStack(Material.BOWL, 16);
-		ItemStack it2 = new ItemStack(Material.BROWN_MUSHROOM, 16);
-		ItemStack it3 = new ItemStack(Material.RED_MUSHROOM, 16);
+		ItemStack it = new ItemStack(Material.MUSHROOM_SOUP, 16);
 		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it);
-		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it2);
-		e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it3);
 		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
 		if(e.getEntity().getLastDamageCause().getCause() != DamageCause.SUICIDE){
 			ap.setDeaths(ap.getDeaths() + 1);
