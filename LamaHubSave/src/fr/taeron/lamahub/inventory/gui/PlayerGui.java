@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import fr.taeron.core.util.ItemBuilder;
-import fr.taeron.lamahub.LamaHub;
 
 public class PlayerGui {
 

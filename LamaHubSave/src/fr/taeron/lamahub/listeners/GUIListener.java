@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import fr.taeron.core.Core;
-import fr.taeron.core.user.UserManager;
 import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
