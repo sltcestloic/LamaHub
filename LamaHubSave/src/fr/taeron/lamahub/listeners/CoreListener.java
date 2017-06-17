@@ -346,8 +346,10 @@ public class CoreListener implements Listener{
 		Player attacker = (Player)e.getDamager(); 
 		Player victim = (Player)e.getEntity();
 		if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
+		attacker.sendMessage("Stone sword detected");
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
 		if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
+		attacker.sendMessage("Kit Viper detected");
 		int randomNumber = (int) (Math.random()*(5-1))+1;
 		if(randomNumber == 1){
 			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 1));
