@@ -90,22 +90,22 @@ public class CoreListener implements Listener{
         if (SpawnHandler.isInSpawn(e.getPlayer())) {
             e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParametres")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§aRanked")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§9Unranked")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bKit")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParticules")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM)){
+        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bChapeaux")){
         	e.setCancelled(true);
         }
     }
@@ -342,17 +342,17 @@ public class CoreListener implements Listener{
 	@EventHandler
 	public void onViper(EntityDamageByEntityEvent e){
 		if(!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){return;}
-		if(!(e.getDamager() instanceof Player) && !(e.getEntity() instanceof Player)){return;}
-		Player attacker = (Player)e.getDamager(); 
-		Player victim = (Player)e.getEntity();
-		if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
-		attacker.sendMessage("Stone sword detected");
-		LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
-		if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
-		attacker.sendMessage("Kit Viper detected");
-		int randomNumber = (int) (Math.random()*(5-1))+1;
+		if(!(e.getDamager() instanceof Player) && (!(e.getEntity() instanceof Player))){return;}
+			Player attacker = (Player)e.getDamager(); 
+			Player victim = (Player)e.getEntity();
+			if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
+			attacker.sendMessage("Stone sword detected");
+			LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
+			if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
+			attacker.sendMessage("Kit Viper detected");
+			int randomNumber = (int) (Math.random()*(5-1))+1;
 		if(randomNumber == 1){
-			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 1));
+			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 1));
 		}
 	}
 	

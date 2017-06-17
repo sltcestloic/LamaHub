@@ -31,13 +31,6 @@ public class Config {
 		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("�bParticules").build();
 		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("�bChapeaux").build();
 		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("�bParametres").build();
-		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("�bAmis").build();
-		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
-		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
-		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
-		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
-		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("§bParamètres").build();
-		FRIENDS_ITEM = new ItemBuilder(Material.RAW_FISH).data((short)2).displayName("§bAmis").build();
 		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("§9Unranked").build();
 		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("§aRanked").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
