@@ -316,7 +316,6 @@ public class CoreListener implements Listener{
 				if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){
 					return;
 				}
-                this.fall.put(e.getPlayer(), true);
 				if(e.getPlayer().isSneaking()){
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
                     vector.multiply(2.8f);
@@ -325,6 +324,7 @@ public class CoreListener implements Listener{
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);
 				} else {
+	                this.fall.put(e.getPlayer(), true);
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
 					vector.multiply(1.6f);
                     vector.setY(1.2);
