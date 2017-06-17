@@ -353,7 +353,7 @@ public class CoreListener implements Listener{
 		}
 		int randomNumber = (int) (Math.random()*(5-1))+1;
 		if(randomNumber == 2){
-			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5, 1));
+			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 0));
 		}
 	}
 	
