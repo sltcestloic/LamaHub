@@ -291,17 +291,18 @@ public class CoreListener implements Listener{
 			if(System.currentTimeMillis() - user.lastKangarooTime() < 2000){
 				return;
 			} else {
+                this.fall.put(e.getPlayer(), true);
 				if(e.getPlayer().isSneaking()){
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
                     vector.multiply(2.8f);
-                    vector.setY(1f);
+                    vector.setY(0.8f);
                     e.getPlayer().setVelocity(vector);
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);
 				} else {
 					Vector vector = e.getPlayer().getEyeLocation().getDirection();
 					vector.multiply(1.6f);
-                    vector.setY(1.4);
+                    vector.setY(1.2);
                     e.getPlayer().setVelocity(vector);
                     PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
                     Bukkit.getPluginManager().callEvent(ev);
