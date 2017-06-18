@@ -20,9 +20,11 @@ public class PlayerDuel {
 	private Arena arena;
 	private Kit kit;
 	private List<Player> participating;
+	private boolean ranked;
+	private Queue queue;
 	
 	@SuppressWarnings("deprecation")
-	public PlayerDuel(Player first, Player second, Arena a, Kit kit){
+	public PlayerDuel(Queue queue, Player first, Player second, Arena a, Kit kit, boolean ranked){
 		for(Player p : Bukkit.getOnlinePlayers()){
 			p.hidePlayer(first, false);
 			p.hidePlayer(second, false);
@@ -35,6 +37,16 @@ public class PlayerDuel {
 		this.participating = new ArrayList<Player>();
 		this.participating.add(player1);
 		this.participating.add(player2);
+		this.ranked = ranked;
+		this.queue = queue;
+	}
+	
+	public boolean isRanked(){
+		return this.ranked;
+	}
+	
+	public Queue getQueue(){
+		return this.queue;
 	}
 	
 	public Player getPrimaryPlayer(){

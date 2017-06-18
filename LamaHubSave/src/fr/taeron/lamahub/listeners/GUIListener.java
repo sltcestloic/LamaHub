@@ -24,7 +24,9 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
+import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
+import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
@@ -206,6 +208,60 @@ public class GUIListener implements Listener{
 			}
 			e.getPlayer().performCommand("trail");
 		}
+		if(e.getItem().equals(Config.RANKED_ITEM)){
+			RankedGui.open(e.getPlayer());
+		}
+		if(e.getItem().equals(Config.UNRANKED_ITEM)){
+			UnrankedGui.open(e.getPlayer());
+		}
+		if(e.getItem().equals(Config.QUEUE_LEAVE_ITEM)){
+			LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
+			if(user.getQueue() != null){
+				user.getQueue().removePlayer(e.getPlayer());
+				user.setCurrentQueue(null);
+				LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(e.getPlayer(), false, true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void inventoryClickRanked(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
+			return;
+		}
+		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
+			LamaHub.getInstance().getQueueHandler().rankedEarlyQueue.addPlayer((Player) e.getWhoClicked());
+		}
+		if(e.getCurrentItem().getType() == Material.IRON_CHESTPLATE){
+			LamaHub.getInstance().getQueueHandler().rankedIronQueue.addPlayer((Player) e.getWhoClicked());
+		}
+		e.getWhoClicked().closeInventory();
+	}
+	
+	@EventHandler
+	public void inventoryClickUnranked(InventoryClickEvent e){
+		if(e.getSlotType() == SlotType.OUTSIDE){
+			return;
+		}
+		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
+			return;
+		}
+		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
+			LamaHub.getInstance().getQueueHandler().unrankedEarlyQueue.addPlayer((Player) e.getWhoClicked());
+		}
+		if(e.getCurrentItem().getType() == Material.IRON_CHESTPLATE){
+			LamaHub.getInstance().getQueueHandler().unrankedIronQueue.addPlayer((Player) e.getWhoClicked());
+		}
+		e.getWhoClicked().closeInventory();
 	}
 	
 	@EventHandler

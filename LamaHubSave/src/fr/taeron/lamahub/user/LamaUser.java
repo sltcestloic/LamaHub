@@ -8,6 +8,7 @@ import java.util.*;
 import com.google.common.collect.*;
 
 import fr.taeron.lamahub.match.PlayerDuel;
+import fr.taeron.lamahub.match.Queue;
 
 public class LamaUser implements ConfigurationSerializable{
 	
@@ -24,6 +25,7 @@ public class LamaUser implements ConfigurationSerializable{
     private long lastKangaroo;
     private boolean notification;
     private PlayerDuel currentDuel;
+    private Queue currentQueue;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -55,6 +57,14 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("coins", this.coins);
         map.put("currentKit", this.currentKit);
         return map;
+    }
+    
+    public void setCurrentQueue(Queue q){
+    	this.currentQueue = q;
+    }
+    
+    public Queue getQueue(){
+    	return this.currentQueue;
     }
     
     public boolean isNotificationEnabled() {
