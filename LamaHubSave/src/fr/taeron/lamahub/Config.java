@@ -20,6 +20,7 @@ public class Config {
 	public static ItemStack UNRANKED_ITEM;
 	public static ItemStack RANKED_ITEM;
 	public static ItemStack QUEUE_LEAVE_ITEM;
+	public static ItemStack LOBBY_ITEM;
 	public static final TimeZone SERVER_TIME_ZONE;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS;
     public static final ThreadLocal<DecimalFormat> REMAINING_SECONDS_TRAILING;
@@ -35,6 +36,7 @@ public class Config {
 		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("§9Unranked").build();
 		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("§aRanked").build();
 		QUEUE_LEAVE_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§cQuitter la queue").build();
+		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("§bRetour au spawn").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override

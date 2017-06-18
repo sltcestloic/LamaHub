@@ -222,6 +222,9 @@ public class GUIListener implements Listener{
 				LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(e.getPlayer(), false, true);
 			}
 		}
+		if(e.getItem().equals(Config.LOBBY_ITEM)){
+			LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
+		}
 	}
 	
 	@EventHandler
