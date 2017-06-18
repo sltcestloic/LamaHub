@@ -1,6 +1,9 @@
 package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.*;
 import org.bukkit.entity.Player;
 
@@ -10,7 +13,6 @@ import com.google.common.collect.*;
 import fr.taeron.lamahub.match.PlayerDuel;
 
 public class LamaUser implements ConfigurationSerializable{
-	
 	
     private final UUID uniqueId;
     private int kills;
@@ -22,8 +24,11 @@ public class LamaUser implements ConfigurationSerializable{
     private String currentKit;
     private Player lastAttacker;
     private long lastKangaroo;
+    private long lastThor;
     private boolean notification;
+    private boolean netherPlaced;
     private PlayerDuel currentDuel;
+	public Material lastClickedblock;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -31,7 +36,10 @@ public class LamaUser implements ConfigurationSerializable{
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
+        this.lastThor = System.currentTimeMillis();
         this.notification = true;
+        this.netherPlaced = false;
+        this.lastClickedblock = null;
     }
 
 	public LamaUser(final Map<String, Object> map) {
@@ -43,6 +51,10 @@ public class LamaUser implements ConfigurationSerializable{
         this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
         this.currentKit = String.valueOf(map.get("currentKit"));
         this.lastKangaroo = System.currentTimeMillis();
+        this.lastThor = System.currentTimeMillis();
+        this.lastClickedblock = null;
+        this.notification = true;
+        this.netherPlaced = false;
     }
     
     public Map<String, Object> serialize() {
@@ -56,7 +68,32 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("currentKit", this.currentKit);
         return map;
     }
-    
+
+	public boolean isNetherPlaced() {
+		return netherPlaced;
+	}
+
+	public void setNetherPlaced(boolean netherPlaced) {
+		this.netherPlaced = netherPlaced;
+	}
+
+	public long getLastThor() {
+		return lastThor;
+	}
+
+	public void setLastThor(long lastThor) {
+		this.lastThor = lastThor;
+	}
+
+	public Material getLastClickedblock() {
+		return lastClickedblock;
+	}
+
+	public void setLastClickedblock(Material lastClickedblock) {
+		this.lastClickedblock = lastClickedblock;
+	}
+
+	
     public boolean isNotificationEnabled() {
 		return notification;
 	}

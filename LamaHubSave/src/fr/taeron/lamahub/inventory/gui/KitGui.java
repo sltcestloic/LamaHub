@@ -20,6 +20,7 @@ private static Inventory i;
 		i.setItem(3, new ItemBuilder(Material.ANVIL).displayName("§9Stomper").lore("Ne prend que 2 coeurs de dégats de chute maximum", "et inflige les dégâts réels de la chute aux joueurs aux alentours").build());
 		i.setItem(4, new ItemBuilder(Material.FIREWORK).displayName("§9Kangaroo").lore("Spawn avec une fusée qui te propulse quand tu click droit dessus.", "La poussée horizontale est doublée si tu es en sneak").build());
 		i.setItem(5, new ItemBuilder(Material.POTION).data((short)16388).displayName("§9Viper").lore("Une chance sur trois de mettre poison 1", "pendant 5 secondes à ton adversaire").build());
+		i.setItem(6, new ItemBuilder(Material.WOOD_AXE).displayName("§9Thor").lore("Un coup de thor spawn un block de netherrack"," un second coup sur le block de netherrack", "cr�e une explosion fatal pour les joueurs", "dans un rayon de 3 blocks").build());
 	}
 	
 	public static void open(Player p){
