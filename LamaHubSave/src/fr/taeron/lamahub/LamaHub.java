@@ -57,7 +57,7 @@ public class LamaHub extends JavaPlugin{
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
-		this.setInstances();
+		this.instance = this;
 		this.registerListeners();
 		this.runAutoSave();
 		this.registerCommands();
