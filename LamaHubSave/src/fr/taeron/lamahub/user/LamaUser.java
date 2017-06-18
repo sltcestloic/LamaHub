@@ -11,6 +11,7 @@ import java.util.*;
 import com.google.common.collect.*;
 
 import fr.taeron.lamahub.match.PlayerDuel;
+import fr.taeron.lamahub.match.Queue;
 
 public class LamaUser implements ConfigurationSerializable{
 	
@@ -29,6 +30,7 @@ public class LamaUser implements ConfigurationSerializable{
     private boolean netherPlaced;
     private PlayerDuel currentDuel;
 	public Material lastClickedblock;
+    private Queue currentQueue;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -92,8 +94,15 @@ public class LamaUser implements ConfigurationSerializable{
 	public void setLastClickedblock(Material lastClickedblock) {
 		this.lastClickedblock = lastClickedblock;
 	}
-
-	
+    
+    public void setCurrentQueue(Queue q){
+    	this.currentQueue = q;
+    }
+    
+    public Queue getQueue(){
+    	return this.currentQueue;
+    }
+   
     public boolean isNotificationEnabled() {
 		return notification;
 	}

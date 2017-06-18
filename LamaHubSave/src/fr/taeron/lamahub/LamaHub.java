@@ -33,6 +33,7 @@ import fr.taeron.lamahub.listeners.GUIListener;
 import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.ProtocolBlocker;
 import fr.taeron.lamahub.listeners.WorldListener;
+import fr.taeron.lamahub.match.QueueHandler;
 import fr.taeron.lamahub.match.arena.ArenaExecutor;
 import fr.taeron.lamahub.match.arena.ArenaManager;
 import fr.taeron.lamahub.match.arena.FlatFileArenaManager;
@@ -52,6 +53,7 @@ public class LamaHub extends JavaPlugin{
 	private static final long MINUTE;
     private static final long HOUR;
     private ArenaManager arenaManager;
+    private QueueHandler queueHandler;
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
@@ -172,6 +174,11 @@ public class LamaHub extends JavaPlugin{
 		 new UnrankedGui();
 		 this.timerManager = new TimerManager(this);
 		 this.arenaManager = new FlatFileArenaManager(this);
+		 this.queueHandler = new QueueHandler();
+	 }
+	 
+	 public QueueHandler getQueueHandler(){
+		 return this.queueHandler;
 	 }
 	 
 	 public ArenaManager getArenaManager(){

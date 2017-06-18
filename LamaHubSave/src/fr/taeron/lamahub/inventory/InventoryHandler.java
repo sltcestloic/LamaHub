@@ -9,11 +9,11 @@ public class InventoryHandler
 {
     public SpawnInventory spawnInventory;
     public FFAInventory ffaInventory;
-    public DuelLobbyInventory duelInventory;
+    public DuelLobbyInventory duelLobbyInventory;
     
     public InventoryHandler(final LamaHub plugin) {
         this.spawnInventory = new SpawnInventory(plugin);
         this.ffaInventory = new FFAInventory(plugin);
-        this.duelInventory = new DuelLobbyInventory(plugin);
+        this.duelLobbyInventory = new DuelLobbyInventory(plugin);
     }
 }
