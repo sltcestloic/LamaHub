@@ -57,7 +57,7 @@ public class LamaHub extends JavaPlugin{
 	
 	@SuppressWarnings("deprecation")
 	public void onEnable(){
-		this.instance = this;
+		this.setInstances();
 		this.registerListeners();
 		this.runAutoSave();
 		this.registerCommands();
@@ -91,25 +91,25 @@ public class LamaHub extends JavaPlugin{
 				LamaHub.this.userManager.saveUserDataAsync();
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-on");
 				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-all");
-				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "Â§aSauvegarde automatique effectuÃ©e.");
+				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "§aSauvegarde automatique effectuee.");
 				LamaHub.this.clearEntities();
 				if(msg == 4){
-					Bukkit.broadcastMessage("Â§aNotre discord: Â§bhttps://discord.gg/xFtSFTf");
+					Bukkit.broadcastMessage("§aNotre discord: §bhttps://discord.gg/xFtSFTf");
 					msg = 1;
 					return;
 				}
 				if(msg == 3){
-					Bukkit.broadcastMessage("Â§cServeur en Â§cÂ§ldeveloppementÂ§c ! Le fait de trouver des bugs est totalement NORMAL");
+					Bukkit.broadcastMessage("§cServeur en §c§ldeveloppement§c ! Le fait de trouver des bugs est totalement NORMAL");
 					msg = 4;
 					return;
 				}
 				if(msg == 2){
-					Bukkit.broadcastMessage("Â§6Le Â§eÂ§l1v1Â§6 arrive bientÃ´t...");
+					Bukkit.broadcastMessage("§6Le §§l1v1§6 arrive bientot...");
 					msg = 3;
 					return;
 				}
 				if(msg == 1){
-					Bukkit.broadcastMessage("Â§aEnvie de Â§bsoutenirÂ§a le serveur ? AchÃ¨te le grade Â§bÂ§lVIPÂ§a dÃ¨s maintenant sur le shop ! Â§b http://lamahub.buycraft.net/");
+					Bukkit.broadcastMessage("§aEnvie de §bsoutenir§a le serveur ? Achete le grade §b§lVIP§a des maintenant sur le shop ! §b http://lamahub.buycraft.net/");
 					msg = 2;
 					return;
 				}
@@ -170,8 +170,8 @@ public class LamaHub extends JavaPlugin{
 		 new LiensUtilesGui();
 		 new CommandUtilsGui();
 		 new PlayerGui();
-		 new RankedGui();
-		 new UnrankedGui();
+//		 new RankedGui();
+//		 new UnrankedGui();
 		 this.timerManager = new TimerManager(this);
 		 this.arenaManager = new FlatFileArenaManager(this);
 		 this.queueHandler = new QueueHandler();

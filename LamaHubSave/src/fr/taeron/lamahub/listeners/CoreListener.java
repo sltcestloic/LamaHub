@@ -27,6 +27,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -366,14 +367,15 @@ public class CoreListener implements Listener{
 	@EventHandler
 	public void onThor(PlayerInteractEvent e){
 		Player p = e.getPlayer(); 
+		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
 		if(!p.getItemInHand().getType().equals(Material.WOOD_AXE)){return;}
 		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)){
 			e.setCancelled(true);
 		}else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
-			if(System.currentTimeMillis() - user.getLastThor() < 6*1000){return;}
 			if(!user.isNetherPlaced()){
+				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){return;}
 				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
 				e.getClickedBlock().getLocation().getBlock().setType(Material.NETHERRACK);
 				p.getWorld().strikeLightning(e.getClickedBlock().getLocation());
@@ -401,9 +403,14 @@ public class CoreListener implements Listener{
 		}
 	}
 	
+    @EventHandler
+    public void onFireStart(final BlockIgniteEvent blockIgniteEvent) {
+    	blockIgniteEvent.setCancelled(true);
+    }
+	
 	@EventHandler
 	public void explosionFixDamage(EntityDamageEvent e){
-		if(e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)){
+		if(e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.LIGHTNING)){
 			e.setCancelled(true);
 		}
 	}

@@ -34,7 +34,7 @@ public class LamaUser implements ConfigurationSerializable{
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.prefix = "ยง7";
+        this.prefix = "ง7";
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
@@ -177,7 +177,7 @@ public class LamaUser implements ConfigurationSerializable{
     
     public String getPrefix(){
     	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-    		return "ยง7";
+    		return "ง7";
     	}
     	return this.prefix;
     }
