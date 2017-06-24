@@ -1,9 +1,7 @@
 package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.*;
 import org.bukkit.entity.Player;
 
@@ -34,7 +32,7 @@ public class LamaUser implements ConfigurationSerializable{
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.prefix = "§7";
+        this.prefix = "Â§7";
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
@@ -177,7 +175,7 @@ public class LamaUser implements ConfigurationSerializable{
     
     public String getPrefix(){
     	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-    		return "§7";
+    		return "ï¿½7";
     	}
     	return this.prefix;
     }
