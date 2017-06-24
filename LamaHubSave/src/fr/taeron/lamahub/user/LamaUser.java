@@ -55,6 +55,9 @@ public class LamaUser implements ConfigurationSerializable{
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
+        if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
+        	this.prefix = "§7";
+        }
     }
     
     public Map<String, Object> serialize() {
@@ -175,7 +178,7 @@ public class LamaUser implements ConfigurationSerializable{
     
     public String getPrefix(){
     	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-    		return "�7";
+    		return "§7";
     	}
     	return this.prefix;
     }

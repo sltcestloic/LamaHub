@@ -63,6 +63,7 @@ public class LamaHub extends JavaPlugin{
 		if(Bukkit.getOnlinePlayers().length > 0){
 			for(Player p : Bukkit.getOnlinePlayers()){
 				this.inventoryHandler.spawnInventory.applyTo(p, true, true);
+				p.sendMessage("§aLe serveur a été reload, tu as été téléporté au spawn.");
 			}
 		}
 	} 
