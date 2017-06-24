@@ -28,15 +28,15 @@ public class Config {
     public static final FastDateFormat DAY_MTH_YR_HR_MIN_AMPM;
 	
 	static{
-		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("§bMenu Principal").build();
-		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("§bKit").build();
-		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§bParticules").build();
-		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§bChapeaux").build();
-		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("§bParametres").build();
-		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("§9Unranked").build();
-		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("§aRanked").build();
-		QUEUE_LEAVE_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§cQuitter la queue").build();
-		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("§bRetour au spawn").build();
+		SPAWN_COMPASS_ITEM = new ItemBuilder(Material.COMPASS).displayName("Â§bMenu Principal").build();
+		FFA_SELECTOR_ITEM = new ItemBuilder(Material.CHEST).displayName("Â§bKit").build();
+		TRAILS_ITEM = new ItemBuilder(Material.REDSTONE).displayName("Â§bParticules").build();
+		HAT_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("Â§bChapeaux").build();
+		SETTINGS_ITEM = new ItemBuilder(Material.NAME_TAG).displayName("Â§bParametres").build();
+		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("Â§9Unranked").build();
+		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("Â§aRanked").build();
+		QUEUE_LEAVE_ITEM = new ItemBuilder(Material.REDSTONE).displayName("Â§cQuitter la queue").build();
+		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("Â§bRetour au spawn").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override

@@ -39,7 +39,7 @@ public abstract class SidebarProvider
     }
     
     static {
-        SCOREBOARD_TITLE = "§f§lLama§2§lHub";
+        SCOREBOARD_TITLE = "Â§fÂ§lLamaÂ§2Â§lHub";
         STRAIGHT_LINE = BukkitUtils.STRAIGHT_LINE_DEFAULT.substring(0, 11);
     }
 }
