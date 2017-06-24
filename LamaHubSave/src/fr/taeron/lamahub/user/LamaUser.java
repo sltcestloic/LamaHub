@@ -1,6 +1,9 @@
 package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.*;
 import org.bukkit.entity.Player;
 
@@ -12,7 +15,6 @@ import fr.taeron.lamahub.match.Queue;
 
 public class LamaUser implements ConfigurationSerializable{
 	
-	
     private final UUID uniqueId;
     private int kills;
     private int deaths;
@@ -23,17 +25,23 @@ public class LamaUser implements ConfigurationSerializable{
     private String currentKit;
     private Player lastAttacker;
     private long lastKangaroo;
+    private long lastThor;
     private boolean notification;
+    private boolean netherPlaced;
     private PlayerDuel currentDuel;
+	public Material lastClickedblock;
     private Queue currentQueue;
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.prefix = "ยง7";
+        this.prefix = "ง7";
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
+        this.lastThor = System.currentTimeMillis();
         this.notification = true;
+        this.netherPlaced = false;
+        this.lastClickedblock = null;
     }
 
 	public LamaUser(final Map<String, Object> map) {
@@ -45,6 +53,10 @@ public class LamaUser implements ConfigurationSerializable{
         this.coins = Integer.valueOf(String.valueOf(map.get("coins")));
         this.currentKit = String.valueOf(map.get("currentKit"));
         this.lastKangaroo = System.currentTimeMillis();
+        this.lastThor = System.currentTimeMillis();
+        this.lastClickedblock = null;
+        this.notification = true;
+        this.netherPlaced = false;
     }
     
     public Map<String, Object> serialize() {
@@ -58,6 +70,30 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("currentKit", this.currentKit);
         return map;
     }
+
+	public boolean isNetherPlaced() {
+		return netherPlaced;
+	}
+
+	public void setNetherPlaced(boolean netherPlaced) {
+		this.netherPlaced = netherPlaced;
+	}
+
+	public long getLastThor() {
+		return lastThor;
+	}
+
+	public void setLastThor(long lastThor) {
+		this.lastThor = lastThor;
+	}
+
+	public Material getLastClickedblock() {
+		return lastClickedblock;
+	}
+
+	public void setLastClickedblock(Material lastClickedblock) {
+		this.lastClickedblock = lastClickedblock;
+	}
     
     public void setCurrentQueue(Queue q){
     	this.currentQueue = q;
@@ -66,7 +102,7 @@ public class LamaUser implements ConfigurationSerializable{
     public Queue getQueue(){
     	return this.currentQueue;
     }
-    
+   
     public boolean isNotificationEnabled() {
 		return notification;
 	}
@@ -141,7 +177,7 @@ public class LamaUser implements ConfigurationSerializable{
     
     public String getPrefix(){
     	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-    		return "ยง7";
+    		return "ง7";
     	}
     	return this.prefix;
     }

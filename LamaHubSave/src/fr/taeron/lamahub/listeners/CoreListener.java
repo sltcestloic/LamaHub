@@ -1,23 +1,33 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Effect;
+import org.bukkit.FireworkEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.FireworkEffect.Type;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -37,11 +47,12 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
+import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
@@ -88,22 +99,22 @@ public class CoreListener implements Listener{
         if (SpawnHandler.isInSpawn(e.getPlayer())) {
             e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParametres")){
+        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§bParametres")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§aRanked")){
+        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§aRanked")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§9Unranked")){
+        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§9Unranked")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bKit")){
+        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§bKit")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParticules")){
+        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§bParticules")){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bChapeaux")){
+        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("Â§bChapeaux")){
         	e.setCancelled(true);
         }
     }
@@ -344,13 +355,63 @@ public class CoreListener implements Listener{
 			Player attacker = (Player)e.getDamager(); 
 			Player victim = (Player)e.getEntity();
 			if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
-			attacker.sendMessage("Stone sword detected");
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
-			attacker.sendMessage("Kit Viper detected");
 			int randomNumber = (int) (Math.random()*(5-1))+1;
 		if(randomNumber == 1){
 			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 1));
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@EventHandler
+	public void onThor(PlayerInteractEvent e){
+		Player p = e.getPlayer(); 
+		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
+		if(!p.getItemInHand().getType().equals(Material.WOOD_AXE)){return;}
+		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)){
+			e.setCancelled(true);
+		}else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
+			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
+			if(!user.isNetherPlaced()){
+				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){return;}
+				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
+				e.getClickedBlock().getLocation().getBlock().setType(Material.NETHERRACK);
+				p.getWorld().strikeLightning(e.getClickedBlock().getLocation());
+				user.setNetherPlaced(true);
+				user.setLastThor(System.currentTimeMillis());
+				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
+				@Override
+				public void run() {
+					e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
+					user.setNetherPlaced(false);
+					}
+				}, 6*20);
+			}else if(user.isNetherPlaced()){
+				if(!e.getClickedBlock().getType().equals(Material.NETHERRACK)){return;}
+	        	for (final Player pAll : Bukkit.getOnlinePlayers()) {
+	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 3.0 && pAll != p) {
+	                	final Player p2 = pAll;
+	                	p2.setHealth(0.0d);
+	            	}
+	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
+	            	e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
+	            	user.setNetherPlaced(false);
+	            }
+			}
+		}
+	}
+	
+    @EventHandler
+    public void onFireStart(final BlockIgniteEvent blockIgniteEvent) {
+    	blockIgniteEvent.setCancelled(true);
+    }
+	
+	@EventHandler
+	public void explosionFixDamage(EntityDamageEvent e){
+		if(e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.LIGHTNING)){
+			e.setCancelled(true);
 		}
 	}
 	
@@ -359,4 +420,13 @@ public class CoreListener implements Listener{
 		e.setCancelled(true);
 		e.getVehicle().remove();
 	}
+	
+	public static Object getKeyFromValue(Map hm, Object value) {
+	    for (Object o : hm.keySet()) {
+	      if (hm.get(o).equals(value)) {
+	        return o;
+	      }
+	    }
+	    return null;
+	  }
 }

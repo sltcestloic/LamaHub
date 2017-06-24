@@ -12,9 +12,9 @@ public class MainGui {
 	private static Inventory i;
 	
 	public MainGui(){
-		i = Bukkit.createInventory(null, 9, "Â§9Choix du jeu");
-		i.setItem(0, new ItemBuilder(Material.MUSHROOM_SOUP).displayName("Â§9Soup FFA").build());
-		i.setItem(1, new ItemBuilder(Material.DIAMOND_CHESTPLATE).displayName("Â§91v1 Â§9(Â§8En DeveloppementÂ§9)").build());
+		i = Bukkit.createInventory(null, 9, "§9Choix du jeu");
+		i.setItem(0, new ItemBuilder(Material.MUSHROOM_SOUP).displayName("§9Soup FFA").build());
+		i.setItem(1, new ItemBuilder(Material.DIAMOND_CHESTPLATE).displayName("§91v1 §9(§7En Developpement§9)").build());
 	}
 	
 	public static void open(Player p){

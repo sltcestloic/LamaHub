@@ -18,7 +18,7 @@ public class FFAScoreboardProvider extends SidebarProvider{
 
 	@Override
 	public String getTitle(Player p) {
-		return SidebarProvider.SCOREBOARD_TITLE + " Â§7| Â§bFFA";
+		return SidebarProvider.SCOREBOARD_TITLE + " §7| §bFFA";
 	}
 
 	@Override
