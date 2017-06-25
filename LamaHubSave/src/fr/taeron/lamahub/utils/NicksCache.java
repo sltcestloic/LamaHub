@@ -41,7 +41,11 @@ public class NicksCache{
         Object profile = NMSUtils.invokeMethod(handle, NMSUtils.getMethod(handle.getClass(), "getProfile", (Class<?>[])new Class[0]));
         NMSUtils.setField(profile, NMSUtils.getField(NMSUtils.getMojangClass("GameProfile"), "name"), getNick(p.getUniqueId()));
         p.setDisplayName(p.getName());
-        p.setPlayerListName(p.getName());
+        if(p.getName().length() > 14){
+            p.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(p.getUniqueId()).getPrefix() + p.getName().substring(0, 14));
+        } else {
+     	  p.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(p.getUniqueId()).getPrefix() + p.getName());
+        }
         Object pmap = NMSUtils.invokeMethod(profile, NMSUtils.getMethod(profile.getClass(), "getProperties", (Class<?>[])new Class[0]));
         System.out.println(pmap);
         Map<Object, Collection<?>> map = (Map<Object, Collection<?>>)NMSUtils.invokeMethod(pmap, NMSUtils.getMethod(NMSUtils.getMojangClass("properties.PropertyMap"), "asMap", (Class<?>[])new Class[0]));
