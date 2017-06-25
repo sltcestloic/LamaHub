@@ -103,7 +103,7 @@ public class LamaHub extends JavaPlugin{
 					return;
 				}
 				if(msg == 2){
-					Bukkit.broadcastMessage("§6Le §el1v1§6 arrive bientot...");
+					Bukkit.broadcastMessage("§6Le §e§l1v1§6 arrive bientot...");
 					msg = 3;
 					return;
 				}

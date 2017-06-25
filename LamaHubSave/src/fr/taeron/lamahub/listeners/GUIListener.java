@@ -227,7 +227,7 @@ public class GUIListener implements Listener{
 		}
 	}
 	
-	@EventHandler
+	/*@EventHandler
 	public void inventoryClickRanked(InventoryClickEvent e){
 		if(e.getSlotType() == SlotType.OUTSIDE){
 			return;
@@ -265,7 +265,7 @@ public class GUIListener implements Listener{
 			LamaHub.getInstance().getQueueHandler().unrankedIronQueue.addPlayer((Player) e.getWhoClicked());
 		}
 		e.getWhoClicked().closeInventory();
-	}
+	}*/
 	
 	@EventHandler
 	public void inventoryClickedSpawn(InventoryClickEvent e){

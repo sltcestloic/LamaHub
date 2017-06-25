@@ -55,9 +55,6 @@ public class LamaUser implements ConfigurationSerializable{
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
-        if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-        	this.prefix = "§7";
-        }
     }
     
     public Map<String, Object> serialize() {
