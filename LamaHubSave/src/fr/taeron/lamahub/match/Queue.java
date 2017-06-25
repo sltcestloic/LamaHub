@@ -21,6 +21,7 @@ public class Queue {
 		this.kit = kit;
 		this.ranked = ranked;
 		this.queue = new ArrayList<UUID>();
+		this.playing = 0;
 	}
 	
 	public ArrayList<UUID> getQueue(){

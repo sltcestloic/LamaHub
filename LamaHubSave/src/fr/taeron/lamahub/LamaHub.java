@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import fr.taeron.lamahub.commands.ColorCommand;
 import fr.taeron.lamahub.commands.HatCommand;
+import fr.taeron.lamahub.commands.NickCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
@@ -23,9 +24,7 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
-import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
-import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.DuelListener;
@@ -153,6 +152,7 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("hat").setExecutor(new HatCommand());
 		this.getCommand("arena").setExecutor(new ArenaExecutor(this));
 		this.getCommand("arena").setPermission("admin");
+		this.getCommand("nick").setExecutor(new NickCommand());
 	}
 	 
 	 private void setInstances(){
@@ -171,8 +171,8 @@ public class LamaHub extends JavaPlugin{
 		 new LiensUtilesGui();
 		 new CommandUtilsGui();
 		 new PlayerGui();
-		 new RankedGui();
-		 new UnrankedGui();
+		 //new RankedGui();
+		 //new UnrankedGui();
 		 this.timerManager = new TimerManager(this);
 		 this.arenaManager = new FlatFileArenaManager(this);
 		 this.queueHandler = new QueueHandler();

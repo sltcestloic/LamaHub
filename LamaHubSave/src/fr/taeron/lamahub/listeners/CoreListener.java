@@ -16,6 +16,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -33,6 +34,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -47,6 +49,7 @@ import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
 import fr.taeron.lamahub.user.LamaUser;
+import fr.taeron.lamahub.utils.NicksCache;
 import net.minecraft.server.v1_7_R4.EntityItem;
 
 
@@ -419,5 +422,23 @@ public class CoreListener implements Listener{
 	      }
 	    }
 	    return null;
-	  }
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+    public void onLogin(PlayerLoginEvent e) {
+        final Player p = e.getPlayer();
+        NicksCache.setRealName(p.getUniqueId(), p.getName());
+        if (!NicksCache.isNicked(p.getUniqueId())) {
+            return;
+        }
+        NicksCache.setNick(p, NicksCache.getNick(p.getUniqueId()));
+    }
+    
+    @EventHandler
+    public void joinNick(PlayerJoinEvent e) {
+        if (!NicksCache.isNicked(e.getPlayer().getUniqueId())) {
+            return;
+        }
+        e.getPlayer().sendMessage("§aNick: " + e.getPlayer().getName());
+    }
 }
