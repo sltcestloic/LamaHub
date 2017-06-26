@@ -361,7 +361,7 @@ public class CoreListener implements Listener{
 	public void onThor(PlayerInteractEvent e){
 		Player p = e.getPlayer(); 
 		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
-		if(!p.getItemInHand().getType().equals(Material.WOOD_AXE)){return;}
+		if(!p.getItemInHand().getType().equals(Material.GOLD_AXE)){return;}
 		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)){
 			e.setCancelled(true);
 		}else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
