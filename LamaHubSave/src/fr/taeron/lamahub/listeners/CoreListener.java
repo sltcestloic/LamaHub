@@ -203,7 +203,7 @@ public class CoreListener implements Listener{
         }.runTaskLater(LamaHub.getInstance(), 1L);
     }
     
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
     	if(event.isCancelled()){
     		return;
