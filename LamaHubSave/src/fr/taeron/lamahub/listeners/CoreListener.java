@@ -92,22 +92,22 @@ public class CoreListener implements Listener{
         if (SpawnHandler.isInSpawn(e.getPlayer())) {
             e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParametres")){
+        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§aRanked")){
+        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§9Unranked")){
+        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bKit")){
+        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParticules")){
+        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bChapeaux")){
+        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM)){
         	e.setCancelled(true);
         }
     }
