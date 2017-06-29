@@ -61,7 +61,6 @@ public class KDListener implements Listener{
 		ap.setKS(0);
 		ap.setCurrentKit("Aucun");
 		ap.setLastAttacker(null);
-		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(e.getEntity(), true, true);
 	}
 	
 	@EventHandler

@@ -198,7 +198,7 @@ public class CoreListener implements Listener{
         final Player player = event.getPlayer();
         new BukkitRunnable() {
             public void run() {
-            	LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(player, true, true);
+        		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(player, true, true);
             }
         }.runTaskLater(LamaHub.getInstance(), 1L);
     }

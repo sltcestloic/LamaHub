@@ -42,9 +42,9 @@ public class NicksCache{
         NMSUtils.setField(profile, NMSUtils.getField(NMSUtils.getMojangClass("GameProfile"), "name"), getNick(p.getUniqueId()));
         p.setDisplayName(p.getName());
         if(p.getName().length() > 14){
-            p.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(p.getUniqueId()).getPrefix() + p.getName().substring(0, 14));
+            p.setPlayerListName("§7" + p.getName().substring(0, 14));
         } else {
-     	  p.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(p.getUniqueId()).getPrefix() + p.getName());
+     	  p.setPlayerListName("§7" + p.getName());
         }
         Object pmap = NMSUtils.invokeMethod(profile, NMSUtils.getMethod(profile.getClass(), "getProperties", (Class<?>[])new Class[0]));
         System.out.println(pmap);
