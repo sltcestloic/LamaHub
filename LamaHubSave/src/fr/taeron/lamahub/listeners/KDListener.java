@@ -20,6 +20,9 @@ public class KDListener implements Listener{
 		if(!(e.getEntity() instanceof Player)){
 			return;
 		}
+		if(!e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("FFASoup")){
+			return;
+		}
 		e.getDrops().clear();
 		ItemStack it = new ItemStack(Material.MUSHROOM_SOUP);
 		for(int i = 0; i < 16; i ++){
@@ -58,6 +61,7 @@ public class KDListener implements Listener{
 		ap.setKS(0);
 		ap.setCurrentKit("Aucun");
 		ap.setLastAttacker(null);
+		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(e.getEntity(), true, true);
 	}
 	
 	@EventHandler

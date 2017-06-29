@@ -54,6 +54,7 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
 	@EventHandler
     public void onQuit(PlayerQuitEvent e){
     	if(this.getRemaining(e.getPlayer()) > 0){
+    		this.clearCooldown(e.getPlayer());
     		e.getPlayer().setHealth(0);
     	}
     }

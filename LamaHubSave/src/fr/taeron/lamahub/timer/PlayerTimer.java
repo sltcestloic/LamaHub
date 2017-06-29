@@ -33,6 +33,9 @@ public abstract class PlayerTimer extends Timer{
     }
     
     public void onExpire(final UUID userUUID) {
+    	if(Bukkit.getPlayer(userUUID) == null){
+    		return;
+    	}
     	if(this.getName().equalsIgnoreCase("Combat") && this.getRemaining(Bukkit.getPlayer(userUUID)) == 0l){
         	Bukkit.getPlayer(userUUID).sendMessage("§aTu n'es plus en combat, tu peux désormais ré-utiliser la commande /spawn.");
     	}
