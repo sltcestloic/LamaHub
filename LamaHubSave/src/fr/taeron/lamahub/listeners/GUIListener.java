@@ -55,15 +55,12 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lBoutique")){
 			p.closeInventory();
-			p.updateInventory();
 			p.sendMessage("§f➥ §fhttp://lamahub.buycraft.net/");
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDiscord")){
 			p.closeInventory();
-			p.updateInventory();
 			p.sendMessage("§f➥ §fhttps://discord.gg/QjhvzT6");
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDeveloppeurs")){
 			p.closeInventory();
-			p.updateInventory();
 			p.sendMessage("§6§nkoalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
 			p.sendMessage("§6§nSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
 		}
@@ -382,9 +379,7 @@ public class GUIListener implements Listener{
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                    p.closeInventory();
     				HatGuiPage2.open(p);
-					p.updateInventory();
                 }
             }, 1L);	
 			break;
@@ -487,9 +482,7 @@ public class GUIListener implements Listener{
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                    p.closeInventory();
     				HatGui.open(p);
-					p.updateInventory();
                 }
             }, 1L);	
 			break;

@@ -352,10 +352,10 @@ public class CoreListener implements Listener{
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
 			int randomNumber = this.randInt(1, 3);
-		if(randomNumber == 2){
-			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 1));
+			if(randomNumber == 2){
+				victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 0));
+			}
 		}
-	}
 	
 	public int randInt(int min, int max) {
 
