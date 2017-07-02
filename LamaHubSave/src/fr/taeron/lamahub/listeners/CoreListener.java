@@ -46,6 +46,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import fr.taeron.hendek.Hendek;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
@@ -402,9 +404,14 @@ public class CoreListener implements Listener{
 			}else if(user.isNetherPlaced()){
 				if(!e.getClickedBlock().getType().equals(Material.NETHERRACK)){return;}
 	        	for (final Player pAll : Bukkit.getOnlinePlayers()) {
+	        		if(!pAll.getWorld().getName().equalsIgnoreCase("FFASoup")){
+	        			continue;
+	        		}
 	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 3.0 && pAll != p) {
 	                	final Player p2 = pAll;
 	                	p2.setHealth(0.0d);
+	            	} else if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 25.0){
+	            		Hendek.getInstance().getPlayerManager().getPlayer(pAll).addBypass(2000l);
 	            	}
 	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
 	            	e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
