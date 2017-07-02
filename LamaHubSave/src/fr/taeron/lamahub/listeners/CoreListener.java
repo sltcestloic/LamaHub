@@ -388,7 +388,10 @@ public class CoreListener implements Listener{
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
 			if(!user.isNetherPlaced()){
-				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){return;}
+				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){
+					p.sendMessage("§cMerci d'attendre encore " + LamaHub.getRemaining(user.getLastThor() + 6000 - System.currentTimeMillis(), false));
+					return;
+				}
 				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
 				e.getClickedBlock().getLocation().getBlock().setType(Material.NETHERRACK);
 				p.getWorld().strikeLightning(e.getClickedBlock().getLocation());
@@ -403,6 +406,9 @@ public class CoreListener implements Listener{
 				}, 6*20);
 			}else if(user.isNetherPlaced()){
 				if(!e.getClickedBlock().getType().equals(Material.NETHERRACK)){return;}
+				 if(System.currentTimeMillis() - user.getLastThor() < 2000){
+					 return;
+				 }
 	        	for (final Player pAll : Bukkit.getOnlinePlayers()) {
 	        		if(!pAll.getWorld().getName().equalsIgnoreCase("FFASoup")){
 	        			continue;
