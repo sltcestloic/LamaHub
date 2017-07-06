@@ -81,9 +81,9 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.SIGN){
 			LiensUtilesGui.open(p);
-		}else if(e.getCurrentItem().getType() == Material.JUKEBOX){
+		} else if(e.getCurrentItem().getType() == Material.JUKEBOX){
 			SonsGui.open(p);
-		}else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+		} else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
 			PlayerGui.open(p);
 		}
 	}
@@ -295,6 +295,9 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+		if(!e.getCurrentItem().hasItemMeta()){
+			return;
+		}
 		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
 		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur")){
 			e.getWhoClicked().getInventory().clear();
