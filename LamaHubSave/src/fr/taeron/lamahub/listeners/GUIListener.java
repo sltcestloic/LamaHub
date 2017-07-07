@@ -80,7 +80,12 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.SIGN){
-			LiensUtilesGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			LiensUtilesGui.open(p);
+                }
+            }, 1L);	
 		} else if(e.getCurrentItem().getType() == Material.JUKEBOX){
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
