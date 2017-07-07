@@ -61,8 +61,8 @@ public class GUIListener implements Listener{
 			p.sendMessage("§f➥ §fhttps://discord.gg/QjhvzT6");
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDeveloppeurs")){
 			p.closeInventory();
-			p.sendMessage("§6§nkoalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
-			p.sendMessage("§6§nSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
+			p.sendMessage("§6koalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
+			p.sendMessage("§6Skazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
 		}
 	}
 	
@@ -82,9 +82,19 @@ public class GUIListener implements Listener{
 		if(e.getCurrentItem().getType() == Material.SIGN){
 			LiensUtilesGui.open(p);
 		} else if(e.getCurrentItem().getType() == Material.JUKEBOX){
-			SonsGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			SonsGui.open(p);
+                }
+            }, 1L);	
 		} else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-			PlayerGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			PlayerGui.open(p);
+                }
+            }, 1L);	
 		}
 	}
 	
@@ -102,7 +112,12 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.NAME_TAG){
-			CommandUtilsGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			CommandUtilsGui.open(p);
+                }
+            }, 1L);	
 		}
 	}
 	
@@ -375,6 +390,9 @@ public class GUIListener implements Listener{
 			return;
 		}
 		e.setCancelled(true);
+		if(!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName()){
+			return;
+		}
 		Player p = (Player) e.getWhoClicked();
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {

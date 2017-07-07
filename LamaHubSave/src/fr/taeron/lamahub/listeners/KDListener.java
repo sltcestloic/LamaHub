@@ -16,7 +16,7 @@ public class KDListener implements Listener{
 
 	
 	@EventHandler
-	public void update(PlayerDeathEvent e){
+	public static void update(PlayerDeathEvent e){
 		if(!(e.getEntity() instanceof Player)){
 			return;
 		}
@@ -43,16 +43,16 @@ public class KDListener implements Listener{
 				ap.getLastAttacker().sendMessage("§a+5 §2LamaCoins");
 			} else if(ap.getKS() < 10){
 				ap2.addCoins(10);
-				e.getEntity().getKiller().sendMessage("§a+10 §2LamaCoins");
+				ap.getLastAttacker().sendMessage("§a+10 §2LamaCoins");
 			} else if (ap.getKS() < 15){
 				ap2.addCoins(20);
-				e.getEntity().getKiller().sendMessage("§a+20 §2LamaCoins");
+				ap.getLastAttacker().sendMessage("§a+20 §2LamaCoins");
 			} else if (ap.getKS() < 20){
 				ap2.addCoins(30);
-				e.getEntity().getKiller().sendMessage("§a+30 §2LamaCoins");
+				ap.getLastAttacker().sendMessage("§a+30 §2LamaCoins");
 			} else {
 				ap2.addCoins(50);
-				e.getEntity().getKiller().sendMessage("§a+50 §2LamaCoins");
+				ap.getLastAttacker().sendMessage("§a+50 §2LamaCoins");
 			}
 			
 		} else {
