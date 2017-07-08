@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.user.LamaUser;
 
@@ -29,25 +28,23 @@ public class KDListener implements Listener{
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it);
 		}
 		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
-		if(e.getEntity().getLastDamageCause().getCause() != DamageCause.SUICIDE){
-			ap.setDeaths(ap.getDeaths() + 1);
-		}
+		ap.setDeaths(ap.getDeaths() + 1);
 		if(ap.getLastAttacker() != null){
 			LamaUser ap2 = LamaHub.getInstance().getUserManager().getUser(ap.getLastAttacker().getUniqueId());
 			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a été tué par §a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
 			ap.getLastAttacker().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a été tué par §a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
 			ap2.setKills(ap2.getKills() + 1);
 			ap2.setKS(ap2.getKS() + 1);
-			if(ap.getKS() < 5){
+			if(ap.getKS() < 3){
 				ap2.addCoins(5);
 				ap.getLastAttacker().sendMessage("§a+5 §2LamaCoins");
-			} else if(ap.getKS() < 10){
+			} else if(ap.getKS() < 7){
 				ap2.addCoins(10);
 				ap.getLastAttacker().sendMessage("§a+10 §2LamaCoins");
-			} else if (ap.getKS() < 15){
+			} else if (ap.getKS() < 10){
 				ap2.addCoins(20);
 				ap.getLastAttacker().sendMessage("§a+20 §2LamaCoins");
-			} else if (ap.getKS() < 20){
+			} else if (ap.getKS() < 15){
 				ap2.addCoins(30);
 				ap.getLastAttacker().sendMessage("§a+30 §2LamaCoins");
 			} else {

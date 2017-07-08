@@ -389,7 +389,7 @@ public class CoreListener implements Listener{
 			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
 			if(!user.isNetherPlaced()){
 				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){
-					p.sendMessage("§cMerci d'attendre encore " + LamaHub.getRemaining(user.getLastThor() + 6000 - System.currentTimeMillis(), false));
+					p.sendMessage("§cMerci d'attendre encore " + LamaHub.getRemaining(user.getLastThor() + 6000 - System.currentTimeMillis(), true));
 					return;
 				}
 				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
@@ -420,6 +420,7 @@ public class CoreListener implements Listener{
 	            		Hendek.getInstance().getPlayerManager().getPlayer(pAll).addBypass(2000l);
 	            	}
 	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
+	            	p.getWorld().strikeLightningEffect(e.getClickedBlock().getLocation());
 	            	e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
 	            	user.setNetherPlaced(false);
 	            }
