@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.lamahub.LamaHub;
+import net.minecraft.server.v1_7_R4.EntityHuman;
 
 public class NicksCache{
 	
@@ -40,6 +41,8 @@ public class NicksCache{
         Object handle = NMSUtils.getHandle(p);
         Object profile = NMSUtils.invokeMethod(handle, NMSUtils.getMethod(handle.getClass(), "getProfile", (Class<?>[])new Class[0]));
         NMSUtils.setField(profile, NMSUtils.getField(NMSUtils.getMojangClass("GameProfile"), "name"), getNick(p.getUniqueId()));
+        EntityHuman ee = (EntityHuman) p;
+        ee.setName(getNick(p.getUniqueId()));
         p.setDisplayName(p.getName());
         if(p.getName().length() > 14){
             p.setPlayerListName("§7" + p.getName().substring(0, 14));

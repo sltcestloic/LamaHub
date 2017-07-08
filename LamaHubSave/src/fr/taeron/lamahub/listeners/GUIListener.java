@@ -319,7 +319,7 @@ public class GUIListener implements Listener{
 			return;
 		}
 		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
-		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur")){
+		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur") || kitName.equalsIgnoreCase("Mongole")){
 			e.getWhoClicked().getInventory().clear();
 			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
 			user.setCurrentKit(kitName);

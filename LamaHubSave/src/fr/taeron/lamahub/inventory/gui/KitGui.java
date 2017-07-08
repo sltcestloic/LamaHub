@@ -21,6 +21,7 @@ private static Inventory i;
 		i.setItem(4, new ItemBuilder(Material.FIREWORK).displayName("§9Kangaroo").lore("Spawn avec une fusée qui te propulse quand tu click droit dessus.", "La poussée horizontale est doublée si tu es en sneak").build());
 		i.setItem(5, new ItemBuilder(Material.POTION).data((short)16388).displayName("§9Viper").lore("Une chance sur trois de mettre poison 1", "pendant 5 secondes à ton adversaire").build());
 		i.setItem(6, new ItemBuilder(Material.WOOD_AXE).displayName("§9Thor").lore("Un coup de thor spawn un block de netherrack"," un second coup sur le block de netherrack", "crée une explosion fatal pour les joueurs", "dans un rayon de 3 blocks").build());
+		i.setItem(6, new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 1000).displayName("§9Mongole").lore("Kit pour les abrutis finis","qui ne savent pas jouer sans speed 2", "(par contre t'as moins de soup et une épée en bois,", "ça t'apprendra a pas savoir jouer)").build());
 	}
 	
 	public static void open(Player p){
