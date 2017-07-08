@@ -8,12 +8,12 @@ import org.bukkit.inventory.PlayerInventory;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.inventory.InventorySnapshot;
-import fr.taeron.lamahub.scoreboard.provider.SpawnScoreboardProvider;
+import fr.taeron.lamahub.scoreboard.provider.DuelLobbyScoreboardProvider;
 
 public class DuelLobbyInventory extends InventorySnapshot{
 
 	public DuelLobbyInventory(LamaHub plugin) {
-		super(plugin, new SpawnScoreboardProvider(), new Location(Bukkit.getWorld("Hub"), 0.0, 108.0, 0.0));
+		super(plugin, new DuelLobbyScoreboardProvider(), new Location(Bukkit.getWorld("Hub"), 0.0, 108.0, 0.0));
 	}
 
 	
@@ -32,7 +32,7 @@ public class DuelLobbyInventory extends InventorySnapshot{
         player.getActivePotionEffects().clear();
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {
-            inventory.setItem(0, Config.UNRANKED_ITEM);
+            inventory.setItem(0, Config.RANKED_ITEM);
             inventory.setItem(1, Config.UNRANKED_ITEM);
             inventory.setItem(8, Config.LOBBY_ITEM);
         }

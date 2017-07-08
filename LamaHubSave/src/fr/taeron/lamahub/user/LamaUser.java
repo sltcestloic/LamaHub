@@ -29,6 +29,7 @@ public class LamaUser implements ConfigurationSerializable{
     private PlayerDuel currentDuel;
 	public Material lastClickedblock;
     private Queue currentQueue;
+    private HashMap<String, Integer> elo = new HashMap<String, Integer>(); 
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
@@ -40,6 +41,8 @@ public class LamaUser implements ConfigurationSerializable{
         this.notification = true;
         this.netherPlaced = false;
         this.lastClickedblock = null;
+        this.elo.put("Iron", 1000);
+        this.elo.put("EarlyHG", 1000);
     }
 
 	public LamaUser(final Map<String, Object> map) {
@@ -52,6 +55,8 @@ public class LamaUser implements ConfigurationSerializable{
         this.currentKit = String.valueOf(map.get("currentKit"));
         this.lastKangaroo = System.currentTimeMillis();
         this.lastThor = System.currentTimeMillis();
+        this.elo.put("Iron", Integer.valueOf(String.valueOf(map.get("ironElo"))));
+        this.elo.put("EarlyHG", Integer.valueOf(String.valueOf(map.get("earlyElo"))));
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
@@ -66,7 +71,26 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("prefix", this.prefix);
         map.put("coins", this.coins);
         map.put("currentKit", this.currentKit);
+        map.put("ironElo", this.elo.get("Iron"));
+        map.put("earlyElo", this.elo.get("EarlyHG"));
         return map;
+    }
+    
+    public int getElo(String kitName){
+    	return this.elo.get(kitName);
+    }
+    
+    public void setElo(String kitName, int i){
+    	this.elo.put(kitName, i);
+    }
+    
+    public int getGlobalElo(){
+    	int elo = 0;
+    	for(int i : this.elo.values()){
+    		elo += i;
+    	}
+    	elo /= this.elo.size();
+    	return elo;
     }
 
 	public boolean isNetherPlaced() {

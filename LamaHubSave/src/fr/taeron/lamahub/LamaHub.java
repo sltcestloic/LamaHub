@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +25,9 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
+import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
+import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.DuelListener;
@@ -33,11 +36,13 @@ import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.ProtocolBlocker;
 import fr.taeron.lamahub.listeners.WorldListener;
 import fr.taeron.lamahub.match.QueueHandler;
+import fr.taeron.lamahub.match.arena.Arena;
 import fr.taeron.lamahub.match.arena.ArenaExecutor;
 import fr.taeron.lamahub.match.arena.ArenaManager;
 import fr.taeron.lamahub.match.arena.FlatFileArenaManager;
 import fr.taeron.lamahub.scoreboard.ScoreboardHandler;
 import fr.taeron.lamahub.timer.TimerManager;
+import fr.taeron.lamahub.user.LamaUser;
 import fr.taeron.lamahub.user.UserManager;
 import net.minecraft.util.org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -154,11 +159,16 @@ public class LamaHub extends JavaPlugin{
 	}
 	 
 	 private void setInstances(){
-		Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
+		 ConfigurationSerialization.registerClass(Arena.class);
+		 ConfigurationSerialization.registerClass(LamaUser.class);
+		 Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
 		 this.userManager = new UserManager(this);
 		 LamaHub.instance = this;
 		 this.scoreboardHandler = new ScoreboardHandler(this);
 		 this.inventoryHandler = new InventoryHandler(this);
+		 this.timerManager = new TimerManager(this);
+		 this.arenaManager = new FlatFileArenaManager(this);
+		 this.queueHandler = new QueueHandler();
 		 new MainGui();
 		 new KitGui();
 		 new ColorGui();
@@ -169,11 +179,8 @@ public class LamaHub extends JavaPlugin{
 		 new LiensUtilesGui();
 		 new CommandUtilsGui();
 		 new PlayerGui();
-		 //new RankedGui();
-		 //new UnrankedGui();
-		 this.timerManager = new TimerManager(this);
-		 this.arenaManager = new FlatFileArenaManager(this);
-		 this.queueHandler = new QueueHandler();
+		 new RankedGui();
+		 new UnrankedGui();
 	 }
 	 
 	 public QueueHandler getQueueHandler(){

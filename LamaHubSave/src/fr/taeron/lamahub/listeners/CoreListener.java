@@ -124,11 +124,14 @@ public class CoreListener implements Listener{
     
     @EventHandler
     public void onPlayerDeath(final PlayerDeathEvent event) {
+        Player player = event.getEntity();
         event.getDrops().clear();
         event.setDeathMessage((String)null);
+        if(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getCurrentDuel() != null){
+        	return;
+        }
         event.setDroppedExp(0);
         event.getEntity().getWorld().strikeLightningEffect(event.getEntity().getLocation());
-        final Player player = event.getEntity();
         new BukkitRunnable() {
             public void run() {
                 player.spigot().respawn();

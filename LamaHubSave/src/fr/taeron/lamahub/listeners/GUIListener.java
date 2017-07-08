@@ -241,10 +241,15 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.LOBBY_ITEM)){
 			LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
+			LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
+			if(user.getQueue() != null){
+				user.getQueue().removePlayer(e.getPlayer());
+				user.setCurrentQueue(null);
+			}
 		}
 	}
 	
-	/*@EventHandler
+	@EventHandler
 	public void inventoryClickRanked(InventoryClickEvent e){
 		if(e.getSlotType() == SlotType.OUTSIDE){
 			return;
@@ -272,7 +277,7 @@ public class GUIListener implements Listener{
 		if(e.getCurrentItem() == null){
 			return;
 		}
-		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
+		if(!e.getInventory().getTitle().equalsIgnoreCase(UnrankedGui.title())){
 			return;
 		}
 		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
@@ -282,7 +287,7 @@ public class GUIListener implements Listener{
 			LamaHub.getInstance().getQueueHandler().unrankedIronQueue.addPlayer((Player) e.getWhoClicked());
 		}
 		e.getWhoClicked().closeInventory();
-	}*/
+	}
 	
 	@EventHandler
 	public void inventoryClickedSpawn(InventoryClickEvent e){
@@ -298,6 +303,9 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		if(e.getCurrentItem().getType() == Material.MUSHROOM_SOUP){
 			LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo((Player) e.getWhoClicked(), true, true);
+		}
+		if(e.getCurrentItem().getType() == Material.DIAMOND_CHESTPLATE){
+			LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo((Player) e.getWhoClicked(), true, true);
 		}
 	}
 	

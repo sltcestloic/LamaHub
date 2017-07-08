@@ -1,5 +1,8 @@
 package fr.taeron.lamahub.listeners;
 
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -12,11 +15,16 @@ import fr.taeron.lamahub.match.PlayerDuel;
 public class DuelListener implements Listener{
 
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void drop(PlayerDropItemEvent e){
 		if(LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId()).getCurrentDuel() != null){
 			e.getItemDrop().remove();
-			//Je ferais un EntityHider dans le Spigot plus tard
+			for(Player p : Bukkit.getOnlinePlayers()){
+				if(!LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId()).getCurrentDuel().getParticipating().contains(p)){
+					((CraftPlayer)p).hide(e.getItemDrop());
+				}
+			}
 		}
 	}
 	
