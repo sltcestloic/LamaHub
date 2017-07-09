@@ -21,6 +21,7 @@ public class Queue {
 		this.kit = kit;
 		this.ranked = ranked;
 		this.queue = new ArrayList<UUID>();
+		this.playing = 0;
 	}
 	
 	public ArrayList<UUID> getQueue(){
@@ -47,8 +48,12 @@ public class Queue {
 		}
 		if(this.queue.size() < 1){
 			this.queue.add(p.getUniqueId());
+			p.sendMessage("§eTu as été ajouté dans la file d'attente en mode de jeu §a" + (this.isRanked() ? "Ranked " : "Unranked ") + this.kit.getName());
+			LamaHub.getInstance().getInventoryHandler().queueInventory.applyTo(p, false, true);
 			user.setCurrentQueue(this);
 		} else {
+			LamaHub.getInstance().getInventoryHandler().duelInventory.applyTo(Bukkit.getPlayer(this.queue.get(0)), false, false);
+			LamaHub.getInstance().getInventoryHandler().duelInventory.applyTo(p, false, false);
 			new PlayerDuel(this, Bukkit.getPlayer(this.queue.get(0)), p, LamaHub.getInstance().getArenaManager().getRandomArena(), this.kit, this.ranked);
 			this.queue.clear();
 			this.playing += 2;

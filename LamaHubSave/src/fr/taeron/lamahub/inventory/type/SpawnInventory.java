@@ -28,9 +28,6 @@ public class SpawnInventory extends InventorySnapshot{
         player.setFireTicks(0);
         player.setHealth(20.0);
         player.setFlying(false);
-        if(player.hasPermission("vip")){
-        	player.setAllowFlight(true);
-        }    
         player.getActivePotionEffects().clear();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999999, 2));
         final PlayerInventory inventory = player.getInventory();
@@ -45,6 +42,9 @@ public class SpawnInventory extends InventorySnapshot{
             player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName().substring(0, 14));
         } else {
      	  player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName());
+        }
+        if(player.hasPermission("vip")){
+        	player.setAllowFlight(true);
         }
     }
 }

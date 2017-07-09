@@ -38,5 +38,10 @@ public class FFAInventory extends InventorySnapshot{
             inventory.setItem(6, Config.SETTINGS_ITEM);
         }
         player.updateInventory();
+        if(player.getName().length() > 14){
+            player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName().substring(0, 14));
+        } else {
+     	  player.setPlayerListName(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getPrefix() + player.getName());
+        }
     }
 }

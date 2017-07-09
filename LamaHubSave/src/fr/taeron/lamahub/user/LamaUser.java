@@ -1,9 +1,7 @@
 package fr.taeron.lamahub.user;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.*;
 import org.bukkit.entity.Player;
 
@@ -26,26 +24,25 @@ public class LamaUser implements ConfigurationSerializable{
     private Player lastAttacker;
     private long lastKangaroo;
     private long lastThor;
-    private long lastEndermage;
     private boolean notification;
     private boolean netherPlaced;
-    private boolean endermageProtection;
     private PlayerDuel currentDuel;
 	public Material lastClickedblock;
     private Queue currentQueue;
+    private HashMap<String, Integer> elo = new HashMap<String, Integer>(); 
 
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
-        this.prefix = "ง7";
+        this.prefix = "ยง7";
         this.coins = 0;
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
         this.lastThor = System.currentTimeMillis();
-        this.lastEndermage = System.currentTimeMillis();
         this.notification = true;
         this.netherPlaced = false;
-        this.setEndermageProtection(false);
         this.lastClickedblock = null;
+        this.elo.put("Iron", 1000);
+        this.elo.put("EarlyHG", 1000);
     }
 
 	public LamaUser(final Map<String, Object> map) {
@@ -58,8 +55,8 @@ public class LamaUser implements ConfigurationSerializable{
         this.currentKit = String.valueOf(map.get("currentKit"));
         this.lastKangaroo = System.currentTimeMillis();
         this.lastThor = System.currentTimeMillis();
-        this.lastEndermage = System.currentTimeMillis();
-        this.setEndermageProtection(false);
+        this.elo.put("Iron", Integer.valueOf(String.valueOf(map.get("ironElo"))));
+        this.elo.put("EarlyHG", Integer.valueOf(String.valueOf(map.get("earlyElo"))));
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
@@ -74,7 +71,26 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("prefix", this.prefix);
         map.put("coins", this.coins);
         map.put("currentKit", this.currentKit);
+        map.put("ironElo", this.elo.get("Iron"));
+        map.put("earlyElo", this.elo.get("EarlyHG"));
         return map;
+    }
+    
+    public int getElo(String kitName){
+    	return this.elo.get(kitName);
+    }
+    
+    public void setElo(String kitName, int i){
+    	this.elo.put(kitName, i);
+    }
+    
+    public int getGlobalElo(){
+    	int elo = 0;
+    	for(int i : this.elo.values()){
+    		elo += i;
+    	}
+    	elo /= this.elo.size();
+    	return elo;
     }
 
 	public boolean isNetherPlaced() {
@@ -83,14 +99,6 @@ public class LamaUser implements ConfigurationSerializable{
 
 	public void setNetherPlaced(boolean netherPlaced) {
 		this.netherPlaced = netherPlaced;
-	}
-
-	public long getLastEndermage() {
-		return lastEndermage;
-	}
-
-	public void setLastEndermage(long lastEndermage) {
-		this.lastEndermage = lastEndermage;
 	}
 
 	public long getLastThor() {
@@ -191,7 +199,7 @@ public class LamaUser implements ConfigurationSerializable{
     
     public String getPrefix(){
     	if(!Bukkit.getPlayer(this.uniqueId).hasPermission("vip")){
-    		return "ง7";
+    		return "ยง7";
     	}
     	return this.prefix;
     }
@@ -232,12 +240,4 @@ public class LamaUser implements ConfigurationSerializable{
     public double getKDR(){
     	return (this.getDeaths() > 0) ? (this.getKills() / this.getDeaths()) : ((double)this.getKills());
     }
-
-	public boolean isEndermageProtection() {
-		return endermageProtection;
-	}
-
-	public void setEndermageProtection(boolean endermageProtection) {
-		this.endermageProtection = endermageProtection;
-	}
 }

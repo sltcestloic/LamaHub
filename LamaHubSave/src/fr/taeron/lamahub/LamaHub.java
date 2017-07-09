@@ -5,12 +5,14 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import fr.taeron.lamahub.commands.ColorCommand;
 import fr.taeron.lamahub.commands.HatCommand;
+import fr.taeron.lamahub.commands.NickCommand;
 import fr.taeron.lamahub.commands.SpawnCommand;
 import fr.taeron.lamahub.commands.StatsCommand;
 import fr.taeron.lamahub.inventory.InventoryHandler;
@@ -23,7 +25,9 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
+import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
+import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.listeners.CoreListener;
 import fr.taeron.lamahub.listeners.DamageFixListener;
 import fr.taeron.lamahub.listeners.DuelListener;
@@ -32,11 +36,13 @@ import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.listeners.ProtocolBlocker;
 import fr.taeron.lamahub.listeners.WorldListener;
 import fr.taeron.lamahub.match.QueueHandler;
+import fr.taeron.lamahub.match.arena.Arena;
 import fr.taeron.lamahub.match.arena.ArenaExecutor;
 import fr.taeron.lamahub.match.arena.ArenaManager;
 import fr.taeron.lamahub.match.arena.FlatFileArenaManager;
 import fr.taeron.lamahub.scoreboard.ScoreboardHandler;
 import fr.taeron.lamahub.timer.TimerManager;
+import fr.taeron.lamahub.user.LamaUser;
 import fr.taeron.lamahub.user.UserManager;
 import net.minecraft.util.org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -63,6 +69,7 @@ public class LamaHub extends JavaPlugin{
 		if(Bukkit.getOnlinePlayers().length > 0){
 			for(Player p : Bukkit.getOnlinePlayers()){
 				this.inventoryHandler.spawnInventory.applyTo(p, true, true);
+				p.sendMessage("Â§aLe serveur a Ã©tÃ© reload, tu as Ã©tÃ© tÃ©lÃ©portÃ© au spawn.");
 			}
 		}
 	} 
@@ -87,27 +94,25 @@ public class LamaHub extends JavaPlugin{
 		new BukkitRunnable(){
 			public void run(){
 				LamaHub.this.userManager.saveUserDataAsync();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-on");
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-all");
-				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "§aSauvegarde automatique effectuee.");
+				Command.broadcastCommandMessage(Bukkit.getConsoleSender(), "Â§aSauvegarde automatique effectuee.");
 				LamaHub.this.clearEntities();
 				if(msg == 4){
-					Bukkit.broadcastMessage("§aNotre discord: §bhttps://discord.gg/xFtSFTf");
+					Bukkit.broadcastMessage("Â§aNotre discord: Â§bhttps://discord.gg/xFtSFTf");
 					msg = 1;
 					return;
 				}
 				if(msg == 3){
-					Bukkit.broadcastMessage("§cServeur en §c§ldeveloppement§c ! Le fait de trouver des bugs est totalement NORMAL");
+					Bukkit.broadcastMessage("Â§cServeur en Â§cÂ§ldeveloppementÂ§c ! Le fait de trouver des bugs est totalement NORMAL");
 					msg = 4;
 					return;
 				}
 				if(msg == 2){
-					Bukkit.broadcastMessage("§6Le §§l1v1§6 arrive bientot...");
+					Bukkit.broadcastMessage("Â§6Le Â§eÂ§l1v1Â§6 arrive bientot...");
 					msg = 3;
 					return;
 				}
 				if(msg == 1){
-					Bukkit.broadcastMessage("§aEnvie de §bsoutenir§a le serveur ? Achete le grade §b§lVIP§a des maintenant sur le shop ! §b http://lamahub.buycraft.net/");
+					Bukkit.broadcastMessage("Â§aEnvie de Â§bsoutenirÂ§a le serveur ? Achete le grade Â§bÂ§lVIPÂ§a des maintenant sur le shop ! Â§b http://lamahub.buycraft.net/");
 					msg = 2;
 					return;
 				}
@@ -150,14 +155,20 @@ public class LamaHub extends JavaPlugin{
 		this.getCommand("hat").setExecutor(new HatCommand());
 		this.getCommand("arena").setExecutor(new ArenaExecutor(this));
 		this.getCommand("arena").setPermission("admin");
+		this.getCommand("nick").setExecutor(new NickCommand());
 	}
 	 
 	 private void setInstances(){
-		Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
+		 ConfigurationSerialization.registerClass(Arena.class);
+		 ConfigurationSerialization.registerClass(LamaUser.class);
+		 Bukkit.getWorld("FFASoup").getSpawnLocation().add(0.0, 0.1, 0.0);
 		 this.userManager = new UserManager(this);
 		 LamaHub.instance = this;
 		 this.scoreboardHandler = new ScoreboardHandler(this);
 		 this.inventoryHandler = new InventoryHandler(this);
+		 this.timerManager = new TimerManager(this);
+		 this.arenaManager = new FlatFileArenaManager(this);
+		 this.queueHandler = new QueueHandler();
 		 new MainGui();
 		 new KitGui();
 		 new ColorGui();
@@ -168,11 +179,8 @@ public class LamaHub extends JavaPlugin{
 		 new LiensUtilesGui();
 		 new CommandUtilsGui();
 		 new PlayerGui();
-//		 new RankedGui();
-//		 new UnrankedGui();
-		 this.timerManager = new TimerManager(this);
-		 this.arenaManager = new FlatFileArenaManager(this);
-		 this.queueHandler = new QueueHandler();
+		 new RankedGui();
+		 new UnrankedGui();
 	 }
 	 
 	 public QueueHandler getQueueHandler(){

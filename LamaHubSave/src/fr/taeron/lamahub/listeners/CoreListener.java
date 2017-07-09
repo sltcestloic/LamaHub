@@ -1,30 +1,23 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Effect;
-import org.bukkit.FireworkEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.FireworkEffect.Type;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -42,22 +35,24 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import fr.taeron.core.util.ItemBuilder;
+
+import fr.taeron.hendek.Hendek;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
 import fr.taeron.lamahub.user.LamaUser;
+import fr.taeron.lamahub.utils.NicksCache;
 import net.minecraft.server.v1_7_R4.EntityItem;
 
 
@@ -100,22 +95,22 @@ public class CoreListener implements Listener{
         if (SpawnHandler.isInSpawn(e.getPlayer())) {
             e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParametres")){
+        if(e.getItemDrop().getItemStack().equals(Config.SETTINGS_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§aRanked")){
+        if(e.getItemDrop().getItemStack().equals(Config.RANKED_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§9Unranked")){
+        if(e.getItemDrop().getItemStack().equals(Config.UNRANKED_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bKit")){
+        if(e.getItemDrop().getItemStack().equals(Config.FFA_SELECTOR_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bParticules")){
+        if(e.getItemDrop().getItemStack().equals(Config.TRAILS_ITEM)){
         	e.setCancelled(true);
         }
-        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM) || e.getItemDrop().getItemStack().getItemMeta().getDisplayName().equalsIgnoreCase("§bChapeaux")){
+        if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM)){
         	e.setCancelled(true);
         }
     }
@@ -129,11 +124,14 @@ public class CoreListener implements Listener{
     
     @EventHandler
     public void onPlayerDeath(final PlayerDeathEvent event) {
+        Player player = event.getEntity();
         event.getDrops().clear();
         event.setDeathMessage((String)null);
+        if(LamaHub.getInstance().getUserManager().getUser(player.getUniqueId()).getCurrentDuel() != null){
+        	return;
+        }
         event.setDroppedExp(0);
         event.getEntity().getWorld().strikeLightningEffect(event.getEntity().getLocation());
-        final Player player = event.getEntity();
         new BukkitRunnable() {
             public void run() {
                 player.spigot().respawn();
@@ -206,12 +204,12 @@ public class CoreListener implements Listener{
         final Player player = event.getPlayer();
         new BukkitRunnable() {
             public void run() {
-            	LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(player, true, true);
+        		LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo(player, true, true);
             }
         }.runTaskLater(LamaHub.getInstance(), 1L);
     }
     
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
   	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
     	if(event.isCancelled()){
     		return;
@@ -358,13 +356,14 @@ public class CoreListener implements Listener{
 			if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
-			int randomNumber = (int) (Math.random()*(5-1))+1;
-		if(randomNumber == 1){
-			victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 1));
+			Random r = new Random();
+			int randomNumber = r.nextInt((4 - 1) + 1) + 4;
+			if(randomNumber == 2){
+				victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 0));
+			}
 		}
-	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onThor(PlayerInteractEvent e){
 		Player p = e.getPlayer(); 
@@ -373,21 +372,18 @@ public class CoreListener implements Listener{
 		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)){
 			e.setCancelled(true);
 		}else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-			if(e.getClickedBlock().getType().equals(Material.WOOD_DOOR) || e.getClickedBlock().getType().equals(Material.IRON_DOOR) || e.getClickedBlock().getType().equals(Material.WOODEN_DOOR)  || e.getClickedBlock().getType().equals(Material.SIGN)){return;}
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
 			if(!user.isNetherPlaced()){
-				if(System.currentTimeMillis() - user.getLastThor() < 9*1000){return;}
+				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){
+					p.sendMessage("§cMerci d'attendre encore " + LamaHub.getRemaining(user.getLastThor() + 6000 - System.currentTimeMillis(), true));
+					return;
+				}
 				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
 				e.getClickedBlock().getLocation().getBlock().setType(Material.NETHERRACK);
 				p.getWorld().strikeLightning(e.getClickedBlock().getLocation());
+				user.setNetherPlaced(true);
 				user.setLastThor(System.currentTimeMillis());
-				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					user.setNetherPlaced(true);
-					}
-				}, 3*20);
 				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				@Override
 				public void run() {
@@ -397,61 +393,31 @@ public class CoreListener implements Listener{
 				}, 6*20);
 			}else if(user.isNetherPlaced()){
 				if(!e.getClickedBlock().getType().equals(Material.NETHERRACK)){return;}
-	            ((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
-	            e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
-	            user.setNetherPlaced(false);
-	        	for (final Player pAll : p.getWorld().getPlayers()) {
-	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 2.0 && pAll != p) {
+				 if(System.currentTimeMillis() - user.getLastThor() < 2000){
+					 return;
+				 }
+	        	for (final Player pAll : Bukkit.getOnlinePlayers()) {
+	        		if(!pAll.getWorld().getName().equalsIgnoreCase("FFASoup")){
+	        			continue;
+	        		}
+	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 3.0 && pAll != p) {
 	                	final Player p2 = pAll;
-	    				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
-	    				victim.setLastAttacker(p);
 	                	p2.setHealth(0.0d);
-	            	}else if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) > 3.0 && pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 5.0 && pAll != p) {
-	                	final Player p2 = pAll;
-	    				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
-	    				victim.setLastAttacker(p);
-	                	p2.damage(10.0d);
+	            	} else if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 25.0){
+	            		Hendek.getInstance().getPlayerManager().getPlayer(pAll).addBypass(2000l);
 	            	}
-	        	}
+	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
+	            	p.getWorld().strikeLightningEffect(e.getClickedBlock().getLocation());
+	            	e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
+	            	user.setNetherPlaced(false);
+	            }
 			}
 		}
-	}
-	
-	@EventHandler
-	public void onEndermage(PlayerInteractEvent e){
-		Player p = e.getPlayer();
-		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
-		if(!p.getItemInHand().getType().equals(Material.PORTAL)){return;}
-		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)){return;}
-		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
-		if(!user.getCurrentKitName().equalsIgnoreCase("Endermage")){return;}
-		if(System.currentTimeMillis() - user.getLastEndermage() < 1000){return;}
-		user.setLastEndermage(System.currentTimeMillis());
-		List<Entity> nearbyEntity = (List<Entity>)p.getNearbyEntities(1.0d, p.getWorld().getMaxHeight(), 1.0d);
-		for(Entity ent : nearbyEntity){
-			if(ent instanceof Player){
-				Player p2 = (Player)ent;
-				p2.teleport(p);
-				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
-				victim.setEndermageProtection(true);
-				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					victim.setEndermageProtection(false);
-					}
-				}, 3*20);
-			}
-		}
-	}
-	
-	@EventHandler
-	public void placePortal(BlockPlaceEvent e){
-		if(e.getBlock().getType().equals(Material.PORTAL)){e.setCancelled(true);}
 	}
 	
     @EventHandler
-    public void onFireStart(final BlockIgniteEvent e) {
-    	e.setCancelled(true);
+    public void onFireStart(final BlockIgniteEvent blockIgniteEvent) {
+    	blockIgniteEvent.setCancelled(true);
     }
 	
 	@EventHandler
@@ -467,6 +433,7 @@ public class CoreListener implements Listener{
 		e.getVehicle().remove();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public static Object getKeyFromValue(Map hm, Object value) {
 	    for (Object o : hm.keySet()) {
 	      if (hm.get(o).equals(value)) {
@@ -474,5 +441,23 @@ public class CoreListener implements Listener{
 	      }
 	    }
 	    return null;
-	  }
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+    public void onLogin(PlayerLoginEvent e) {
+        final Player p = e.getPlayer();
+        NicksCache.setRealName(p.getUniqueId(), p.getName());
+        if (!NicksCache.isNicked(p.getUniqueId())) {
+            return;
+        }
+        NicksCache.setNick(p, NicksCache.getNick(p.getUniqueId()));
+    }
+    
+    @EventHandler
+    public void joinNick(PlayerJoinEvent e) {
+        if (!NicksCache.isNicked(e.getPlayer().getUniqueId())) {
+            return;
+        }
+        e.getPlayer().sendMessage("§aNick: " + e.getPlayer().getName());
+    }
 }

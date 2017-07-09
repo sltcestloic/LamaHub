@@ -9,6 +9,7 @@ import org.bukkit.*;
 import net.minecraft.util.org.apache.commons.lang3.time.DurationFormatUtils;
 import fr.taeron.core.util.*;
 import fr.taeron.lamahub.LamaHub;
+import fr.taeron.lamahub.listeners.KDListener;
 import fr.taeron.lamahub.timer.PlayerTimer;
 import fr.taeron.lamahub.timer.event.TimerClearEvent;
 import fr.taeron.lamahub.timer.event.TimerStartEvent;
@@ -50,11 +51,11 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
         }
     }
     
-	@SuppressWarnings("deprecation")
 	@EventHandler
     public void onQuit(PlayerQuitEvent e){
     	if(this.getRemaining(e.getPlayer()) > 0){
-    		e.getPlayer().setHealth(0);
+    		this.clearCooldown(e.getPlayer());
+    		KDListener.update(new PlayerDeathEvent(e.getPlayer(), Arrays.asList(e.getPlayer().getInventory().getContents()), 0, "quit"));
     	}
     }
 

@@ -24,7 +24,9 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
+import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
+import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
@@ -53,17 +55,14 @@ public class GUIListener implements Listener{
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lBoutique")){
 			p.closeInventory();
-			p.updateInventory();
 			p.sendMessage("§f➥ §fhttp://lamahub.buycraft.net/");
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDiscord")){
 			p.closeInventory();
-			p.updateInventory();
 			p.sendMessage("§f➥ §fhttps://discord.gg/QjhvzT6");
 		}else if(e.getCurrentItem().getType() == Material.STAINED_CLAY && e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lDeveloppeurs")){
 			p.closeInventory();
-			p.updateInventory();
-			p.sendMessage("§6§nkoalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
-			p.sendMessage("§6§nSkazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
+			p.sendMessage("§6koalaQ_Q§r §f➥ §fhttps://www.youtube.com/user/lawhitteam");
+			p.sendMessage("§6Skazzy§r §f➥ §fhttps://www.youtube.com/channel/UCcqG1czcpNWAlpausEx5UuQ");
 		}
 	}
 	
@@ -81,11 +80,26 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.SIGN){
-			LiensUtilesGui.open(p);
-		}else if(e.getCurrentItem().getType() == Material.JUKEBOX){
-			SonsGui.open(p);
-		}else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
-			PlayerGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			LiensUtilesGui.open(p);
+                }
+            }, 1L);	
+		} else if(e.getCurrentItem().getType() == Material.JUKEBOX){
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			SonsGui.open(p);
+                }
+            }, 1L);	
+		} else if(e.getCurrentItem().getType() == Material.SKULL_ITEM){
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			PlayerGui.open(p);
+                }
+            }, 1L);	
 		}
 	}
 	
@@ -103,7 +117,12 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		if(e.getCurrentItem().getType() == Material.NAME_TAG){
-			CommandUtilsGui.open(p);
+			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
+                @Override
+                public void run() {
+        			CommandUtilsGui.open(p);
+                }
+            }, 1L);	
 		}
 	}
 	
@@ -206,6 +225,12 @@ public class GUIListener implements Listener{
 			}
 			e.getPlayer().performCommand("trail");
 		}
+		if(e.getItem().equals(Config.RANKED_ITEM)){
+			RankedGui.open(e.getPlayer());
+		}
+		if(e.getItem().equals(Config.UNRANKED_ITEM)){
+			UnrankedGui.open(e.getPlayer());
+		}
 		if(e.getItem().equals(Config.QUEUE_LEAVE_ITEM)){
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
 			if(user.getQueue() != null){
@@ -216,6 +241,11 @@ public class GUIListener implements Listener{
 		}
 		if(e.getItem().equals(Config.LOBBY_ITEM)){
 			LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
+			LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
+			if(user.getQueue() != null){
+				user.getQueue().removePlayer(e.getPlayer());
+				user.setCurrentQueue(null);
+			}
 		}
 	}
 	
@@ -225,6 +255,9 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
 			return;
 		}
 		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
@@ -242,6 +275,9 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(e.getCurrentItem() == null){
+			return;
+		}
+		if(!e.getInventory().getTitle().equalsIgnoreCase(UnrankedGui.title())){
 			return;
 		}
 		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
@@ -268,6 +304,9 @@ public class GUIListener implements Listener{
 		if(e.getCurrentItem().getType() == Material.MUSHROOM_SOUP){
 			LamaHub.getInstance().getInventoryHandler().ffaInventory.applyTo((Player) e.getWhoClicked(), true, true);
 		}
+		if(e.getCurrentItem().getType() == Material.DIAMOND_CHESTPLATE){
+			LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo((Player) e.getWhoClicked(), true, true);
+		}
 	}
 	
 	@EventHandler
@@ -284,8 +323,11 @@ public class GUIListener implements Listener{
 		e.setCancelled(true);
 		Player p = (Player) e.getWhoClicked();
 		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+		if(!e.getCurrentItem().hasItemMeta()){
+			return;
+		}
 		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
-		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur")){
+		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur") || kitName.equalsIgnoreCase("Mongole")){
 			e.getWhoClicked().getInventory().clear();
 			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
 			user.setCurrentKit(kitName);
@@ -361,6 +403,9 @@ public class GUIListener implements Listener{
 			return;
 		}
 		e.setCancelled(true);
+		if(!e.getCurrentItem().hasItemMeta() || !e.getCurrentItem().getItemMeta().hasDisplayName()){
+			return;
+		}
 		Player p = (Player) e.getWhoClicked();
 		String displayName = e.getCurrentItem().getItemMeta().getDisplayName();
 		switch (displayName) {
@@ -368,9 +413,7 @@ public class GUIListener implements Listener{
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                    p.closeInventory();
     				HatGuiPage2.open(p);
-					p.updateInventory();
                 }
             }, 1L);	
 			break;
@@ -473,9 +516,7 @@ public class GUIListener implements Listener{
 			Bukkit.getScheduler().runTaskLater((Plugin)LamaHub.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                    p.closeInventory();
     				HatGui.open(p);
-					p.updateInventory();
                 }
             }, 1L);	
 			break;
