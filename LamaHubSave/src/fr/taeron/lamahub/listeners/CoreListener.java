@@ -1,6 +1,7 @@
 package fr.taeron.lamahub.listeners;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -368,19 +369,25 @@ public class CoreListener implements Listener{
 	public void onThor(PlayerInteractEvent e){
 		Player p = e.getPlayer(); 
 		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
-		if(!p.getItemInHand().getType().equals(Material.WOOD_AXE)){return;}
+		if(!p.getItemInHand().getType().equals(Material.GOLD_AXE)){return;}
 		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_AIR)){
 			e.setCancelled(true);
 		}else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
+			if(e.getClickedBlock().getType().equals(Material.WOOD_DOOR) || e.getClickedBlock().getType().equals(Material.IRON_DOOR) || e.getClickedBlock().getType().equals(Material.WOODEN_DOOR)  || e.getClickedBlock().getType().equals(Material.SIGN)){return;}
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Thor")){return;}
 			if(!user.isNetherPlaced()){
-				if(System.currentTimeMillis() - user.getLastThor() < 6*1000){return;}
+				if(System.currentTimeMillis() - user.getLastThor() < 9*1000){return;}
 				user.setLastClickedblock(e.getClickedBlock().getLocation().getBlock().getType());
 				e.getClickedBlock().getLocation().getBlock().setType(Material.NETHERRACK);
 				p.getWorld().strikeLightning(e.getClickedBlock().getLocation());
-				user.setNetherPlaced(true);
 				user.setLastThor(System.currentTimeMillis());
+				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
+				@Override
+				public void run() {
+					user.setNetherPlaced(true);
+					}
+				}, 3*20);
 				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
 				@Override
 				public void run() {
@@ -390,22 +397,61 @@ public class CoreListener implements Listener{
 				}, 6*20);
 			}else if(user.isNetherPlaced()){
 				if(!e.getClickedBlock().getType().equals(Material.NETHERRACK)){return;}
-	        	for (final Player pAll : Bukkit.getOnlinePlayers()) {
-	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 3.0 && pAll != p) {
+	            ((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
+	            e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
+	            user.setNetherPlaced(false);
+	        	for (final Player pAll : p.getWorld().getPlayers()) {
+	            	if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 2.0 && pAll != p) {
 	                	final Player p2 = pAll;
+	    				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
+	    				victim.setLastAttacker(p);
 	                	p2.setHealth(0.0d);
+	            	}else if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) > 3.0 && pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 5.0 && pAll != p) {
+	                	final Player p2 = pAll;
+	    				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
+	    				victim.setLastAttacker(p);
+	                	p2.damage(10.0d);
 	            	}
-	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
-	            	e.getClickedBlock().getLocation().getBlock().setType(user.getLastClickedblock());
-	            	user.setNetherPlaced(false);
-	            }
+	        	}
 			}
 		}
 	}
 	
+	@EventHandler
+	public void onEndermage(PlayerInteractEvent e){
+		Player p = e.getPlayer();
+		if(e.getPlayer().getLocation().getY() > 130 || this.fall.containsKey(e.getPlayer())){return;}
+		if(!p.getItemInHand().getType().equals(Material.PORTAL)){return;}
+		if(e.getAction().equals(Action.LEFT_CLICK_AIR) || e.getAction().equals(Action.LEFT_CLICK_BLOCK)){return;}
+		LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+		if(!user.getCurrentKitName().equalsIgnoreCase("Endermage")){return;}
+		if(System.currentTimeMillis() - user.getLastEndermage() < 1000){return;}
+		user.setLastEndermage(System.currentTimeMillis());
+		List<Entity> nearbyEntity = (List<Entity>)p.getNearbyEntities(1.0d, p.getWorld().getMaxHeight(), 1.0d);
+		for(Entity ent : nearbyEntity){
+			if(ent instanceof Player){
+				Player p2 = (Player)ent;
+				p2.teleport(p);
+				LamaUser victim = LamaHub.getInstance().getUserManager().getUser(p2.getUniqueId());
+				victim.setEndermageProtection(true);
+				Bukkit.getScheduler().runTaskLater(LamaHub.getInstance(), new Runnable() {
+				@Override
+				public void run() {
+					victim.setEndermageProtection(false);
+					}
+				}, 3*20);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void placePortal(BlockPlaceEvent e){
+		if(e.getBlock().getType().equals(Material.PORTAL)){e.setCancelled(true);}
+	}
+	
     @EventHandler
-    public void onFireStart(final BlockIgniteEvent blockIgniteEvent) {
-    	blockIgniteEvent.setCancelled(true);
+    public void onFireStart(final BlockIgniteEvent e) {
+    	e.setCancelled(true);
     }
 	
 	@EventHandler

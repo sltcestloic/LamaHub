@@ -82,7 +82,7 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
             final com.google.common.base.Optional<Player> optional = event.getPlayer();
             if (optional.isPresent()) {
                 final Player player = (Player)optional.get();
-                player.sendMessage(ChatColor.YELLOW + "Tu es désormais en " + "combat" + ChatColor.YELLOW + " pendant " + ChatColor.RED + DurationFormatUtils.formatDurationWords(event.getDuration(), true, true) + ChatColor.YELLOW + '.');
+                player.sendMessage(ChatColor.YELLOW + "Tu es desormais en " + "combat" + ChatColor.YELLOW + " pendant " + ChatColor.RED + DurationFormatUtils.formatDurationWords(event.getDuration(), true, true) + ChatColor.YELLOW + '.');
             }
         }
     }

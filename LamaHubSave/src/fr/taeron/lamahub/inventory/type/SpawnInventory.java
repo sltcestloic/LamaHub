@@ -30,9 +30,7 @@ public class SpawnInventory extends InventorySnapshot{
         player.setFlying(false);
         if(player.hasPermission("vip")){
         	player.setAllowFlight(true);
-        }
-		
-        
+        }    
         player.getActivePotionEffects().clear();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999999, 2));
         final PlayerInventory inventory = player.getInventory();

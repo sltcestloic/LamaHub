@@ -5,8 +5,8 @@ import fr.taeron.lamahub.inventory.type.DuelLobbyInventory;
 import fr.taeron.lamahub.inventory.type.FFAInventory;
 import fr.taeron.lamahub.inventory.type.SpawnInventory;
 
-public class InventoryHandler
-{
+public class InventoryHandler{
+	
     public SpawnInventory spawnInventory;
     public FFAInventory ffaInventory;
     public DuelLobbyInventory duelLobbyInventory;

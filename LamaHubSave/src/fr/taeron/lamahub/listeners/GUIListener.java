@@ -24,9 +24,7 @@ import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
 import fr.taeron.lamahub.inventory.gui.PlayerGui;
-import fr.taeron.lamahub.inventory.gui.RankedGui;
 import fr.taeron.lamahub.inventory.gui.SonsGui;
-import fr.taeron.lamahub.inventory.gui.UnrankedGui;
 import fr.taeron.lamahub.user.LamaUser;
 
 public class GUIListener implements Listener{
@@ -208,12 +206,6 @@ public class GUIListener implements Listener{
 			}
 			e.getPlayer().performCommand("trail");
 		}
-		if(e.getItem().equals(Config.RANKED_ITEM)){
-			RankedGui.open(e.getPlayer());
-		}
-		if(e.getItem().equals(Config.UNRANKED_ITEM)){
-			UnrankedGui.open(e.getPlayer());
-		}
 		if(e.getItem().equals(Config.QUEUE_LEAVE_ITEM)){
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(e.getPlayer().getUniqueId());
 			if(user.getQueue() != null){
@@ -235,9 +227,6 @@ public class GUIListener implements Listener{
 		if(e.getCurrentItem() == null){
 			return;
 		}
-		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
-			return;
-		}
 		if(e.getCurrentItem().getType() == Material.STONE_SWORD){
 			LamaHub.getInstance().getQueueHandler().rankedEarlyQueue.addPlayer((Player) e.getWhoClicked());
 		}
@@ -253,9 +242,6 @@ public class GUIListener implements Listener{
 			return;
 		}
 		if(e.getCurrentItem() == null){
-			return;
-		}
-		if(!e.getInventory().getTitle().equalsIgnoreCase(RankedGui.title())){
 			return;
 		}
 		if(e.getCurrentItem().getType() == Material.STONE_SWORD){

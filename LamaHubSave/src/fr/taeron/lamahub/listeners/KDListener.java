@@ -31,29 +31,29 @@ public class KDListener implements Listener{
 		}
 		if(ap.getLastAttacker() != null){
 			LamaUser ap2 = LamaHub.getInstance().getUserManager().getUser(ap.getLastAttacker().getUniqueId());
-			e.getEntity().sendMessage("Â§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") Â§7a Ã©tÃ© tuÃ© par Â§a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
-			ap.getLastAttacker().sendMessage("Â§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") Â§7a Ã©tÃ© tuÃ© par Â§a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
+			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a ete tue par §a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
+			ap.getLastAttacker().sendMessage("§c" + e.getEntity().getName() + " (" + ap.getCurrentKitName() + ") §7a ete tue par §a" + ap.getLastAttacker().getName() + " (" + ap2.getCurrentKitName() + ")");
 			ap2.setKills(ap2.getKills() + 1);
 			ap2.setKS(ap2.getKS() + 1);
 			if(ap.getKS() < 5){
 				ap2.addCoins(5);
-				ap.getLastAttacker().sendMessage("Â§a+5 Â§2LamaCoins");
+				ap.getLastAttacker().sendMessage("§a+5 §2LamaCoins");
 			} else if(ap.getKS() < 10){
 				ap2.addCoins(10);
-				e.getEntity().getKiller().sendMessage("Â§a+10 Â§2LamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+10 §2LamaCoins");
 			} else if (ap.getKS() < 15){
 				ap2.addCoins(20);
-				e.getEntity().getKiller().sendMessage("Â§a+20 Â§2LamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+20 §2LamaCoins");
 			} else if (ap.getKS() < 20){
 				ap2.addCoins(30);
-				e.getEntity().getKiller().sendMessage("Â§a+30 Â§2LamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+30 §2LamaCoins");
 			} else {
 				ap2.addCoins(50);
-				e.getEntity().getKiller().sendMessage("Â§a+50 Â§2LamaCoins");
+				e.getEntity().getKiller().sendMessage("§a+50 §2LamaCoins");
 			}
 			
 		} else {
-			e.getEntity().sendMessage("Â§c" + e.getEntity().getName() + " Â§7est mort");
+			e.getEntity().sendMessage("§c" + e.getEntity().getName() + " §7est mort");
 		}
 		ap.setKS(0);
 		ap.setCurrentKit("Aucun");

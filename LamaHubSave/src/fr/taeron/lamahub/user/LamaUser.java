@@ -26,8 +26,10 @@ public class LamaUser implements ConfigurationSerializable{
     private Player lastAttacker;
     private long lastKangaroo;
     private long lastThor;
+    private long lastEndermage;
     private boolean notification;
     private boolean netherPlaced;
+    private boolean endermageProtection;
     private PlayerDuel currentDuel;
 	public Material lastClickedblock;
     private Queue currentQueue;
@@ -39,8 +41,10 @@ public class LamaUser implements ConfigurationSerializable{
         this.currentKit = "Aucun";
         this.lastKangaroo = System.currentTimeMillis();
         this.lastThor = System.currentTimeMillis();
+        this.lastEndermage = System.currentTimeMillis();
         this.notification = true;
         this.netherPlaced = false;
+        this.setEndermageProtection(false);
         this.lastClickedblock = null;
     }
 
@@ -54,6 +58,8 @@ public class LamaUser implements ConfigurationSerializable{
         this.currentKit = String.valueOf(map.get("currentKit"));
         this.lastKangaroo = System.currentTimeMillis();
         this.lastThor = System.currentTimeMillis();
+        this.lastEndermage = System.currentTimeMillis();
+        this.setEndermageProtection(false);
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
@@ -77,6 +83,14 @@ public class LamaUser implements ConfigurationSerializable{
 
 	public void setNetherPlaced(boolean netherPlaced) {
 		this.netherPlaced = netherPlaced;
+	}
+
+	public long getLastEndermage() {
+		return lastEndermage;
+	}
+
+	public void setLastEndermage(long lastEndermage) {
+		this.lastEndermage = lastEndermage;
 	}
 
 	public long getLastThor() {
@@ -218,4 +232,12 @@ public class LamaUser implements ConfigurationSerializable{
     public double getKDR(){
     	return (this.getDeaths() > 0) ? (this.getKills() / this.getDeaths()) : ((double)this.getKills());
     }
+
+	public boolean isEndermageProtection() {
+		return endermageProtection;
+	}
+
+	public void setEndermageProtection(boolean endermageProtection) {
+		this.endermageProtection = endermageProtection;
+	}
 }
