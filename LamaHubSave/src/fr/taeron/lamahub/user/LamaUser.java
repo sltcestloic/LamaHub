@@ -30,7 +30,8 @@ public class LamaUser implements ConfigurationSerializable{
 	public Material lastClickedblock;
     private Queue currentQueue;
     private HashMap<String, Integer> elo = new HashMap<String, Integer>(); 
-
+    private ArrayList<String> kits = new ArrayList<String>();
+    
     public LamaUser(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.prefix = "§7";
@@ -45,6 +46,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.elo.put("EarlyHG", 1000);
     }
 
+	@SuppressWarnings("unchecked")
 	public LamaUser(final Map<String, Object> map) {
         this.uniqueId = UUID.fromString(String.valueOf(map.get("uniqueID")));
         this.kills = Integer.valueOf(String.valueOf(map.get("kills")));
@@ -57,6 +59,7 @@ public class LamaUser implements ConfigurationSerializable{
         this.lastThor = System.currentTimeMillis();
         this.elo.put("Iron", Integer.valueOf(String.valueOf(map.get("ironElo"))));
         this.elo.put("EarlyHG", Integer.valueOf(String.valueOf(map.get("earlyElo"))));
+        this.kits.addAll((Collection<? extends String>) map.get("kits"));
         this.lastClickedblock = null;
         this.notification = true;
         this.netherPlaced = false;
@@ -73,11 +76,23 @@ public class LamaUser implements ConfigurationSerializable{
         map.put("currentKit", this.currentKit);
         map.put("ironElo", this.elo.get("Iron"));
         map.put("earlyElo", this.elo.get("EarlyHG"));
+        map.put("kits", this.kits);
         return map;
     }
     
     public int getElo(String kitName){
     	return this.elo.get(kitName);
+    }
+    
+    public void buyKit(String kitName, int cout){
+    	if(this.coins >= cout){
+    		this.coins -= cout;
+    		this.kits.add(kitName);
+    	}
+    }
+    
+    public boolean hasPurchasedKit(String s){
+    	return this.kits.contains(s);
     }
     
     public void setElo(String kitName, int i){

@@ -21,6 +21,7 @@ import fr.taeron.lamahub.inventory.gui.CommandUtilsGui;
 import fr.taeron.lamahub.inventory.gui.HatGui;
 import fr.taeron.lamahub.inventory.gui.HatGuiPage2;
 import fr.taeron.lamahub.inventory.gui.KitGui;
+import fr.taeron.lamahub.inventory.gui.KitShopGui;
 import fr.taeron.lamahub.inventory.gui.LiensUtilesGui;
 import fr.taeron.lamahub.inventory.gui.MainGui;
 import fr.taeron.lamahub.inventory.gui.ParametreGui;
@@ -181,6 +182,7 @@ public class LamaHub extends JavaPlugin{
 		 new PlayerGui();
 		 new RankedGui();
 		 new UnrankedGui();
+		 new KitShopGui();
 	 }
 	 
 	 public QueueHandler getQueueHandler(){
