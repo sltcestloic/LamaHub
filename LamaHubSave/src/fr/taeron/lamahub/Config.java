@@ -38,7 +38,7 @@ public class Config {
 		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("§aRanked").build();
 		QUEUE_LEAVE_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§cQuitter la queue").build();
 		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("§bRetour au lobby").build();
-		KIT_SHOP_ITEM = new ItemBuilder(Material.NETHER_STAR).displayName("§6Acheter un kit").build();
+		KIT_SHOP_ITEM = new ItemBuilder(Material.DIAMOND).displayName("§6Acheter un kit").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override
