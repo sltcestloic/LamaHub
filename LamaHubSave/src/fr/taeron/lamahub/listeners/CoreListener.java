@@ -356,28 +356,12 @@ public class CoreListener implements Listener{
 			if(!attacker.getItemInHand().equals(Material.STONE_SWORD)){return;}
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId());
 			if(!user.getCurrentKitName().equalsIgnoreCase("Viper")){return;}
-			int randomNumber = this.randInt(1, 3);
+			Random r = new Random();
+			int randomNumber = r.nextInt((4 - 1) + 1) + 4;
 			if(randomNumber == 2){
 				victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 5*20, 0));
 			}
 		}
-	
-	public int randInt(int min, int max) {
-
-	    // NOTE: This will (intentionally) not run as written so that folks
-	    // copy-pasting have to think about how to initialize their
-	    // Random instance.  Initialization of the Random instance is outside
-	    // the main scope of the question, but some decent options are to have
-	    // a field that is initialized once and then re-used as needed or to
-	    // use ThreadLocalRandom (if using at least Java 1.7).
-	    Random rand = new Random();
-
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-
-	    return randomNum;
-	}
 
 	@SuppressWarnings("deprecation")
 	@EventHandler

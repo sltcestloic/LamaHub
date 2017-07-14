@@ -37,7 +37,7 @@ public class NicksCache{
     @SuppressWarnings("deprecation")
 	public static void setNick(Player p, String string) {
         NicksCache.nicknames.put(p.getUniqueId(), string);
-        ((CraftPlayer)p).setName(getNick(p.getUniqueId()));
+        ((CraftPlayer)p).setDisplayName(getNick(p.getUniqueId()));
         p.setDisplayName(p.getName());
         if(p.getName().length() > 14){
             p.setPlayerListName("§7" + p.getName().substring(0, 14));
@@ -70,7 +70,7 @@ public class NicksCache{
             return;
         }
         NicksCache.nicknames.remove(p.getUniqueId());
-        ((CraftPlayer)p).setName(getRealName(p.getUniqueId()));
+        ((CraftPlayer)p).setDisplayName(getRealName(p.getUniqueId()));
         p.setDisplayName(getRealName(p.getUniqueId()));
         p.setPlayerListName(getRealName(p.getUniqueId()));
         for (Player online : Bukkit.getOnlinePlayers()) {

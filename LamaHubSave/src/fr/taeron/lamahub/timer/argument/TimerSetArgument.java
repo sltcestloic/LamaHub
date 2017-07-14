@@ -30,7 +30,7 @@ public class TimerSetArgument extends CommandArgument{
     private final LamaHub plugin;
     
     public TimerSetArgument(final LamaHub plugin) {
-        super("set", "Définir le temps restant d'un timer");
+        super("set", "Definir le temps restant d'un timer");
         this.plugin = plugin;
     }
     
@@ -46,7 +46,7 @@ public class TimerSetArgument extends CommandArgument{
         }
         final long duration = JavaUtils.parse(args[3]);
         if (duration == -1L) {
-            sender.sendMessage(ChatColor.RED + "Durée invalide. Exemple: 10m 1s");
+            sender.sendMessage(ChatColor.RED + "Duree invalide. Exemple: 10m 1s");
             return true;
         }
         PlayerTimer playerTimer = null;
@@ -64,7 +64,7 @@ public class TimerSetArgument extends CommandArgument{
             for (final Player player : Bukkit.getOnlinePlayers()) {
                 playerTimer.setCooldown(player, player.getUniqueId(), duration, true);
             }
-            sender.sendMessage(ChatColor.GREEN + "Tu as défini le timer " + playerTimer.getName() + " pour tout le monde en " + DurationFormatUtils.formatDurationWords(duration, true, true) + '.');
+            sender.sendMessage(ChatColor.GREEN + "Tu as defini le timer " + playerTimer.getName() + " pour tout le monde en " + DurationFormatUtils.formatDurationWords(duration, true, true) + '.');
         }
         else {
             final OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
@@ -74,7 +74,7 @@ public class TimerSetArgument extends CommandArgument{
                 return true;
             }
             playerTimer.setCooldown(targetPlayer, target.getUniqueId(), duration, true);
-            sender.sendMessage(ChatColor.GREEN + "Tu as défini la durée du timer " + playerTimer.getName() + " a " + DurationFormatUtils.formatDurationWords(duration, true, true) + " pour " + target.getName() + '.');
+            sender.sendMessage(ChatColor.GREEN + "Tu as defini la durée du timer " + playerTimer.getName() + " a " + DurationFormatUtils.formatDurationWords(duration, true, true) + " pour " + target.getName() + '.');
         }
         return true;
     }
