@@ -363,8 +363,9 @@ public class GUIListener implements Listener{
 			return;
 		}
 		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
-		if (!e.getWhoClicked().hasPermission("vip") || user.hasPurchasedKit(kitName)){
+		if (e.getWhoClicked().hasPermission("vip") || user.hasPurchasedKit(kitName)){
 			p.sendMessage("§cTu as déjà débloqué ce kit.");
+			return;
 		}
 		if(kitName.equalsIgnoreCase("Stomper") || kitName.equalsIgnoreCase("Thor")){
 			if(user.getCoins() >= 2500){
