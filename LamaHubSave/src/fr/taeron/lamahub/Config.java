@@ -36,7 +36,7 @@ public class Config {
 		UNRANKED_ITEM = new ItemBuilder(Material.IRON_SWORD).displayName("§9Unranked").build();
 		RANKED_ITEM = new ItemBuilder(Material.DIAMOND_SWORD).displayName("§aRanked").build();
 		QUEUE_LEAVE_ITEM = new ItemBuilder(Material.REDSTONE).displayName("§cQuitter la queue").build();
-		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("§bRetour au spawn").build();
+		LOBBY_ITEM = new ItemBuilder(Material.BED).displayName("§bRetour au lobby").build();
 		SERVER_TIME_ZONE = TimeZone.getTimeZone("Europe/Copenhagen");
         REMAINING_SECONDS = new ThreadLocal<DecimalFormat>() {
             @Override
