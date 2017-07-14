@@ -13,7 +13,7 @@ import fr.taeron.lamahub.scoreboard.provider.DuelLobbyScoreboardProvider;
 public class DuelLobbyInventory extends InventorySnapshot{
 
 	public DuelLobbyInventory(LamaHub plugin) {
-		super(plugin, new DuelLobbyScoreboardProvider(), new Location(Bukkit.getWorld("Hub"), 0.0, 108.0, 0.0));
+		super(plugin, new DuelLobbyScoreboardProvider(), new Location(Bukkit.getWorld("Hub"), -67.5, 17, 451.5));
 	}
 
 	

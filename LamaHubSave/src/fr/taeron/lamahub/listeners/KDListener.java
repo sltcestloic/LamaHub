@@ -19,6 +19,10 @@ public class KDListener implements Listener{
 		if(!(e.getEntity() instanceof Player)){
 			return;
 		}
+		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
+		if(ap.getCurrentDuel() != null){
+			return;
+		}
 		if(!e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("FFASoup")){
 			return;
 		}
@@ -27,7 +31,6 @@ public class KDListener implements Listener{
 		for(int i = 0; i < 16; i ++){
 			e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), it);
 		}
-		LamaUser ap = LamaHub.getInstance().getUserManager().getUser(e.getEntity().getUniqueId());
 		ap.setDeaths(ap.getDeaths() + 1);
 		if(ap.getLastAttacker() != null){
 			LamaUser ap2 = LamaHub.getInstance().getUserManager().getUser(ap.getLastAttacker().getUniqueId());

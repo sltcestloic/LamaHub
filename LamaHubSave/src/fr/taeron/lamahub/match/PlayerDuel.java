@@ -9,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import fr.taeron.core.Core;
 import fr.taeron.core.kits.Kit;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.match.arena.Arena;
@@ -105,6 +106,9 @@ public class PlayerDuel {
 	
 	public void start(){
 		for(Player p : this.participating){
+			p.getInventory().clear();
+			Core.getPlugin().getKitManager().getKit(this.kit.getName()).applyTo(p, true, false);
+			p.showPlayer(this.getOpponent(p));
 			if(p.equals(this.getPrimaryPlayer())){
 				p.teleport(this.arena.getPoint1());
 			} else {
@@ -136,17 +140,23 @@ public class PlayerDuel {
 		}.runTaskTimerAsynchronously(LamaHub.getInstance(), 20, 20);
     }
 	
+	@SuppressWarnings("deprecation")
 	public void end(Player winner){
 		for(Player p : this.participating){
 			p.sendMessage("§2Gagnant: §a" + winner.getName());
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			user.setCurrentDuel(null);
 		}
+		for(Player p : Bukkit.getOnlinePlayers()){
+			for(Player part : this.participating){
+				p.showPlayer(part);
+			}
+		}
+		Player loser = PlayerDuel.this.getOpponent(winner);
 		new BukkitRunnable(){
 			public void run(){
 				PlayerDuel.this.getOpponent(winner).spigot().respawn();
 				LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(winner, true, true);
-				LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(PlayerDuel.this.getOpponent(winner), true, true);
 				if(PlayerDuel.this.isRanked()){
 					Player loser = PlayerDuel.this.getOpponent(winner);
 		            final int[] eloRatings = QueueHandler.getNewRankings(LamaHub.getInstance().getUserManager().getUser(winner.getUniqueId()).getElo(PlayerDuel.this.kit.getName()), LamaHub.getInstance().getUserManager().getUser(loser.getUniqueId()).getElo(PlayerDuel.this.kit.getName()), true);
@@ -162,6 +172,12 @@ public class PlayerDuel {
 					p.sendMessage("§aInventaires: §cbientôt...");
 				}
 				LamaHub.getInstance().getQueueHandler().endDuel(PlayerDuel.this);
+				new BukkitRunnable(){
+					@Override
+					public void run() {
+						LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(loser, true, true);
+					}
+				}.runTaskLater(LamaHub.getInstance(), 2l);
 			}
 		}.runTaskLater(LamaHub.getInstance(), 40l);
 	}

@@ -247,7 +247,7 @@ public class GUIListener implements Listener{
 				user.setCurrentQueue(null);
 			}
 		}
-	}
+	} 
 	
 	@EventHandler
 	public void inventoryClickRanked(InventoryClickEvent e){

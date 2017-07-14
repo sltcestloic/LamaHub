@@ -63,6 +63,9 @@ public class CombatTagTimer extends PlayerTimer implements Listener{
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
         final Player attacker = BukkitUtils.getFinalAttacker((EntityDamageEvent)event, true);
+        if(LamaHub.getInstance().getUserManager().getUser(attacker.getUniqueId()).getCurrentDuel() != null){
+        	return;
+        }
         final Entity entity;
         if (attacker != null && (entity = event.getEntity()) instanceof Player) {
             final Player attacked = (Player)entity;
