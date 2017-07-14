@@ -146,6 +146,7 @@ public class PlayerDuel {
 			p.sendMessage("§2Gagnant: §a" + winner.getName());
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
 			user.setCurrentDuel(null);
+			user.setCurrentQueue(null);
 		}
 		for(Player p : Bukkit.getOnlinePlayers()){
 			for(Player part : this.participating){

@@ -108,7 +108,7 @@ public class LamaHub extends JavaPlugin{
 					return;
 				}
 				if(msg == 2){
-					Bukkit.broadcastMessage("§6Le §e§l1v1§6 arrive bientot...");
+					Bukkit.broadcastMessage("§6Le §e§l1v1§6 est en test, il est disponible depuis le menu du lobby !");
 					msg = 3;
 					return;
 				}

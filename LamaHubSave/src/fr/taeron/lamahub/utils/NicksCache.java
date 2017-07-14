@@ -37,8 +37,8 @@ public class NicksCache{
     @SuppressWarnings("deprecation")
 	public static void setNick(Player p, String string) {
         NicksCache.nicknames.put(p.getUniqueId(), string);
-        ((CraftPlayer)p).setDisplayName(getNick(p.getUniqueId()));
-        p.setDisplayName(p.getName());
+        ((CraftPlayer)p).setDisplayName(string);
+        p.setDisplayName(string);
         if(p.getName().length() > 14){
             p.setPlayerListName("§7" + p.getName().substring(0, 14));
         } else {
