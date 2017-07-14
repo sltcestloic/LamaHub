@@ -33,6 +33,7 @@ public class FFAInventory extends InventorySnapshot{
         final PlayerInventory inventory = player.getInventory();
         if (setItems) {
             inventory.setItem(0, Config.FFA_SELECTOR_ITEM);
+            inventory.setItem(4, Config.KIT_SHOP_ITEM);
             inventory.setItem(5, Config.HAT_ITEM);
             inventory.setItem(6, Config.TRAILS_ITEM);
             inventory.setItem(7, Config.SETTINGS_ITEM);
