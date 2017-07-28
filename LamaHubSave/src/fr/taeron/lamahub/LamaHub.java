@@ -214,7 +214,7 @@ public class LamaHub extends JavaPlugin{
 	 }
 	 
 	 static {
-	        MINUTE = TimeUnit.MINUTES.toMillis(1L);
-	        HOUR = TimeUnit.HOURS.toMillis(1L);
-	    }
+		 MINUTE = TimeUnit.MINUTES.toMillis(1L);
+		 HOUR = TimeUnit.HOURS.toMillis(1L);
+	 }
 }

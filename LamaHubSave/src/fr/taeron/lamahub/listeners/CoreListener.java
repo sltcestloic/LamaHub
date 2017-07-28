@@ -6,15 +6,12 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +29,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerAttempToBuildEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -47,13 +45,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import fr.taeron.hendek.Hendek;
+import fr.taeron.auguste.Auguste;
 import fr.taeron.lamahub.Config;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.SpawnHandler;
 import fr.taeron.lamahub.user.LamaUser;
 import fr.taeron.lamahub.utils.NicksCache;
-import net.minecraft.server.v1_7_R4.EntityItem;
 
 
 public class CoreListener implements Listener{
@@ -111,6 +108,9 @@ public class CoreListener implements Listener{
         	e.setCancelled(true);
         }
         if(e.getItemDrop().getItemStack().equals(Config.HAT_ITEM)){
+        	e.setCancelled(true);
+        }
+        if(e.getItemDrop().getItemStack().equals(Config.LOBBY_ITEM)){
         	e.setCancelled(true);
         }
     }
@@ -209,35 +209,6 @@ public class CoreListener implements Listener{
         }.runTaskLater(LamaHub.getInstance(), 1L);
     }
     
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-  	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
-    	if(event.isCancelled()){
-    		return;
-    	}
-		if(!SpawnHandler.isInSpawn(event.getPlayer().getLocation())){
-			Item item = event.getItemDrop();
-			ItemStack itemstack = item.getItemStack();
-			Location location = item.getLocation();
-			EntityItem ei = new EntityItem(
-				((CraftWorld)location.getWorld()).getHandle(),
-		      	location.getX(),
-		      	location.getY(),
-		      	location.getZ(),
-		      	CraftItemStack.asNMSCopy(itemstack)) {
-		    	@Override
-		      	public boolean a(EntityItem entityitem) {
-		    		return false;
-		    	}
-		    	};
-		    	ei.pickupDelay = 40;
-		    	((Item)ei.getBukkitEntity()).setVelocity(item.getVelocity());
-		    	((CraftWorld)location.getWorld()).getHandle().addEntity(ei);
-		    	item.remove();
-		} else {
-			event.setCancelled(true);
-		}
-  	}
-    
     @EventHandler
     public void entitySpawn(ItemSpawnEvent e){
     	new BukkitRunnable(){
@@ -331,7 +302,7 @@ public class CoreListener implements Listener{
                     vector.multiply(2.8f);
                     vector.setY(0.8f);
                     e.getPlayer().setVelocity(vector);
-                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector, true);
                     Bukkit.getPluginManager().callEvent(ev);
 				} else {
 	                this.fall.put(e.getPlayer(), true);
@@ -339,7 +310,7 @@ public class CoreListener implements Listener{
 					vector.multiply(1.6f);
                     vector.setY(1.2);
                     e.getPlayer().setVelocity(vector);
-                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector);
+                    PlayerVelocityEvent ev = new PlayerVelocityEvent(e.getPlayer(), vector, true);
                     Bukkit.getPluginManager().callEvent(ev);
 				}
 				user.setLastKangarooTime(System.currentTimeMillis());
@@ -404,7 +375,7 @@ public class CoreListener implements Listener{
 	                	final Player p2 = pAll;
 	                	p2.setHealth(0.0d);
 	            	} else if (pAll.getLocation().distance(e.getClickedBlock().getLocation()) <= 25.0){
-	            		Hendek.getInstance().getPlayerManager().getPlayer(pAll).addBypass(2000l);
+	            		Auguste.getInstance().getPlayerManager().getPlayer(pAll).addBypass(2000l);
 	            	}
 	            	((CraftWorld)p.getWorld()).createExplosion(e.getClickedBlock().getLocation().getX(),e.getClickedBlock().getLocation().getY() + 5 ,e.getClickedBlock().getLocation().getZ(),5.0f, false, false);
 	            	p.getWorld().strikeLightningEffect(e.getClickedBlock().getLocation());
@@ -459,5 +430,10 @@ public class CoreListener implements Listener{
             return;
         }
         e.getPlayer().sendMessage("§aNick: " + e.getPlayer().getName());
+    }
+    
+    @EventHandler
+    public void fdp(PlayerAttempToBuildEvent e){
+    	e.setCancelled(true);
     }
 }

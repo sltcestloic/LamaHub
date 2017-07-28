@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.taeron.core.Core;
+import fr.taeron.core.command.module.staffmode.StaffMode;
 import fr.taeron.core.kits.Kit;
 import fr.taeron.lamahub.LamaHub;
 import fr.taeron.lamahub.match.arena.Arena;
@@ -26,12 +27,7 @@ public class PlayerDuel {
 	private boolean ranked;
 	private Queue queue;
 	
-	@SuppressWarnings("deprecation")
 	public PlayerDuel(Queue queue, Player first, Player second, Arena a, Kit kit, boolean ranked){
-		for(Player p : Bukkit.getOnlinePlayers()){
-			p.hidePlayer(first, false);
-			p.hidePlayer(second, false);
-		}
 		this.player1 = first;
 		this.player2 = second;
 		this.arena = a;
@@ -104,11 +100,19 @@ public class PlayerDuel {
 		return this.startMillis < System.currentTimeMillis();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void start(){
+		for(Player p : Bukkit.getOnlinePlayers()){
+			player1.hidePlayer(p);
+			player2.hidePlayer(p);
+			if(!StaffMode.isInStaffMode(p)){
+				p.hidePlayer(this.player1);
+				p.hidePlayer(this.player2);
+			}
+		}
 		for(Player p : this.participating){
 			p.getInventory().clear();
 			Core.getPlugin().getKitManager().getKit(this.kit.getName()).applyTo(p, true, false);
-			p.showPlayer(this.getOpponent(p));
 			if(p.equals(this.getPrimaryPlayer())){
 				p.teleport(this.arena.getPoint1());
 			} else {
@@ -131,9 +135,15 @@ public class PlayerDuel {
 						player2.sendMessage(ChatColor.YELLOW + "Le duel commence !");
 						player2.playSound(player2.getLocation(), Sound.FIREWORK_LARGE_BLAST, 1.0f, 1.0f);
 						player2.setSaturation(4.0f);
+						new BukkitRunnable(){
+							public void run(){
+								player2.showPlayer(PlayerDuel.this.getOpponent(player2));
+							}
+						}.runTask(LamaHub.getInstance());
 					}
 					--dms;
 				} else {
+					this.cancel();
 					return;
 	            }				
 			}
@@ -145,13 +155,9 @@ public class PlayerDuel {
 		for(Player p : this.participating){
 			p.sendMessage("§2Gagnant: §a" + winner.getName());
 			LamaUser user = LamaHub.getInstance().getUserManager().getUser(p.getUniqueId());
+			user.getQueue().decreasePlaying(2);
 			user.setCurrentDuel(null);
 			user.setCurrentQueue(null);
-		}
-		for(Player p : Bukkit.getOnlinePlayers()){
-			for(Player part : this.participating){
-				p.showPlayer(part);
-			}
 		}
 		Player loser = PlayerDuel.this.getOpponent(winner);
 		new BukkitRunnable(){
@@ -171,6 +177,12 @@ public class PlayerDuel {
 				}
 				for(Player p : PlayerDuel.this.participating){
 					p.sendMessage("§aInventaires: §cbientôt...");
+				}
+				for(Player p : Bukkit.getOnlinePlayers()){
+					for(Player part : PlayerDuel.this.participating){
+						p.showPlayer(part);
+						part.showPlayer(p);
+					}
 				}
 				LamaHub.getInstance().getQueueHandler().endDuel(PlayerDuel.this);
 				new BukkitRunnable(){

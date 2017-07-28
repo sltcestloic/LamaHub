@@ -11,6 +11,8 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import fr.taeron.core.Core;
 import fr.taeron.core.util.ItemBuilder;
 import fr.taeron.lamahub.Config;
@@ -240,8 +242,8 @@ public class GUIListener implements Listener{
 			if(user.getQueue() != null){
 				user.getQueue().removePlayer(e.getPlayer());
 				user.setCurrentQueue(null);
-				LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(e.getPlayer(), false, true);
 			}
+			LamaHub.getInstance().getInventoryHandler().duelLobbyInventory.applyTo(e.getPlayer(), false, true);
 		}
 		if(e.getItem().equals(Config.LOBBY_ITEM)){
 			LamaHub.getInstance().getInventoryHandler().spawnInventory.applyTo(e.getPlayer(), true, true);
@@ -330,19 +332,24 @@ public class GUIListener implements Listener{
 		if(!e.getCurrentItem().hasItemMeta()){
 			return;
 		}
-		String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
-		if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur") || kitName.equalsIgnoreCase("Mongole")){
-			e.getWhoClicked().getInventory().clear();
-			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
-			user.setCurrentKit(kitName);
-		} else if (!e.getWhoClicked().hasPermission("vip") && !user.hasPurchasedKit(kitName)){
-			p.sendMessage("§cTu n'as pas accès à ce kit, tu peut le débloquer avec tes LamaCoins ou en achetant le grade VIP http://lamahub.buycraft.net/");
-		} else {
-			e.getWhoClicked().getInventory().clear();
-			Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
-			user.setCurrentKit(kitName);
-		}
 		e.getWhoClicked().closeInventory();
+		new BukkitRunnable(){
+			@Override
+			public void run() {
+				String kitName = e.getCurrentItem().getItemMeta().getDisplayName().replace("§9", "");
+				if(kitName.equalsIgnoreCase("Guerrier") || kitName.equalsIgnoreCase("AntiStomper") || kitName.equalsIgnoreCase("Violeur") || kitName.equalsIgnoreCase("Mongole")){
+					e.getWhoClicked().getInventory().clear();
+					Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
+					user.setCurrentKit(kitName);
+				} else if (!e.getWhoClicked().hasPermission("vip") && !user.hasPurchasedKit(kitName)){
+					p.sendMessage("§cTu n'as pas accès à ce kit, tu peut le débloquer avec tes LamaCoins ou en achetant le grade VIP http://lamahub.buycraft.net/");
+				} else {
+					e.getWhoClicked().getInventory().clear();
+					Core.getPlugin().getKitManager().getKit(kitName).applyTo((Player) e.getWhoClicked(), true, true);
+					user.setCurrentKit(kitName);
+				}
+			}
+		}.runTaskLater(LamaHub.getInstance(), 1l);
 	}
 	
 	@EventHandler
@@ -367,9 +374,9 @@ public class GUIListener implements Listener{
 			p.sendMessage("§cTu as déjà débloqué ce kit.");
 			return;
 		}
-		if(kitName.equalsIgnoreCase("Stomper") || kitName.equalsIgnoreCase("Thor")){
-			if(user.getCoins() >= 2500){
-				user.buyKit(kitName, 2500);
+		if(kitName.equalsIgnoreCase("Thor")){
+			if(user.getCoins() >= 3000){
+				user.buyKit(kitName, 3000);
 			} else {
 				p.sendMessage("§cTu n'as pas assez de LamaCoins.");
 			}

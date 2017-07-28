@@ -22,7 +22,6 @@ public class StatsResetArgument extends CommandArgument{
 		return ChatColor.YELLOW + "/" + label + " reset <joueur>";
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length != 2){

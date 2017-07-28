@@ -24,6 +24,10 @@ public class Queue {
 		this.playing = 0;
 	}
 	
+	public void decreasePlaying(int i){
+		this.playing -= i;
+	}
+	
 	public ArrayList<UUID> getQueue(){
 		return this.queue;
 	}
@@ -52,6 +56,7 @@ public class Queue {
 			LamaHub.getInstance().getInventoryHandler().queueInventory.applyTo(p, false, true);
 			user.setCurrentQueue(this);
 		} else {
+			user.setCurrentQueue(this);
 			LamaHub.getInstance().getInventoryHandler().duelInventory.applyTo(Bukkit.getPlayer(this.queue.get(0)), false, false);
 			LamaHub.getInstance().getInventoryHandler().duelInventory.applyTo(p, false, false);
 			new PlayerDuel(this, Bukkit.getPlayer(this.queue.get(0)), p, LamaHub.getInstance().getArenaManager().getRandomArena(), this.kit, this.ranked);
